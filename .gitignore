@@ -1,0 +1,29 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.ipynb_checkpoints/
+
+# Never commit datasets
+data/raw/*
+data/processed/*
+data/synthetic/*
+!data/**/.gitkeep
+*.parquet
+*.csv
+!tests/fixtures/*.csv
+
+# Model artefacts
+artifacts/
+*.pt
+*.pkl
+*.joblib
+
+# Results: keep manifests and summaries, they are the paper's evidence
+results/**/*.png
+.env
+.DS_Store
