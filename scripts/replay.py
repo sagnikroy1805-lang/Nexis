@@ -247,7 +247,14 @@ def write_drift(prep: Any, cols: list[str], s_val: np.ndarray, s_test: np.ndarra
     # Training-fold scores are inflated by fit, so comparing against them would
     # flag "drift" that is only overfitting.
     val, test = prep.split.val, prep.split.test
-    monitor = PSIMonitor.fit(val, s_val, cols, alert_threshold=tau)
+    # Monitor only features that should be stationary. Cumulative ones (an
+    # account's earlier-payment count, graph degree, PageRank...) grow with time
+    # by construction and would read as "drift" in every window (PSI ~8 in a
+    # first replay), drowning the signal.
+    cumulative = ("_n_hist", "n_counterparties", "_degree", "_tx", "_weight", "pagerank",
+                  "scc_size", "reciprocal", "prior_pair", "secs_since")
+    monitored = [c for c in cols if not any(k in c for k in cumulative)]
+    monitor = PSIMonitor.fit(val, s_val, monitored, alert_threshold=tau)
     test = test.assign(_score=s_test)
     with session_scope(url) as s:
         run = s.get(ModelRun, version)
@@ -262,9 +269,10 @@ def write_drift(prep: Any, cols: list[str], s_val: np.ndarray, s_test: np.ndarra
             d = asdict(monitor.window_report(win, win["_score"].to_numpy()))
             s.add(DriftWindow(start=w0.to_pydatetime(), end=(w0 + pd.Timedelta("6h")).to_pydatetime(), report=d))
             if d["status"] != "ok" and d["status"] != prev:
-                metric = "score_psi" if d["score_psi"] >= d["psi_max"] else "feature_psi"
+                # Status is driven by score PSI (monitors.PSIMonitor), so the
+                # event reports that value; feature PSIs stay in the window report.
                 s.add(DriftEvent(model_version=version, detected_at=(w0 + pd.Timedelta("6h")).to_pydatetime(),
-                                 metric=metric, value=float(max(d["score_psi"], d["psi_max"])),
+                                 metric="score_psi", value=float(d["score_psi"]),
                                  level=d["status"], action="recalibrate_threshold" if d["status"] == "drift" else "monitor"))
             prev = d["status"]
     print("  wrote drift windows")
