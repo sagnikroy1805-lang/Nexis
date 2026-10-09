@@ -7,6 +7,10 @@
   "processed_sha256": "28bb26f5ed8d3bd2f22fee85e931bbacd81a74f1b6bbf5531da9ba15231ee824",
   "tail_cutoff": "2022-09-11 00:00:00",
   "rate_fit_end": "2022-09-02 00:00:00",
+  "patterns_source_file": "HI-Small_Patterns.txt",
+  "patterns_source_sha256": "2c546b5ce6009e73851f0139af053cf845f08bf92f3bc82fe1eb937dec2ef39b",
+  "patterns_file": "ibm_aml_hi_small_patterns.parquet",
+  "patterns_sha256": "afa0b0fad19e461cce9912dd03a6e2a380b1a6ddbc756be45f866a65bd0b087e",
   "report": {
     "variant": "HI-Small",
     "n_raw": 5078345,
@@ -37,8 +41,28 @@
       "US Dollar": 1.0,
       "Yen": 0.009487666034467455,
       "Yuan": 0.14930721383438225
+    },
+    "patterns": {
+      "n_patterns": 370,
+      "n_pattern_rows": 3209,
+      "n_rows_matched": 2554,
+      "n_rows_in_dropped_tail": 655,
+      "n_patterns_truncated_by_tail": 102,
+      "n_patterns_entirely_in_tail": 7,
+      "n_positives_attributed": 2554,
+      "share_of_positives_attributed": 0.5647943387881469,
+      "patterns_by_typology": {
+        "BIPARTITE": 49,
+        "CYCLE": 54,
+        "FAN-IN": 40,
+        "FAN-OUT": 48,
+        "GATHER-SCATTER": 51,
+        "RANDOM": 41,
+        "SCATTER-GATHER": 44,
+        "STACK": 43
+      }
     }
   },
-  "code_commit": "06efab065e7c7f49aeebcaca4df507db46200e68",
+  "code_commit": "bd27f92cabb8f6481a31026350b183580a36d25e",
   "working_tree_dirty": false
 }
