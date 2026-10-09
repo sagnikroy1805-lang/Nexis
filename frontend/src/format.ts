@@ -1,7 +1,7 @@
 /**
  * Formatting and display labels.
  *
- * Copy rule (CLAUDE.md rule 5): every label here describes what the system
+ * Copy rule (PROJECT_RULES.md rule 5): every label here describes what the system
  * observed or what the model weighted. None asserts intent or wrongdoing.
  */
 import type { AlertStatus, DriftStatus } from "./types";

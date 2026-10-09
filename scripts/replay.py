@@ -1,6 +1,6 @@
 """Streaming replay: score the test period in time order and populate the database.
 
-CLAUDE.md: "simulate streaming by replaying a sorted file". This script is that
+PROJECT_RULES.md: "simulate streaming by replaying a sorted file". This script is that
 simulation, and the bridge between the research pipeline and the analyst app.
 
 Causality, step by step:

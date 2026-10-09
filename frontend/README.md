@@ -4,7 +4,7 @@ React front end for the NEXIS research prototype. It consumes the JSON API in
 [`../docs/api_contract.md`](../docs/api_contract.md) and ranks transactions by
 risk score for analyst review.
 
-A risk score is model output on recorded data, not a finding (CLAUDE.md rule 5).
+A risk score is model output on recorded data, not a finding (PROJECT_RULES.md rule 5).
 The UI never states that a person did anything. It offers no action on an
 account; the only write is an analyst *disposition* on an alert.
 

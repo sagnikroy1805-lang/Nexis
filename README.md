@@ -7,7 +7,7 @@ detect coordinated financial fraud earlier, and with fewer false positives, than
 transaction-level ML baselines?
 
 Results: [`docs/results.md`](docs/results.md) · Data: [`docs/dataset_card.md`](docs/dataset_card.md) ·
-API: [`docs/api_contract.md`](docs/api_contract.md) · Rules: [`CLAUDE.md`](CLAUDE.md)
+API: [`docs/api_contract.md`](docs/api_contract.md) · Rules: [`PROJECT_RULES.md`](PROJECT_RULES.md)
 
 ---
 
@@ -41,7 +41,7 @@ API: [`docs/api_contract.md`](docs/api_contract.md) · Rules: [`CLAUDE.md`](CLAU
 | Evaluation | `src/nexis/evaluation/` | temporal splits with embargo, PR-AUC-first metrics, 5-seed harness with git provenance, leakage canary |
 | Explanation | `src/nexis/explainability/` | TreeSHAP contributions, evidence packets (rule 6) |
 | Drift | `src/nexis/drift/` | reference-frozen PSI, Page-Hinkley, ADWIN, adaptation policies, walk-forward experiment |
-| Investigator | `src/nexis/investigation/` | retrieval-first Claude summary with mechanical claim verification; template fallback |
+| Investigator | `src/nexis/investigation/` | retrieval-first LLM summary with mechanical claim verification; template fallback |
 | Serving | `src/nexis/db/`, `src/nexis/api/`, `scripts/replay.py` | PostgreSQL schema, streaming replay, FastAPI |
 | Dashboard | `frontend/` | React + Tailwind analyst UI: dashboard, alerts, explanation, graph explorer, rings, drift, models |
 
@@ -111,7 +111,7 @@ make frontend     # http://localhost:5173
 
 ## The rules
 
-Full detail in `CLAUDE.md`:
+Full detail in `PROJECT_RULES.md`:
 
 1. No temporal leakage — time-aware splits, embargo, `t_cutoff` on every graph.
 2. Never accuracy — PR-AUC primary, always with prevalence.

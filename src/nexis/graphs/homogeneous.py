@@ -4,7 +4,7 @@ Implements Concept Mastery §6.2-6.7 (directed weighted graphs, degree,
 reachability, components, centrality), §7.1 (homogeneous account graph:
 accounts are nodes, transactions are edges) and §9.1 (time snapshots).
 
-The t_cutoff contract (CLAUDE.md rule 1): every graph here is built from
+The t_cutoff contract (PROJECT_RULES.md rule 1): every graph here is built from
 transactions with timestamp < t_cutoff, passed explicitly, and the constructor
 asserts it. Structural features for a transaction at time t come from the
 snapshot whose cutoff is the start of t's snapshot period, so they never contain

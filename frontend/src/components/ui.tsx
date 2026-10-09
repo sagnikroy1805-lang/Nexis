@@ -166,7 +166,7 @@ export function Figure({ label, value, sub }: { label: string; value: ReactNode;
   );
 }
 
-/** One small line, on every evidence view (CLAUDE.md rule 5). */
+/** One small line, on every evidence view (PROJECT_RULES.md rule 5). */
 export function LanguageNote({ note }: { note: string }) {
   return (
     <p className="text-[11px] leading-snug" role="note">
@@ -208,7 +208,7 @@ export function TxChip({ id, tone = "default", title }: { id: string; tone?: "de
   );
 }
 
-/** mean ± std. A missing std is flagged, not hidden (CLAUDE.md rule 3). */
+/** mean ± std. A missing std is flagged, not hidden (PROJECT_RULES.md rule 3). */
 export function MeanStd({ mean, std, digits }: { mean: number | null | undefined; std?: number | null; digits?: number }) {
   if (mean === null || mean === undefined) return <span>—</span>;
   const d = digits ?? decimalsFor(std ?? 0, 3);

@@ -4,7 +4,7 @@ The FastAPI backend (`src/nexis/api/`) serves this contract; the React dashboard
 (`frontend/`) consumes it. All paths are under `/api`. Timestamps are ISO-8601
 strings. Amounts are USD floats.
 
-**Language (CLAUDE.md rule 5).** No field name, value or UI string may assert
+**Language (PROJECT_RULES.md rule 5).** No field name, value or UI string may assert
 that a person committed fraud, laundered money or acted with intent. Use "risk
 score", "the model weighted", "the system observed". Every evidence payload
 carries `language_note`.

@@ -1,7 +1,7 @@
 """Evidence packets: everything an alert rests on, and nothing else.
 
 Implements Concept Mastery §12.1-12.2 (SHAP, local explanation), §12.4 (the
-evidence graph) and §12.5 (explanation is not causation), plus CLAUDE.md
+evidence graph) and §12.5 (explanation is not causation), plus PROJECT_RULES.md
 rules 5 and 6.
 
 Rule 6: an alert and its packet are written in the same database transaction,

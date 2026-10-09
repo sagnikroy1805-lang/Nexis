@@ -1,7 +1,7 @@
 """NEXIS analyst API (contract: docs/api_contract.md).
 
 Implements Concept Mastery §19.1 (REST design), §19.2 (validation) and §19.3
-(the model service), with CLAUDE.md rules 5 and 6 as hard constraints:
+(the model service), with PROJECT_RULES.md rules 5 and 6 as hard constraints:
   - every alert returned carries an evidence packet written with it;
   - responses describe risk scores and observations, never conclusions;
   - there is no endpoint that acts on an account. Dispositions are analyst

@@ -69,7 +69,7 @@ export function driftReport(): DriftReport {
 }
 
 /**
- * The modelling ladder (CLAUDE.md rule 4), rungs 1-4, mean ± std over 5 seeds.
+ * The modelling ladder (PROJECT_RULES.md rule 4), rungs 1-4, mean ± std over 5 seeds.
  * Deterministic scorers (majority, rules) have zero seed variance by construction.
  */
 export function modelLadder(): ModelLadder {

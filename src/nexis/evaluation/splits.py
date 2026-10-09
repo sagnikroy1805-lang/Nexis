@@ -186,7 +186,7 @@ def assert_temporal_integrity(
 def assert_embargo_covers_windows(embargo: str, windows: Sequence[str]) -> None:
     """Fail if any feature window is longer than the embargo between folds.
 
-    CLAUDE.md rule 1 states this as a requirement; this function enforces it. A
+    PROJECT_RULES.md rule 1 states this as a requirement; this function enforces it. A
     24h embargo with a 7D velocity window lets the first six days of each fold
     carry features computed from the previous fold, and nothing in the metrics
     shows it.

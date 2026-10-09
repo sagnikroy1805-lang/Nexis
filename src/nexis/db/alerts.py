@@ -1,6 +1,6 @@
 """Alert creation: the only place alerts are written, always with evidence.
 
-CLAUDE.md rule 6: alerts and their evidence packets are written in the same
+PROJECT_RULES.md rule 6: alerts and their evidence packets are written in the same
 database transaction, and an alert with no source_record_ids is a bug.
 """
 

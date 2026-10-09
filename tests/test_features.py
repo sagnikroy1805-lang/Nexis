@@ -1,4 +1,4 @@
-"""Feature correctness on hand-computed fixtures (CLAUDE.md testing priority 2)."""
+"""Feature correctness on hand-computed fixtures (PROJECT_RULES.md testing priority 2)."""
 
 from __future__ import annotations
 

@@ -27,7 +27,7 @@ feature, graph and model in the repository runs on it unchanged. `patterns` has
 the shape of `ibm_aml.match_patterns` output. Both are label-derived ground
 truth: for evaluation only, never joined in as features.
 
-Label semantics (CLAUDE.md rule 5): `is_fraud` = 1 means "this row was written by
+Label semantics (PROJECT_RULES.md rule 5): `is_fraud` = 1 means "this row was written by
 the pattern injector". It is a simulator label, not a finding about any account.
 
 Random streams. Every random draw comes from a stream keyed by

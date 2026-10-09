@@ -181,7 +181,7 @@ export interface EvidencePacket {
   risk_score: number;
   threshold: number;
   generated_at: IsoTime;
-  /** Never empty (CLAUDE.md rule 6). */
+  /** Never empty (PROJECT_RULES.md rule 6). */
   source_record_ids: TxId[];
   transaction: Transaction;
   feature_contributions: FeatureContribution[];
@@ -324,7 +324,7 @@ export interface DriftReport {
  * The contract example carries `pr_auc_std` only, but says the endpoint is
  * "mean ± std over seeds". The other `*_std` fields follow the same naming
  * convention and are optional; the UI flags any metric that arrives without
- * one (CLAUDE.md rule 3).
+ * one (PROJECT_RULES.md rule 3).
  */
 export interface ModelRow {
   name: string;

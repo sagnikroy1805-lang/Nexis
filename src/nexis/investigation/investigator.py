@@ -10,11 +10,11 @@ Implements Concept Mastery Module 16:
   §16.5 the correct role -- it summarises what the system observed for a human
         reviewer. It decides nothing and takes no action.
 
-CLAUDE.md rule 5 is enforced twice: in the instructions, and by a post-check
+PROJECT_RULES.md rule 5 is enforced twice: in the instructions, and by a post-check
 that flags any claim using accusatory language.
 
 Two modes with one output shape:
-  llm       Claude via the Anthropic SDK (structured JSON output);
+  llm       an LLM through the Anthropic SDK (structured JSON output);
   template  a deterministic summary built from the packet, used when no
             credentials are configured or the LLM call fails.
 """

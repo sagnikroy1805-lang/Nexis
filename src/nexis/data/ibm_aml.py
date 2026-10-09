@@ -9,7 +9,7 @@ Source: Altman et al., "Realistic Synthetic Financial Transactions for Anti-Mone
 Laundering Models", NeurIPS 2023 Datasets and Benchmarks; distributed on Kaggle as
 ealtman2019/ibm-transactions-for-anti-money-laundering-aml.
 
-Label semantics (CLAUDE.md rule 5): `is_fraud` is the generator's `Is Laundering`
+Label semantics (PROJECT_RULES.md rule 5): `is_fraud` is the generator's `Is Laundering`
 flag. It records that the simulator placed a transaction inside one of its
 laundering patterns. It is a dataset label, not a finding about any account.
 

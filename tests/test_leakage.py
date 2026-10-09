@@ -293,7 +293,7 @@ def test_drift_adaptation_never_trains_on_the_window_it_scores():
     """Drift retraining (§13.6) must only use labels from windows already scored.
 
     The full recorder test lives in tests/test_drift.py; this is the guard in the
-    place CLAUDE.md says leakage tests live: an alarm-every-window detector forces
+    place PROJECT_RULES.md says leakage tests live: an alarm-every-window detector forces
     a retrain each step, and every adaptive model's training data must end at
     least the embargo before the window it then scores.
     """

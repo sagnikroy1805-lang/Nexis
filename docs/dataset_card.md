@@ -6,7 +6,7 @@
 
 # Dataset card — IBM AML (HI-Small)
 
-Tier 2 dataset (see `CLAUDE.md`). Built by `make data-ibm` from
+Tier 2 dataset (see `PROJECT_RULES.md`). Built by `make data-ibm` from
 `configs/ibm_aml.yaml`; the exact bytes are pinned by
 `data/processed/ibm_aml_hi_small.manifest.json`.
 

@@ -3,7 +3,7 @@
 #
 # Controlled experiments only: ring-size, prevalence, camouflage, delay and drift
 # sweeps. Never the sole evidence for a claim -- validating on data we generated
-# ourselves is circular (CLAUDE.md, Datasets; §14.1).
+# ourselves is circular (PROJECT_RULES.md, Datasets; §14.1).
 #
 # Sections only group keys for the reader; every key is a GeneratorConfig field.
 # Unknown keys raise. Build with:

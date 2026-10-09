@@ -1,4 +1,4 @@
-# One reproducible environment for NEXIS (CLAUDE.md: "one reproducible
+# One reproducible environment for NEXIS (PROJECT_RULES.md: "one reproducible
 # Dockerfile is the requirement"; no production compose stack).
 #
 # Build:   docker build -t nexis .
