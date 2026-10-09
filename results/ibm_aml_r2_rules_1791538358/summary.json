@@ -1,0 +1,80 @@
+{
+  "prevalence": {
+    "rules": 0.0014704965144674788
+  },
+  "n_samples": {
+    "rules": 416866.0
+  },
+  "n_positives": {
+    "rules": 613.0
+  },
+  "pr_auc": {
+    "rules": 0.014312917901130914
+  },
+  "roc_auc": {
+    "rules": 0.8979470557357926
+  },
+  "pr_auc_lift": {
+    "rules": 9.733391245958956
+  },
+  "threshold_budget": {
+    "rules": 2.000537868817647
+  },
+  "precision_at_budget": {
+    "rules": 0.021956087824351298
+  },
+  "recall_at_budget": {
+    "rules": 0.01794453507340946
+  },
+  "recall_at_fpr_1e2": {
+    "rules": 0.07177814029363784
+  },
+  "recall_at_fpr_1e3": {
+    "rules": 0.014681892332789558
+  },
+  "median_ewt_minutes": {
+    "rules": NaN
+  },
+  "ring_detection_rate": {
+    "rules": NaN
+  },
+  "prevalence_std": {
+    "rules": 0.0
+  },
+  "n_samples_std": {
+    "rules": 0.0
+  },
+  "n_positives_std": {
+    "rules": 0.0
+  },
+  "pr_auc_std": {
+    "rules": 0.0
+  },
+  "roc_auc_std": {
+    "rules": 0.0
+  },
+  "pr_auc_lift_std": {
+    "rules": 0.0
+  },
+  "threshold_budget_std": {
+    "rules": 0.0
+  },
+  "precision_at_budget_std": {
+    "rules": 0.0
+  },
+  "recall_at_budget_std": {
+    "rules": 0.0
+  },
+  "recall_at_fpr_1e2_std": {
+    "rules": 0.0
+  },
+  "recall_at_fpr_1e3_std": {
+    "rules": 0.0
+  },
+  "median_ewt_minutes_std": {
+    "rules": NaN
+  },
+  "ring_detection_rate_std": {
+    "rules": NaN
+  }
+}

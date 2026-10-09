@@ -1,0 +1,658 @@
+{
+  "name": "synthetic_amount_shift_seed0",
+  "detector": {
+    "detector": "ThresholdDetector",
+    "drift_level": 0.25,
+    "warn_level": 0.1,
+    "patience": 1
+  },
+  "policy": {
+    "policy": "retrain_recent_window",
+    "window": "5D",
+    "min_positives": 5
+  },
+  "monitor_metric": "score_psi",
+  "window": "1 days 00:00:00",
+  "gap": "1 days 00:00:00",
+  "alert_budget_rate": 0.005,
+  "initial_train_start": "2026-01-05T00:00:00",
+  "initial_train_end": "2026-01-10T23:59:00",
+  "n_initial_train": 57454,
+  "reference_start": "2026-01-12T00:00:00",
+  "reference_end": "2026-01-13T00:00:00",
+  "reference_pr_auc": 0.08023747640277323,
+  "drift_onset": "2026-01-19T00:00:00",
+  "windows": [
+    {
+      "index": 0,
+      "start": "2026-01-13T00:00:00",
+      "end": "2026-01-14T00:00:00",
+      "n": 10172,
+      "n_pos": 17,
+      "prevalence": 0.0016712544239087693,
+      "static": {
+        "pr_auc": 0.07950363106986844,
+        "roc_auc": 0.9535725663973122,
+        "precision_at_budget": 0.057692307692307696,
+        "recall_at_budget": 0.17647058823529413,
+        "alert_rate": 0.005013763271726307,
+        "recall_at_threshold": 0.17647058823529413,
+        "threshold": 0.7981704545021059,
+        "model_version": 0
+      },
+      "adaptive": {
+        "pr_auc": 0.07950363106986844,
+        "roc_auc": 0.9535725663973122,
+        "precision_at_budget": 0.057692307692307696,
+        "recall_at_budget": 0.17647058823529413,
+        "alert_rate": 0.005013763271726307,
+        "recall_at_threshold": 0.17647058823529413,
+        "threshold": 0.7981704545021059,
+        "model_version": 0
+      },
+      "monitor": {
+        "start": "2026-01-13T00:00:00",
+        "end": "2026-01-13T23:58:00",
+        "n": 10172,
+        "psi_max": 0.05955075109202842,
+        "psi_top": {
+          "dst_out_cnt_24h": 0.05955075109202842,
+          "src_secs_since_in": 0.04750599780636819,
+          "src_out_cnt_24h": 0.04607186622063898,
+          "dst_out_sum_24h": 0.03977773394629715,
+          "src_in_sum_24h": 0.0372156299495885
+        },
+        "score_psi": 0.003966375331742357,
+        "score_ks": 0.019986158789193964,
+        "alert_rate": 0.005013763271726307,
+        "status": "ok"
+      },
+      "monitored_value": 0.003966375331742357,
+      "detector_updated": true,
+      "alarm": false,
+      "action": null,
+      "adaptive_train_end": "2026-01-10T23:59:00"
+    },
+    {
+      "index": 1,
+      "start": "2026-01-14T00:00:00",
+      "end": "2026-01-15T00:00:00",
+      "n": 9976,
+      "n_pos": 26,
+      "prevalence": 0.0026062550120288693,
+      "static": {
+        "pr_auc": 0.21730071871949624,
+        "roc_auc": 0.978448009277155,
+        "precision_at_budget": 0.27450980392156865,
+        "recall_at_budget": 0.5384615384615384,
+        "alert_rate": 0.0037089013632718524,
+        "recall_at_threshold": 0.34615384615384615,
+        "threshold": 0.7981704545021059,
+        "model_version": 0
+      },
+      "adaptive": {
+        "pr_auc": 0.21730071871949624,
+        "roc_auc": 0.978448009277155,
+        "precision_at_budget": 0.27450980392156865,
+        "recall_at_budget": 0.5384615384615384,
+        "alert_rate": 0.0037089013632718524,
+        "recall_at_threshold": 0.34615384615384615,
+        "threshold": 0.7981704545021059,
+        "model_version": 0
+      },
+      "monitor": {
+        "start": "2026-01-14T00:00:00",
+        "end": "2026-01-14T23:59:00",
+        "n": 9976,
+        "psi_max": 0.09507591094670957,
+        "psi_top": {
+          "dst_out_n_hist": 0.09507591094670957,
+          "src_out_n_hist": 0.08269348605925962,
+          "src_n_counterparties": 0.07666315501464471,
+          "dst_in_n_hist": 0.07073280629860343,
+          "dst_out_cnt_24h": 0.055350989066123686
+        },
+        "score_psi": 0.004156810929474745,
+        "score_ks": 0.027890378231039237,
+        "alert_rate": 0.0037089013632718524,
+        "status": "ok"
+      },
+      "monitored_value": 0.004156810929474745,
+      "detector_updated": true,
+      "alarm": false,
+      "action": null,
+      "adaptive_train_end": "2026-01-10T23:59:00"
+    },
+    {
+      "index": 2,
+      "start": "2026-01-15T00:00:00",
+      "end": "2026-01-16T00:00:00",
+      "n": 10158,
+      "n_pos": 20,
+      "prevalence": 0.0019688915140775743,
+      "static": {
+        "pr_auc": 0.23186294626452653,
+        "roc_auc": 0.9781811008088381,
+        "precision_at_budget": 0.15384615384615385,
+        "recall_at_budget": 0.4,
+        "alert_rate": 0.004134672179562906,
+        "recall_at_threshold": 0.35,
+        "threshold": 0.7981704545021059,
+        "model_version": 0
+      },
+      "adaptive": {
+        "pr_auc": 0.23186294626452653,
+        "roc_auc": 0.9781811008088381,
+        "precision_at_budget": 0.15384615384615385,
+        "recall_at_budget": 0.4,
+        "alert_rate": 0.004134672179562906,
+        "recall_at_threshold": 0.35,
+        "threshold": 0.7981704545021059,
+        "model_version": 0
+      },
+      "monitor": {
+        "start": "2026-01-15T00:00:00",
+        "end": "2026-01-15T23:59:00",
+        "n": 10158,
+        "psi_max": 0.18698638096032805,
+        "psi_top": {
+          "dst_out_n_hist": 0.18698638096032805,
+          "src_out_n_hist": 0.17022291746475104,
+          "src_n_counterparties": 0.14430916475797195,
+          "dst_in_n_hist": 0.09230988646713637,
+          "src_in_n_hist": 0.057983007471507295
+        },
+        "score_psi": 0.008296870859024495,
+        "score_ks": 0.035927943850767474,
+        "alert_rate": 0.004134672179562906,
+        "status": "ok"
+      },
+      "monitored_value": 0.008296870859024495,
+      "detector_updated": true,
+      "alarm": false,
+      "action": null,
+      "adaptive_train_end": "2026-01-10T23:59:00"
+    },
+    {
+      "index": 3,
+      "start": "2026-01-16T00:00:00",
+      "end": "2026-01-17T00:00:00",
+      "n": 10277,
+      "n_pos": 18,
+      "prevalence": 0.0017514838960786222,
+      "static": {
+        "pr_auc": 0.3595412610954097,
+        "roc_auc": 0.9906992234460799,
+        "precision_at_budget": 0.23076923076923078,
+        "recall_at_budget": 0.6666666666666666,
+        "alert_rate": 0.0036975771139437577,
+        "recall_at_threshold": 0.6111111111111112,
+        "threshold": 0.7981704545021059,
+        "model_version": 0
+      },
+      "adaptive": {
+        "pr_auc": 0.3595412610954097,
+        "roc_auc": 0.9906992234460799,
+        "precision_at_budget": 0.23076923076923078,
+        "recall_at_budget": 0.6666666666666666,
+        "alert_rate": 0.0036975771139437577,
+        "recall_at_threshold": 0.6111111111111112,
+        "threshold": 0.7981704545021059,
+        "model_version": 0
+      },
+      "monitor": {
+        "start": "2026-01-16T00:00:00",
+        "end": "2026-01-16T23:59:00",
+        "n": 10277,
+        "psi_max": 0.26626912325996976,
+        "psi_top": {
+          "src_out_n_hist": 0.26626912325996976,
+          "dst_out_n_hist": 0.25110770464043775,
+          "src_n_counterparties": 0.22277709827819617,
+          "dst_in_n_hist": 0.11978139230831343,
+          "src_in_n_hist": 0.09985784224027022
+        },
+        "score_psi": 0.01072989226954327,
+        "score_ks": 0.0392511116345603,
+        "alert_rate": 0.0036975771139437577,
+        "status": "ok"
+      },
+      "monitored_value": 0.01072989226954327,
+      "detector_updated": true,
+      "alarm": false,
+      "action": null,
+      "adaptive_train_end": "2026-01-10T23:59:00"
+    },
+    {
+      "index": 4,
+      "start": "2026-01-17T00:00:00",
+      "end": "2026-01-18T00:00:00",
+      "n": 6222,
+      "n_pos": 21,
+      "prevalence": 0.0033751205400192863,
+      "static": {
+        "pr_auc": 0.456028725605437,
+        "roc_auc": 0.9901014429316316,
+        "precision_at_budget": 0.34375,
+        "recall_at_budget": 0.5238095238095238,
+        "alert_rate": 0.006428801028608165,
+        "recall_at_threshold": 0.6190476190476191,
+        "threshold": 0.7981704545021059,
+        "model_version": 0
+      },
+      "adaptive": {
+        "pr_auc": 0.456028725605437,
+        "roc_auc": 0.9901014429316316,
+        "precision_at_budget": 0.34375,
+        "recall_at_budget": 0.5238095238095238,
+        "alert_rate": 0.006428801028608165,
+        "recall_at_threshold": 0.6190476190476191,
+        "threshold": 0.7981704545021059,
+        "model_version": 0
+      },
+      "monitor": {
+        "start": "2026-01-17T00:00:00",
+        "end": "2026-01-17T23:58:00",
+        "n": 6222,
+        "psi_max": 0.35805659964080255,
+        "psi_top": {
+          "dst_out_n_hist": 0.35805659964080255,
+          "src_out_n_hist": 0.3243141184363149,
+          "src_n_counterparties": 0.2795887100827727,
+          "dst_in_n_hist": 0.17059078160831073,
+          "src_secs_since_in": 0.1480983113881657
+        },
+        "score_psi": 0.0336956185346821,
+        "score_ks": 0.04195327513182523,
+        "alert_rate": 0.006428801028608165,
+        "status": "ok"
+      },
+      "monitored_value": 0.0336956185346821,
+      "detector_updated": true,
+      "alarm": false,
+      "action": null,
+      "adaptive_train_end": "2026-01-10T23:59:00"
+    },
+    {
+      "index": 5,
+      "start": "2026-01-18T00:00:00",
+      "end": "2026-01-19T00:00:00",
+      "n": 6111,
+      "n_pos": 15,
+      "prevalence": 0.002454590083456063,
+      "static": {
+        "pr_auc": 0.2501288715369142,
+        "roc_auc": 0.9825021872265967,
+        "precision_at_budget": 0.28125,
+        "recall_at_budget": 0.6,
+        "alert_rate": 0.002290950744558992,
+        "recall_at_threshold": 0.3333333333333333,
+        "threshold": 0.7981704545021059,
+        "model_version": 0
+      },
+      "adaptive": {
+        "pr_auc": 0.2501288715369142,
+        "roc_auc": 0.9825021872265967,
+        "precision_at_budget": 0.28125,
+        "recall_at_budget": 0.6,
+        "alert_rate": 0.002290950744558992,
+        "recall_at_threshold": 0.3333333333333333,
+        "threshold": 0.7981704545021059,
+        "model_version": 0
+      },
+      "monitor": {
+        "start": "2026-01-18T00:00:00",
+        "end": "2026-01-18T23:58:00",
+        "n": 6111,
+        "psi_max": 0.47754292580794255,
+        "psi_top": {
+          "dst_out_n_hist": 0.47754292580794255,
+          "src_out_n_hist": 0.4249972587753627,
+          "src_n_counterparties": 0.3679497537586612,
+          "dst_in_n_hist": 0.2376915444876072,
+          "src_in_n_hist": 0.15877373193811173
+        },
+        "score_psi": 0.05035504446344762,
+        "score_ks": 0.04708166608839537,
+        "alert_rate": 0.002290950744558992,
+        "status": "ok"
+      },
+      "monitored_value": 0.05035504446344762,
+      "detector_updated": true,
+      "alarm": false,
+      "action": null,
+      "adaptive_train_end": "2026-01-10T23:59:00"
+    },
+    {
+      "index": 6,
+      "start": "2026-01-19T00:00:00",
+      "end": "2026-01-20T00:00:00",
+      "n": 10168,
+      "n_pos": 15,
+      "prevalence": 0.0014752163650668766,
+      "static": {
+        "pr_auc": 0.046018202255944926,
+        "roc_auc": 0.9616205390853279,
+        "precision_at_budget": 0.038461538461538464,
+        "recall_at_budget": 0.13333333333333333,
+        "alert_rate": 0.00462234461054288,
+        "recall_at_threshold": 0.13333333333333333,
+        "threshold": 0.7981704545021059,
+        "model_version": 0
+      },
+      "adaptive": {
+        "pr_auc": 0.046018202255944926,
+        "roc_auc": 0.9616205390853279,
+        "precision_at_budget": 0.038461538461538464,
+        "recall_at_budget": 0.13333333333333333,
+        "alert_rate": 0.00462234461054288,
+        "recall_at_threshold": 0.13333333333333333,
+        "threshold": 0.7981704545021059,
+        "model_version": 0
+      },
+      "monitor": {
+        "start": "2026-01-19T00:01:00",
+        "end": "2026-01-19T23:59:00",
+        "n": 10168,
+        "psi_max": 1.3886370607751697,
+        "psi_top": {
+          "amt_z_src": 1.3886370607751697,
+          "amt_log_ratio_src_mean": 1.3680958526657272,
+          "log_amount": 0.7031302743969314,
+          "dst_out_n_hist": 0.5065866818584395,
+          "src_out_n_hist": 0.4865427503086917
+        },
+        "score_psi": 0.37755335222367387,
+        "score_ks": 0.19615251866903616,
+        "alert_rate": 0.00462234461054288,
+        "status": "drift"
+      },
+      "monitored_value": 0.37755335222367387,
+      "detector_updated": true,
+      "alarm": true,
+      "action": "retrain_recent_window(5D) [2026-01-13T23:58:00 .. 2026-01-18T23:58:00]",
+      "adaptive_train_end": "2026-01-10T23:59:00"
+    },
+    {
+      "index": 7,
+      "start": "2026-01-20T00:00:00",
+      "end": "2026-01-21T00:00:00",
+      "n": 10191,
+      "n_pos": 18,
+      "prevalence": 0.001766264350897851,
+      "static": {
+        "pr_auc": 0.2559588976652895,
+        "roc_auc": 0.988083925860393,
+        "precision_at_budget": 0.15384615384615385,
+        "recall_at_budget": 0.4444444444444444,
+        "alert_rate": 0.004219409282700422,
+        "recall_at_threshold": 0.4444444444444444,
+        "threshold": 0.7981704545021059,
+        "model_version": 0
+      },
+      "adaptive": {
+        "pr_auc": 0.3030877296312332,
+        "roc_auc": 0.9925456273141321,
+        "precision_at_budget": 0.21153846153846154,
+        "recall_at_budget": 0.6111111111111112,
+        "alert_rate": 0.01069571190265921,
+        "recall_at_threshold": 0.7777777777777778,
+        "threshold": 0.05027039401233237,
+        "model_version": 1
+      },
+      "monitor": {
+        "start": "2026-01-20T00:00:00",
+        "end": "2026-01-20T23:58:00",
+        "n": 10191,
+        "psi_max": 1.1718792037692904,
+        "psi_top": {
+          "amt_log_ratio_src_mean": 1.1718792037692904,
+          "amt_z_src": 1.1649194231979103,
+          "log_amount": 0.6964467721665681,
+          "dst_in_sum_24h": 0.6421938778477279,
+          "dst_out_n_hist": 0.6175225057632733
+        },
+        "score_psi": 7.135004350129179,
+        "score_ks": 0.9874406470743726,
+        "alert_rate": 0.01069571190265921,
+        "status": "drift"
+      },
+      "monitored_value": 7.135004350129179,
+      "detector_updated": false,
+      "alarm": false,
+      "action": null,
+      "adaptive_train_end": "2026-01-18T23:58:00"
+    },
+    {
+      "index": 8,
+      "start": "2026-01-21T00:00:00",
+      "end": "2026-01-22T00:00:00",
+      "n": 10214,
+      "n_pos": 20,
+      "prevalence": 0.001958096729978461,
+      "static": {
+        "pr_auc": 0.24383593845748477,
+        "roc_auc": 0.9552825191288994,
+        "precision_at_budget": 0.11538461538461539,
+        "recall_at_budget": 0.3,
+        "alert_rate": 0.0035245741139612297,
+        "recall_at_threshold": 0.25,
+        "threshold": 0.7981704545021059,
+        "model_version": 0
+      },
+      "adaptive": {
+        "pr_auc": 0.16449651662408593,
+        "roc_auc": 0.9569697861487149,
+        "precision_at_budget": 0.11538461538461539,
+        "recall_at_budget": 0.3,
+        "alert_rate": 0.010084198159389074,
+        "recall_at_threshold": 0.45,
+        "threshold": 0.05027039401233237,
+        "model_version": 1
+      },
+      "monitor": {
+        "start": "2026-01-21T00:00:00",
+        "end": "2026-01-21T23:59:00",
+        "n": 10214,
+        "psi_max": 0.019077778176152627,
+        "psi_top": {
+          "amt_vs_src_max": 0.019077778176152627,
+          "amt_z_src": 0.017817377478605997,
+          "dst_out_n_hist": 0.009615720941368233,
+          "dst_in_cnt_24h": 0.00652336184719069,
+          "dst_in_sum_24h": 0.006409160742325447
+        },
+        "score_psi": 0.005486577479604907,
+        "score_ks": 0.02826268900384099,
+        "alert_rate": 0.010084198159389074,
+        "status": "ok"
+      },
+      "monitored_value": 0.005486577479604907,
+      "detector_updated": true,
+      "alarm": false,
+      "action": null,
+      "adaptive_train_end": "2026-01-18T23:58:00"
+    },
+    {
+      "index": 9,
+      "start": "2026-01-22T00:00:00",
+      "end": "2026-01-23T00:00:00",
+      "n": 9948,
+      "n_pos": 15,
+      "prevalence": 0.0015078407720144752,
+      "static": {
+        "pr_auc": 0.11980765282617974,
+        "roc_auc": 0.9242927615020639,
+        "precision_at_budget": 0.058823529411764705,
+        "recall_at_budget": 0.2,
+        "alert_rate": 0.003216726980297547,
+        "recall_at_threshold": 0.2,
+        "threshold": 0.7981704545021059,
+        "model_version": 0
+      },
+      "adaptive": {
+        "pr_auc": 0.29029702898497395,
+        "roc_auc": 0.9892546729756032,
+        "precision_at_budget": 0.17647058823529413,
+        "recall_at_budget": 0.6,
+        "alert_rate": 0.00794129473260957,
+        "recall_at_threshold": 0.6666666666666666,
+        "threshold": 0.05027039401233237,
+        "model_version": 1
+      },
+      "monitor": {
+        "start": "2026-01-22T00:00:00",
+        "end": "2026-01-22T23:59:00",
+        "n": 9948,
+        "psi_max": 0.06654653303834533,
+        "psi_top": {
+          "amt_vs_src_max": 0.06654653303834533,
+          "amt_z_src": 0.06368350886596696,
+          "dst_out_n_hist": 0.03163088873370496,
+          "amt_log_ratio_src_mean": 0.024289982360004708,
+          "src_out_n_hist": 0.023827665306956555
+        },
+        "score_psi": 0.022219729934577808,
+        "score_ks": 0.0657494035218047,
+        "alert_rate": 0.00794129473260957,
+        "status": "ok"
+      },
+      "monitored_value": 0.022219729934577808,
+      "detector_updated": true,
+      "alarm": false,
+      "action": null,
+      "adaptive_train_end": "2026-01-18T23:58:00"
+    },
+    {
+      "index": 10,
+      "start": "2026-01-23T00:00:00",
+      "end": "2026-01-24T00:00:00",
+      "n": 9912,
+      "n_pos": 29,
+      "prevalence": 0.0029257465698143666,
+      "static": {
+        "pr_auc": 0.2058547015693586,
+        "roc_auc": 0.9683608565038537,
+        "precision_at_budget": 0.17647058823529413,
+        "recall_at_budget": 0.3103448275862069,
+        "alert_rate": 0.0035310734463276836,
+        "recall_at_threshold": 0.2413793103448276,
+        "threshold": 0.7981704545021059,
+        "model_version": 0
+      },
+      "adaptive": {
+        "pr_auc": 0.46727742506779346,
+        "roc_auc": 0.95743648968797,
+        "precision_at_budget": 0.3137254901960784,
+        "recall_at_budget": 0.5517241379310345,
+        "alert_rate": 0.004640839386602098,
+        "recall_at_threshold": 0.5517241379310345,
+        "threshold": 0.05027039401233237,
+        "model_version": 1
+      },
+      "monitor": {
+        "start": "2026-01-23T00:00:00",
+        "end": "2026-01-23T23:59:00",
+        "n": 9912,
+        "psi_max": 0.11258912247072461,
+        "psi_top": {
+          "amt_vs_src_max": 0.11258912247072461,
+          "amt_z_src": 0.10906988043478252,
+          "dst_out_n_hist": 0.05651370314833609,
+          "src_out_n_hist": 0.05100696153189615,
+          "src_n_counterparties": 0.04699455374024853
+        },
+        "score_psi": 0.0502260520708962,
+        "score_ks": 0.09701971401913523,
+        "alert_rate": 0.004640839386602098,
+        "status": "ok"
+      },
+      "monitored_value": 0.0502260520708962,
+      "detector_updated": true,
+      "alarm": false,
+      "action": null,
+      "adaptive_train_end": "2026-01-18T23:58:00"
+    },
+    {
+      "index": 11,
+      "start": "2026-01-24T00:00:00",
+      "end": "2026-01-25T00:00:00",
+      "n": 6039,
+      "n_pos": 17,
+      "prevalence": 0.002815035601920848,
+      "static": {
+        "pr_auc": 0.19448605897841514,
+        "roc_auc": 0.9188172778244476,
+        "precision_at_budget": 0.16129032258064516,
+        "recall_at_budget": 0.29411764705882354,
+        "alert_rate": 0.00546448087431694,
+        "recall_at_threshold": 0.35294117647058826,
+        "threshold": 0.7981704545021059,
+        "model_version": 0
+      },
+      "adaptive": {
+        "pr_auc": 0.3059193354584887,
+        "roc_auc": 0.9718092484419874,
+        "precision_at_budget": 0.25806451612903225,
+        "recall_at_budget": 0.47058823529411764,
+        "alert_rate": 0.005133300215267428,
+        "recall_at_threshold": 0.47058823529411764,
+        "threshold": 0.05027039401233237,
+        "model_version": 1
+      },
+      "monitor": {
+        "start": "2026-01-24T00:01:00",
+        "end": "2026-01-24T23:58:00",
+        "n": 6039,
+        "psi_max": 0.15240496662055222,
+        "psi_top": {
+          "amt_z_src": 0.15240496662055222,
+          "amt_vs_src_max": 0.15198424330755153,
+          "src_secs_since_out": 0.08157135442920756,
+          "dst_out_cnt_24h": 0.07754466600031903,
+          "dst_out_n_hist": 0.07641597181416887
+        },
+        "score_psi": 0.15193433569132628,
+        "score_ks": 0.17021593963640225,
+        "alert_rate": 0.005133300215267428,
+        "status": "warn"
+      },
+      "monitored_value": 0.15193433569132628,
+      "detector_updated": true,
+      "alarm": false,
+      "action": null,
+      "adaptive_train_end": "2026-01-18T23:58:00"
+    }
+  ],
+  "actions": [
+    {
+      "detected_at": "2026-01-20T00:00:00",
+      "window_index": 6,
+      "metric": "score_psi",
+      "value": 0.37755335222367387,
+      "level": "drift",
+      "action": "retrain_recent_window(5D) [2026-01-13T23:58:00 .. 2026-01-18T23:58:00]",
+      "threshold_before": 0.7981704545021059,
+      "threshold_after": 0.05027039401233237,
+      "model_version": 1,
+      "train_start": "2026-01-13T23:58:00",
+      "train_end": "2026-01-18T23:58:00",
+      "n_train": 42747,
+      "n_train_pos": 100
+    }
+  ],
+  "alarm_windows": [
+    6
+  ],
+  "first_alarm_at": "2026-01-20T00:00:00",
+  "detected_at": "2026-01-20T00:00:00",
+  "detection_window": 6,
+  "detection_latency_hours": 24.0,
+  "false_alarms_before_onset": 0,
+  "baseline_pr_auc": 0.265727692381942,
+  "pr_auc_lost_onset_to_detection": 0.21970949012599705,
+  "pr_auc_lost_static": 0.5284047025389793,
+  "pr_auc_lost_adaptive": 0.01726991626913177,
+  "mean_pr_auc_post_onset_static": 0.1776602419587788,
+  "mean_pr_auc_post_onset_adaptive": 0.2628493730037534
+}

@@ -1,0 +1,26 @@
+{
+  "drift_kind": "amount_shift",
+  "drift_magnitude": 3.0,
+  "n_seeds": 5,
+  "detected": 4,
+  "detection_latency_hours": [
+    24.0,
+    0.0
+  ],
+  "false_alarms_before_onset": [
+    0.0,
+    0.0
+  ],
+  "post_onset_pr_auc_static": [
+    0.1710918006868941,
+    0.06962690998438428
+  ],
+  "post_onset_pr_auc_adaptive": [
+    0.273192760051855,
+    0.029089492809669167
+  ],
+  "pr_auc_lost_onset_to_detection": [
+    0.337091309973666,
+    0.3198600760785893
+  ]
+}

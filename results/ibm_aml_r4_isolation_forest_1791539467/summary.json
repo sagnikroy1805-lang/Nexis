@@ -1,0 +1,80 @@
+{
+  "prevalence": {
+    "isolation_forest": 0.0014704965144674788
+  },
+  "n_samples": {
+    "isolation_forest": 416866.0
+  },
+  "n_positives": {
+    "isolation_forest": 613.0
+  },
+  "pr_auc": {
+    "isolation_forest": 0.0023501983023005513
+  },
+  "roc_auc": {
+    "isolation_forest": 0.7039744906051048
+  },
+  "pr_auc_lift": {
+    "isolation_forest": 1.598234527710965
+  },
+  "threshold_budget": {
+    "isolation_forest": 0.6749017564772444
+  },
+  "precision_at_budget": {
+    "isolation_forest": 0.0
+  },
+  "recall_at_budget": {
+    "isolation_forest": 0.0
+  },
+  "recall_at_fpr_1e2": {
+    "isolation_forest": 0.005220228384991843
+  },
+  "recall_at_fpr_1e3": {
+    "isolation_forest": 0.0
+  },
+  "median_ewt_minutes": {
+    "isolation_forest": NaN
+  },
+  "ring_detection_rate": {
+    "isolation_forest": NaN
+  },
+  "prevalence_std": {
+    "isolation_forest": 0.0
+  },
+  "n_samples_std": {
+    "isolation_forest": 0.0
+  },
+  "n_positives_std": {
+    "isolation_forest": 0.0
+  },
+  "pr_auc_std": {
+    "isolation_forest": 0.0001373850347357452
+  },
+  "roc_auc_std": {
+    "isolation_forest": 0.018111759265654753
+  },
+  "pr_auc_lift_std": {
+    "isolation_forest": 0.09342765071802803
+  },
+  "threshold_budget_std": {
+    "isolation_forest": 0.0024950256259177544
+  },
+  "precision_at_budget_std": {
+    "isolation_forest": 0.0
+  },
+  "recall_at_budget_std": {
+    "isolation_forest": 0.0
+  },
+  "recall_at_fpr_1e2_std": {
+    "isolation_forest": 0.0007295490954322318
+  },
+  "recall_at_fpr_1e3_std": {
+    "isolation_forest": 0.0
+  },
+  "median_ewt_minutes_std": {
+    "isolation_forest": NaN
+  },
+  "ring_detection_rate_std": {
+    "isolation_forest": NaN
+  }
+}

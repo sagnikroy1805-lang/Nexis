@@ -1,0 +1,40 @@
+{
+  "run_id": "ibm_aml_r4_xgb_behavioural_1791539692",
+  "name": "ibm_aml_r4_xgb_behavioural",
+  "config": {
+    "dataset": "ibm_aml",
+    "variant": "HI-Small",
+    "rung": 4,
+    "model": "xgb_behavioural",
+    "split": {
+      "train_frac": 0.6,
+      "val_frac": 0.2,
+      "embargo": "24h",
+      "split_on": "rows"
+    },
+    "windows": [
+      "5min",
+      "1h",
+      "24h"
+    ],
+    "alert_budget": 500,
+    "xgb_params": {
+      "max_depth": 10,
+      "learning_rate": 0.1,
+      "min_child_weight": 20,
+      "subsample": 0.85,
+      "colsample_bytree": 1.0,
+      "reg_lambda": 0.5
+    }
+  },
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "timestamp": 1791539823.5381432,
+  "code_commit": "0886444cdafff280e6d805136ed83323d090f104",
+  "working_tree_dirty": true
+}
