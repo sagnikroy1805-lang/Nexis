@@ -27,5 +27,8 @@ artifacts/
 
 # Results: keep manifests and summaries, they are the paper's evidence
 results/**/*.png
+# Per-transaction scores are large and regenerable from the runs above
+results/scores/
+results/*.log
 .env
 .DS_Store
