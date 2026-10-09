@@ -11,6 +11,25 @@ API: [`docs/api_contract.md`](docs/api_contract.md) · Rules: [`CLAUDE.md`](CLAU
 
 ---
 
+## Headline results (test folds, mean ± std over 5 seeds — full tables in `docs/results.md`)
+
+| IBM AML HI-Small (prevalence 0.147%) | PR-AUC |
+|---|---|
+| Rules (rung 2) | 0.0143 |
+| XGBoost, transaction fields (rung 3) | 0.0971 ± 0.0022 |
+| XGBoost + strict-past behaviour (rung 4) | 0.5285 ± 0.0022 |
+| XGBoost + leak-free graph structure (rung 5) | **0.5598 ± 0.0034** |
+| Best GNN, homogeneous (rung 6) | 0.2858 ± 0.0124 |
+| Fusion XGBoost + GNN (rung 9) | 0.5647 ± 0.0023 (not distinguishable from rung 5) |
+
+- Leakage canary (shuffled training labels): PR-AUC / chance = **0.997**.
+- Patterns flagged before they complete: **88%**, median ~43 h early.
+- Elliptic++ (tier 1): XGBoost 0.7945 ± 0.0017; per-step PR-AUC collapses from ~0.9 to
+  ~0.05 after the step-43 dark-market shutdown — real-world drift.
+- Synthetic drift (tier 3): 4/5 shifts detected 24 h after onset, 0 false alarms.
+
+---
+
 ## What is in the box
 
 | Layer | Where | What it does |
