@@ -25,9 +25,11 @@ from sqlalchemy import func, or_, select
 from sqlalchemy.orm import Session, sessionmaker
 
 from nexis.db.models import Alert, DriftEvent, DriftWindow, ModelRun, Ring, Transaction
-from nexis.db.session import database_url, get_engine, init_db
+from nexis.db.session import database_url, get_engine, init_db, load_dotenv
 from nexis.explainability.evidence import LANGUAGE_NOTE
 from nexis.investigation.investigator import Investigator
+
+load_dotenv()  # before anything reads NEXIS_* settings
 
 RESULTS_DIR = Path("results")
 FRONTEND_DIST = Path("frontend") / "dist"
@@ -364,4 +366,16 @@ def models() -> dict[str, Any]:
 
 
 if FRONTEND_DIST.exists():  # serve the built dashboard from the same origin
-    app.mount("/", StaticFiles(directory=FRONTEND_DIST, html=True), name="frontend")
+    from fastapi.responses import FileResponse
+
+    app.mount("/assets", StaticFiles(directory=FRONTEND_DIST / "assets"), name="assets")
+
+    @app.get("/{path:path}", include_in_schema=False)
+    def spa(path: str) -> FileResponse:
+        """Client-side routes (/alerts, /graph/...) all load the app shell."""
+        if path.startswith("api/"):
+            raise HTTPException(404, "not found")
+        file = FRONTEND_DIST / path
+        if path and file.is_file():
+            return FileResponse(file)
+        return FileResponse(FRONTEND_DIST / "index.html")

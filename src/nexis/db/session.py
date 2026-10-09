@@ -20,7 +20,26 @@ from nexis.db.models import Base
 DEFAULT_URL = "sqlite:///data/nexis.db"
 
 
+def load_dotenv(path: str = ".env") -> None:
+    """Read KEY=VALUE lines from a local .env into os.environ (existing vars win).
+
+    Lets `cp .env.example .env` configure the API without touching the shell.
+    The file is gitignored; secrets never belong in the repository.
+    """
+    try:
+        lines = open(path, encoding="utf-8").read().splitlines()
+    except OSError:
+        return
+    for line in lines:
+        line = line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, value = line.split("=", 1)
+        os.environ.setdefault(key.strip(), value.strip().strip('"').strip("'"))
+
+
 def database_url() -> str:
+    load_dotenv()
     return os.environ.get("NEXIS_DATABASE_URL", DEFAULT_URL)
 
 
