@@ -83,14 +83,15 @@ tests/            leakage tests first, then features, metrics, integration
 
 | Component | Status |
 |---|---|
-| `data/ibm_aml.py` | IBM AML adapter: standard schema, USD amounts, tail cut, hashed manifest (`make data-ibm`) |
+| `data/ibm_aml.py` | IBM AML adapter: standard schema, USD amounts, tail cut, typology table, hashed manifest (`make data-ibm`) |
 | `evaluation/splits.py` | Temporal split (time-span or row-count) with embargo, walk-forward CV, integrity assertions |
 | `evaluation/metrics.py` | PR-AUC, alert-budget thresholds, recall@FPR, early-warning time, ring metrics |
 | `evaluation/harness.py` | Multi-seed runner, git provenance, mean ± std aggregation |
 | `evaluation/leakage.py` | Future-edge assertion, leakage canary |
 | `features/velocity.py` | Rolling velocity, inter-arrival, personal baselines, HHI |
-| `tests/` | 35 passing tests, leakage guards included |
+| `tests/` | 42 passing tests, leakage guards included |
 | `scripts/run_baseline.py` | End-to-end tabular baseline experiment |
+| `scripts/dataset_stats.py` | Dataset-card statistics (`make stats-ibm`) |
 
 Everything else is yours to build. The order is fixed — see `CLAUDE.md`.
 

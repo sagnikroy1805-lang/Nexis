@@ -27,7 +27,10 @@ from nexis.data.ibm_aml import (
     IbmAmlConfig,
     build_processed,
     load_config,
+    load_patterns,
     load_processed,
+    match_patterns,
+    read_patterns,
     read_raw,
     to_standard_schema,
     validate,
@@ -35,6 +38,9 @@ from nexis.data.ibm_aml import (
 from nexis.evaluation.splits import SplitConfig
 
 FIXTURE = Path(__file__).parent / "fixtures" / "ibm_aml_sample.csv"
+# Three patterns over the fixture: FAN-OUT {row 6} fully kept; CYCLE {row 8,
+# row 10} cut by the tail; BIPARTITE {row 9} entirely in the tail.
+PATTERNS = Path(__file__).parent / "fixtures" / "ibm_aml_sample_patterns.txt"
 TAIL_CUTOFF = pd.Timestamp("2022-09-11")
 RATE_FIT_END = pd.Timestamp("2022-09-02")
 
@@ -150,7 +156,7 @@ def test_currency_without_rate_is_rejected(tmp_path):
         to_standard_schema(read_raw(p), "TEST", TAIL_CUTOFF, RATE_FIT_END)
 
 
-def _cfg(tmp_path: Path) -> IbmAmlConfig:
+def _cfg(tmp_path: Path, patterns: Path | None = None) -> IbmAmlConfig:
     return IbmAmlConfig(
         variant="TEST",
         raw_path=FIXTURE,
@@ -159,6 +165,7 @@ def _cfg(tmp_path: Path) -> IbmAmlConfig:
         rate_fit_end=RATE_FIT_END,
         split=SplitConfig(),
         feature_windows=("1h",),
+        patterns_path=patterns,
     )
 
 
@@ -181,6 +188,86 @@ def test_load_refuses_a_file_that_changed_after_its_manifest(tmp_path):
     df.to_parquet(cfg.processed_path, index=False)
     with pytest.raises(DataValidationError, match="does not match manifest"):
         load_processed(cfg)
+
+
+def test_read_patterns_parses_blocks():
+    p = read_patterns(PATTERNS)
+    assert p["pattern_id"].tolist() == [0, 1, 1, 2]
+    assert p["typology"].tolist() == ["FAN-OUT", "CYCLE", "CYCLE", "BIPARTITE"]
+    assert p["detail"].tolist() == [
+        "Max 1-degree Fan-Out",
+        "Max 2 hops",
+        "Max 2 hops",
+        "",
+    ]
+    assert p.loc[2, "src"] == "001_8000A0001", "leading zeros must survive"
+
+
+def test_match_patterns_links_rows_and_reports_truncation(loaded):
+    df, _ = loaded
+    mapping, report = match_patterns(df, read_patterns(PATTERNS), TAIL_CUTOFF)
+    # Rows 3 and 4: the cycle's second leg and the whole bipartite pattern lie in
+    # the dropped tail, so they have no tx_id.
+    assert mapping["tx_id"].notna().tolist() == [True, True, False, False]
+    assert mapping["tx_id"].head(2).tolist() == ["TEST:0000006", "TEST:0000008"]
+    assert report.n_patterns == 3
+    assert report.n_rows_matched == 2
+    assert report.n_rows_in_dropped_tail == 2
+    assert report.n_patterns_truncated_by_tail == 1
+    assert report.n_patterns_entirely_in_tail == 1
+    assert report.share_of_positives_attributed == pytest.approx(1.0)
+    assert report.patterns_by_typology == {"BIPARTITE": 1, "CYCLE": 1, "FAN-OUT": 1}
+
+
+def _patterns_file(tmp_path: Path, body: str) -> Path:
+    p = tmp_path / "patterns.txt"
+    p.write_text(body, encoding="utf-8")
+    return p
+
+
+def test_pattern_row_matching_a_negative_is_rejected(loaded, tmp_path):
+    """Row 1 is labelled 0 in the transactions file; the two files disagree."""
+    df, _ = loaded
+    p = _patterns_file(
+        tmp_path,
+        "BEGIN LAUNDERING ATTEMPT - FAN-IN:  Max 1-degree Fan-In\n"
+        "2022/09/01 00:05,001,8000A0001,010,8000B0002,100.00,US Dollar,"
+        "100.00,US Dollar,Cheque,1\n"
+        "END LAUNDERING ATTEMPT - FAN-IN\n",
+    )
+    with pytest.raises(DataValidationError, match="negative"):
+        match_patterns(df, read_patterns(p), TAIL_CUTOFF)
+
+
+def test_pattern_row_missing_before_cutoff_is_rejected(loaded, tmp_path):
+    df, _ = loaded
+    p = _patterns_file(
+        tmp_path,
+        "BEGIN LAUNDERING ATTEMPT - STACK:  Max 2 hops\n"
+        "2022/09/02 10:00,020,8000C0003,050,8000E0005,999.00,Euro,999.00,Euro,ACH,1\n"
+        "END LAUNDERING ATTEMPT - STACK\n",
+    )
+    with pytest.raises(DataValidationError, match="match no tx"):
+        match_patterns(df, read_patterns(p), TAIL_CUTOFF)
+
+
+def test_unterminated_pattern_block_is_rejected(tmp_path):
+    p = _patterns_file(
+        tmp_path,
+        "BEGIN LAUNDERING ATTEMPT - CYCLE:  Max 2 hops\n"
+        "2022/09/02 10:00,020,8000C0003,050,8000E0005,1000.00,Euro,1000.00,Euro,ACH,1\n",
+    )
+    with pytest.raises(DataValidationError, match="no END"):
+        read_patterns(p)
+
+
+def test_build_writes_verified_pattern_table(tmp_path):
+    cfg = _cfg(tmp_path, patterns=PATTERNS)
+    report = build_processed(cfg)
+    assert report.patterns is not None
+    assert report.patterns.n_rows_matched == 2
+    mapping = load_patterns(cfg)
+    assert mapping["tx_id"].notna().sum() == 2
 
 
 def test_repo_config_loads_and_respects_rule_1():

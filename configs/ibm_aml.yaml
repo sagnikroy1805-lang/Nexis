@@ -6,6 +6,9 @@ dataset:
   variant: HI-Small
   raw_path: data/raw/HI-Small_Trans.csv
   processed_path: data/processed/ibm_aml_hi_small.parquet
+  # Laundering patterns (typology labels). Written to a separate parquet so a
+  # label-derived column can never be picked up as a feature. Optional.
+  patterns_path: data/raw/HI-Small_Patterns.txt
 
   # Simulated normal activity ends on 2022-09-10. After it, 655 of the remaining
   # 1,108 rows are positive (laundering chains completing with no background

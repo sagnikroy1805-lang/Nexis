@@ -113,11 +113,75 @@ velocity window is impossible on 10 days. For this dataset the windows are
 - **Self-transfers** (11.6% of rows, almost all Reinvestment) are kept and flagged
   with `is_self_transfer`. Whether models see them is a modelling decision.
 
-## Still to do (Day 3)
+## Statistics (after processing)
 
-- Duration distribution of labelled laundering patterns. This sets the snapshot
-  window Δ for Module 9. It needs `HI-Small_Patterns.txt`.
-- Transactions per typology (fan-in, fan-out, cycle, scatter-gather, …). Also from the
-  patterns file.
-- Amount distribution (raw and `log1p`) and skew.
-- Transactions per account: how heavy is the tail?
+Regenerate with `make stats-ibm` (`scripts/dataset_stats.py`). Every number below
+comes from that script.
+
+### Amounts (USD)
+
+| | median | p90 | p99 | max | skew | skew of log1p |
+|---|---|---|---|---|---|---|
+| all | 892.90 | 35,407 | 3,100,925 | 26,558,612,966 | 556.0 | 0.51 |
+| negatives | 890.87 | 35,451 | 3,099,589 | 26,558,612,966 | 573.8 | 0.51 |
+| positives | 5,074.02 | 18,384 | 19,360,301 | 16,297,045,517 | 63.4 | 1.28 |
+
+- **Use `log1p(amount)`** for anything scale-sensitive (logistic regression, GNN
+  inputs). The raw skew is 556; after the log it is 0.51.
+- The median positive is **5.7×** the median negative. Amount alone is a strong
+  signal, so the tabular baseline will not be weak.
+
+### Accounts
+
+- 515,078 accounts; 496,973 of them send at least once.
+- Transactions per account (as sender or receiver): median 6, p90 51, p99 119,
+  p99.9 190, **max 169,756**.
+- 17,480 accounts (3.4%) appear exactly once.
+- The busiest 1% of accounts take part in 12.0% of all transactions.
+- **One hub account dwarfs the rest.** Full-neighbourhood message passing would
+  explode on it, so GNNs need neighbour sampling (§8.3), and raw degree features will
+  be dominated by a few nodes.
+
+### Time
+
+- 14,400 distinct timestamps, i.e. every minute of the 10 days is occupied.
+- Rows per minute: median 326, p99 813, max 11,193.
+- Rows per hour: median 19,515, max 344,208, no empty hours.
+
+### Laundering patterns (`HI-Small_Patterns.txt`)
+
+370 documented patterns, 3,209 transactions. Every pattern row matches exactly one
+transaction, and every match is labelled positive. The 655 rows that match nothing
+are exactly the 655 positives in the dropped tail. `match_patterns` raises if any of
+this stops being true.
+
+| typology | patterns | tx | tx kept | median tx | median hours | p90 hours | max hours |
+|---|---|---|---|---|---|---|---|
+| BIPARTITE | 49 | 263 | 241 | 4.0 | 24.3 | 43.1 | 47.4 |
+| CYCLE | 54 | 287 | 243 | 4.0 | 71.9 | 90.3 | 95.6 |
+| FAN-IN | 40 | 318 | 252 | 8.0 | 84.9 | 94.7 | 95.8 |
+| FAN-OUT | 48 | 342 | 276 | 7.0 | 76.7 | 94.7 | 96.0 |
+| GATHER-SCATTER | 51 | 716 | 462 | 14.0 | 150.8 | 183.8 | 202.3 |
+| RANDOM | 41 | 191 | 150 | 3.0 | 46.0 | 86.6 | 91.6 |
+| SCATTER-GATHER | 44 | 626 | 497 | 14.0 | 88.8 | 95.5 | 95.9 |
+| STACK | 43 | 466 | 433 | 10.0 | 73.3 | 101.0 | 114.0 |
+| **all** | **370** | **3,209** | **2,554** | **6.5** | **74.7** | **110.2** | **202.3** |
+
+- **Only 56.5% of positives belong to a listed pattern** (2,554 of 4,522). The other
+  1,968 are labelled laundering with no documented typology. Per-typology results
+  therefore cover about half the positives; report the rest as their own
+  "unattributed" group, never silently dropped.
+- **102 patterns are cut short by the tail cut-off and 7 lie entirely after it.** The
+  pattern table keeps their tail rows (with a null `tx_id`), so each pattern's true end
+  is still known.
+- **Patterns last days, not hours** (median 75h, up to 202h). This sets Δ for the
+  Module 9 snapshots. With Δ = 24h, a median pattern spans 3–4 snapshots, which is
+  enough for a temporal model to see it develop. With Δ = 6h it spans about 12.
+- **Patterns cross the train/val/test boundaries.** By the folds their kept
+  transactions fall in: 104 patterns are train only, 53 test only, 4 val only. **26 lie
+  entirely in embargo gaps and are never evaluated.** The rest span two or more folds.
+  For the early-warning metric (§4.7, §9.5), a pattern's start is its first transaction
+  *in the full table*, even if that falls in an earlier fold.
+- The pattern table is **label-derived**. It lives in a separate parquet
+  (`*_patterns.parquet`, loaded with `load_patterns`), never in the transactions table,
+  so no model fitted on "all columns" can read it. `tests/test_leakage.py` guards this.

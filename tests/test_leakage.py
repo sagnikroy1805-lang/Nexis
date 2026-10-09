@@ -188,6 +188,30 @@ def test_fx_rates_ignore_rows_after_rate_fit_end():
     )
 
 
+def test_pattern_labels_never_enter_the_transactions_table(tmp_path):
+    """Typology is derived from the label. If it sat in the transactions table, a
+    model fitted on 'all columns' would read the answer off it."""
+    from pathlib import Path
+
+    from nexis.data.ibm_aml import IbmAmlConfig, build_processed
+    from nexis.evaluation.splits import SplitConfig
+
+    fixtures = Path(__file__).parent / "fixtures"
+    cfg = IbmAmlConfig(
+        variant="TEST",
+        raw_path=fixtures / "ibm_aml_sample.csv",
+        processed_path=tmp_path / "t.parquet",
+        tail_cutoff=pd.Timestamp("2022-09-11"),
+        rate_fit_end=pd.Timestamp("2022-09-02"),
+        split=SplitConfig(),
+        feature_windows=("1h",),
+        patterns_path=fixtures / "ibm_aml_sample_patterns.txt",
+    )
+    build_processed(cfg)
+    columns = set(pd.read_parquet(cfg.processed_path).columns)
+    assert not columns & {"pattern_id", "typology", "detail"}
+
+
 @pytest.mark.slow
 def test_leakage_canary_scores_at_chance(transactions):
     """Shuffled training labels must not predict the future.

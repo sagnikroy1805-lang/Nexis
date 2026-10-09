@@ -26,6 +26,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Any
@@ -92,10 +93,30 @@ class IbmAmlConfig:
     rate_fit_end: pd.Timestamp
     split: SplitConfig
     feature_windows: tuple[str, ...]
+    patterns_path: Path | None = None
 
     @property
     def manifest_path(self) -> Path:
         return self.processed_path.with_suffix(".manifest.json")
+
+    @property
+    def patterns_processed_path(self) -> Path:
+        return self.processed_path.with_name(self.processed_path.stem + "_patterns.parquet")
+
+
+@dataclass
+class PatternReport:
+    """How the documented laundering patterns line up with the kept transactions."""
+
+    n_patterns: int
+    n_pattern_rows: int
+    n_rows_matched: int
+    n_rows_in_dropped_tail: int
+    n_patterns_truncated_by_tail: int
+    n_patterns_entirely_in_tail: int
+    n_positives_attributed: int
+    share_of_positives_attributed: float
+    patterns_by_typology: dict[str, int] = field(default_factory=dict)
 
 
 @dataclass
@@ -116,6 +137,7 @@ class LoadReport:
     n_cross_currency: int
     n_exact_duplicate_raw_rows: int
     usd_per_unit: dict[str, float] = field(default_factory=dict)
+    patterns: PatternReport | None = None
 
 
 def load_config(path: str | Path) -> IbmAmlConfig:
@@ -147,6 +169,7 @@ def load_config(path: str | Path) -> IbmAmlConfig:
         rate_fit_end=pd.Timestamp(ds["rate_fit_end"]),
         split=split,
         feature_windows=windows,
+        patterns_path=root / ds["patterns_path"] if ds.get("patterns_path") else None,
     )
 
 
@@ -336,6 +359,145 @@ def validate(df: pd.DataFrame, tail_cutoff: pd.Timestamp | None = None) -> None:
         raise DataValidationError("; ".join(problems))
 
 
+_BEGIN = re.compile(r"^BEGIN LAUNDERING ATTEMPT - (?P<typology>[A-Z-]+):?\s*(?P<detail>.*)$")
+# Every field the two files share. Matching on all of them, not a subset, means
+# an ambiguous match is a data problem we see, not one we resolve by accident.
+_PATTERN_KEY = (
+    "timestamp",
+    "src",
+    "dst",
+    "amount_paid",
+    "pay_currency",
+    "amount_received",
+    "recv_currency",
+    "payment_format",
+)
+
+
+def read_patterns(path: str | Path) -> pd.DataFrame:
+    """Parse the laundering-patterns file: one row per pattern transaction.
+
+    The file is a sequence of blocks:
+        BEGIN LAUNDERING ATTEMPT - <TYPOLOGY>[:  <detail, e.g. "Max 10 hops">]
+        <transaction rows, same 11 fields as the raw CSV>
+        END LAUNDERING ATTEMPT - <TYPOLOGY>
+    pattern_id is the block's 0-based position in the file. Fields are split as
+    text, so identifiers keep their leading zeros exactly as in read_raw.
+    """
+    path = Path(path)
+    records: list[tuple[Any, ...]] = []
+    pattern_id, typology, detail = -1, None, ""
+    for lineno, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
+        line = line.strip()
+        if not line:
+            continue
+        if line.startswith("BEGIN"):
+            match = _BEGIN.match(line)
+            if match is None or typology is not None:
+                raise DataValidationError(f"{path.name}:{lineno}: unexpected '{line}'")
+            pattern_id += 1
+            typology, detail = match["typology"], match["detail"].strip()
+        elif line.startswith("END"):
+            if typology is None:
+                raise DataValidationError(f"{path.name}:{lineno}: END without BEGIN")
+            typology = None
+        else:
+            fields = line.split(",")
+            if typology is None or len(fields) != len(RAW_COLUMNS):
+                raise DataValidationError(f"{path.name}:{lineno}: malformed row '{line}'")
+            records.append((pattern_id, typology, detail, *fields))
+    if typology is not None:
+        raise DataValidationError(f"{path.name}: last pattern has no END line")
+
+    raw = pd.DataFrame(records, columns=["pattern_id", "typology", "detail", *RAW_COLUMNS])
+    return pd.DataFrame(
+        {
+            "pattern_id": raw["pattern_id"].astype("int32"),
+            "typology": raw["typology"],
+            "detail": raw["detail"],
+            "timestamp": pd.to_datetime(raw["Timestamp"], format=TIMESTAMP_FORMAT),
+            "src": raw["From Bank"] + "_" + raw["From Account"],
+            "dst": raw["To Bank"] + "_" + raw["To Account"],
+            "amount_paid": raw["Amount Paid"].astype(float),
+            "pay_currency": raw["Payment Currency"],
+            "amount_received": raw["Amount Received"].astype(float),
+            "recv_currency": raw["Receiving Currency"],
+            "payment_format": raw["Payment Format"],
+            "is_fraud": raw["Is Laundering"].astype("int8"),
+        }
+    )
+
+
+def match_patterns(
+    df: pd.DataFrame, patterns: pd.DataFrame, tail_cutoff: pd.Timestamp
+) -> tuple[pd.DataFrame, PatternReport]:
+    """Link every pattern transaction to its tx_id, and check the two files agree.
+
+    Returns one row per pattern transaction: pattern_id, typology, detail,
+    timestamp, tx_id. tx_id is null for rows that fall in the dropped tail; they
+    are kept because they record each pattern's true end, which is needed to
+    say how much of a pattern was visible when it was first flagged.
+
+    This table is label-derived. It is for evaluation (per-typology recall, ring
+    detection, early-warning time) and must never be joined in as a feature.
+
+    Raises if any pattern row is ambiguous, matches a negative, or is missing
+    from the kept data without being in the tail. Each would mean the two files
+    disagree, and any per-typology number built on top would be wrong.
+    """
+    key = list(_PATTERN_KEY)
+    tx = df[[*key, "tx_id", "is_fraud"]].copy()
+    pat = patterns.copy()
+    for col in ("pay_currency", "recv_currency", "payment_format"):
+        tx[col] = tx[col].astype(str)
+        pat[col] = pat[col].astype(str)
+
+    merged = pat.merge(tx, on=key, how="left", suffixes=("_pattern", ""))
+    problems: list[str] = []
+    if len(merged) != len(pat):
+        problems.append(f"{len(merged) - len(pat)} pattern rows match more than one tx")
+    if (pat["is_fraud"] != 1).any():
+        problems.append("pattern file contains rows not labelled as laundering")
+    matched = merged["tx_id"].notna()
+    if (merged.loc[matched, "is_fraud"] != 1).any():
+        problems.append(f"{int((merged.loc[matched, 'is_fraud'] != 1).sum())} pattern rows match a negative tx")
+    stray = ~matched & (merged["timestamp"] < tail_cutoff)
+    if stray.any():
+        problems.append(f"{int(stray.sum())} pattern rows before tail_cutoff match no tx")
+    if merged.loc[matched, "tx_id"].duplicated().any():
+        problems.append("a tx belongs to more than one pattern")
+    if problems:
+        raise DataValidationError("; ".join(problems))
+
+    mapping = (
+        merged[["pattern_id", "typology", "detail", "timestamp", "tx_id"]]
+        .sort_values(["pattern_id", "timestamp"], kind="stable")
+        .reset_index(drop=True)
+    )
+    mapping["typology"] = mapping["typology"].astype("category")
+
+    per_pattern = mapping.assign(kept=mapping["tx_id"].notna()).groupby("pattern_id")["kept"]
+    n_pos = int(df["is_fraud"].sum())
+    n_matched = int(matched.sum())
+    report = PatternReport(
+        n_patterns=int(mapping["pattern_id"].nunique()),
+        n_pattern_rows=len(mapping),
+        n_rows_matched=n_matched,
+        n_rows_in_dropped_tail=int((~matched).sum()),
+        n_patterns_truncated_by_tail=int((per_pattern.any() & ~per_pattern.all()).sum()),
+        n_patterns_entirely_in_tail=int((~per_pattern.any()).sum()),
+        n_positives_attributed=n_matched,
+        share_of_positives_attributed=n_matched / n_pos if n_pos else 0.0,
+        patterns_by_typology={
+            str(k): int(v)
+            for k, v in mapping.groupby("typology", observed=True)["pattern_id"]
+            .nunique()
+            .items()
+        },
+    )
+    return mapping, report
+
+
 def file_sha256(path: str | Path, chunk: int = 1 << 20) -> str:
     """Content hash, so a result can be tied to the exact bytes it came from."""
     h = hashlib.sha256()
@@ -354,6 +516,12 @@ def build_processed(cfg: IbmAmlConfig) -> LoadReport:
     df, report = to_standard_schema(raw, cfg.variant, cfg.tail_cutoff, cfg.rate_fit_end)
     validate(df, cfg.tail_cutoff)
 
+    mapping = None
+    if cfg.patterns_path is not None:
+        mapping, report.patterns = match_patterns(
+            df, read_patterns(cfg.patterns_path), cfg.tail_cutoff
+        )
+
     cfg.processed_path.parent.mkdir(parents=True, exist_ok=True)
     df.to_parquet(cfg.processed_path, index=False)
 
@@ -366,18 +534,25 @@ def build_processed(cfg: IbmAmlConfig) -> LoadReport:
         "processed_sha256": file_sha256(cfg.processed_path),
         "tail_cutoff": str(cfg.tail_cutoff),
         "rate_fit_end": str(cfg.rate_fit_end),
-        "report": asdict(report),
-        **code_state,
     }
+    if mapping is not None and cfg.patterns_path is not None:
+        mapping.to_parquet(cfg.patterns_processed_path, index=False)
+        manifest |= {
+            "patterns_source_file": cfg.patterns_path.name,
+            "patterns_source_sha256": file_sha256(cfg.patterns_path),
+            "patterns_file": cfg.patterns_processed_path.name,
+            "patterns_sha256": file_sha256(cfg.patterns_processed_path),
+        }
+    manifest |= {"report": asdict(report), **code_state}
     cfg.manifest_path.write_text(json.dumps(manifest, indent=2), encoding="utf-8")
     return report
 
 
-def load_processed(cfg: IbmAmlConfig) -> pd.DataFrame:
-    """Load the processed parquet, refusing it if it differs from its manifest.
+def _read_verified(cfg: IbmAmlConfig, path: Path, hash_key: str) -> pd.DataFrame:
+    """Read a parquet only if its bytes match the hash its manifest recorded.
 
-    The hash check means an experiment can never run on a file that was rebuilt
-    or edited after the manifest it cites was written.
+    The check means an experiment can never run on a file that was rebuilt or
+    edited after the manifest it cites was written.
     """
     if not cfg.manifest_path.exists():
         raise FileNotFoundError(
@@ -385,15 +560,30 @@ def load_processed(cfg: IbmAmlConfig) -> pd.DataFrame:
             "`python -m nexis.data.ibm_aml --config configs/ibm_aml.yaml`"
         )
     manifest = json.loads(cfg.manifest_path.read_text(encoding="utf-8"))
-    actual = file_sha256(cfg.processed_path)
-    if actual != manifest["processed_sha256"]:
+    if hash_key not in manifest:
+        raise DataValidationError(f"manifest has no {hash_key}; rebuild the dataset")
+    actual = file_sha256(path)
+    if actual != manifest[hash_key]:
         raise DataValidationError(
-            f"{cfg.processed_path.name} hash {actual[:12]} does not match manifest "
-            f"{manifest['processed_sha256'][:12]}; rebuild the dataset"
+            f"{path.name} hash {actual[:12]} does not match manifest "
+            f"{manifest[hash_key][:12]}; rebuild the dataset"
         )
-    df = pd.read_parquet(cfg.processed_path)
+    return pd.read_parquet(path)
+
+
+def load_processed(cfg: IbmAmlConfig) -> pd.DataFrame:
+    """Load the processed transactions, verified against the manifest."""
+    df = _read_verified(cfg, cfg.processed_path, "processed_sha256")
     validate(df, cfg.tail_cutoff)
     return df
+
+
+def load_patterns(cfg: IbmAmlConfig) -> pd.DataFrame:
+    """Load the pattern table (pattern_id, typology, detail, timestamp, tx_id).
+
+    Label-derived: for evaluation only, never a feature. See match_patterns.
+    """
+    return _read_verified(cfg, cfg.patterns_processed_path, "patterns_sha256")
 
 
 def main() -> None:
@@ -404,10 +594,15 @@ def main() -> None:
     cfg = load_config(args.config)
     report = build_processed(cfg)
     print(f"wrote {cfg.processed_path}")
+    if report.patterns is not None:
+        print(f"wrote {cfg.patterns_processed_path}")
     print(f"wrote {cfg.manifest_path}")
     for key, value in asdict(report).items():
-        if key != "usd_per_unit":
-            print(f"  {key:<28} {value}")
+        if key == "patterns" and value is not None:
+            for pkey, pvalue in value.items():
+                print(f"  patterns.{pkey:<29} {pvalue}")
+        elif key not in ("usd_per_unit", "patterns"):
+            print(f"  {key:<38} {value}")
 
 
 if __name__ == "__main__":
