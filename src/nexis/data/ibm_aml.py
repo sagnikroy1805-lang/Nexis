@@ -347,6 +347,9 @@ def file_sha256(path: str | Path, chunk: int = 1 << 20) -> str:
 
 def build_processed(cfg: IbmAmlConfig) -> LoadReport:
     """Raw CSV -> validated parquet + manifest (source hash, output hash, report)."""
+    # Captured before any output is written, so the build's own files cannot
+    # make the tree look dirty: this records the code that produced the data.
+    code_state = _git_state()
     raw = read_raw(cfg.raw_path)
     df, report = to_standard_schema(raw, cfg.variant, cfg.tail_cutoff, cfg.rate_fit_end)
     validate(df, cfg.tail_cutoff)
@@ -364,7 +367,7 @@ def build_processed(cfg: IbmAmlConfig) -> LoadReport:
         "tail_cutoff": str(cfg.tail_cutoff),
         "rate_fit_end": str(cfg.rate_fit_end),
         "report": asdict(report),
-        **_git_state(),
+        **code_state,
     }
     cfg.manifest_path.write_text(json.dumps(manifest, indent=2), encoding="utf-8")
     return report
