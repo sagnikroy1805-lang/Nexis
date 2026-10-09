@@ -34,18 +34,23 @@ def rolling_velocity(
     Returns:
         A frame aligned to df's index with one column per (statistic, window).
     """
-    df = df.sort_values(time_col).copy()
+    df = df.sort_values(time_col, kind="stable").copy()
     out = pd.DataFrame(index=df.index)
     indexed = df.set_index(time_col)
-    grouped = indexed.groupby(key)[amount_col]
+    grouped = indexed.groupby(key, sort=True)[amount_col]
+    # ALIGNMENT GUARD: groupby().rolling() emits rows grouped by account (in key
+    # order), not in time order. Writing its values positionally into the
+    # time-sorted frame assigns every account's features to other accounts'
+    # transactions. `order` is the row order the rolling output actually has.
+    order = df.sort_values(key, kind="stable").index
 
     for w in windows:
         cnt = grouped.rolling(w, closed="left").count()
         tot = grouped.rolling(w, closed="left").sum()
         mx = grouped.rolling(w, closed="left").max()
-        out[f"cnt_{w}"] = cnt.reset_index(level=0, drop=True).to_numpy()
-        out[f"sum_{w}"] = tot.reset_index(level=0, drop=True).to_numpy()
-        out[f"max_{w}"] = mx.reset_index(level=0, drop=True).to_numpy()
+        out.loc[order, f"cnt_{w}"] = cnt.to_numpy()
+        out.loc[order, f"sum_{w}"] = tot.to_numpy()
+        out.loc[order, f"max_{w}"] = mx.to_numpy()
 
     # Ratios between windows are more informative than raw counts: they are
     # self-normalising, so they compare across accounts of very different sizes.
