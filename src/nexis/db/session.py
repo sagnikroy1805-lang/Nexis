@@ -27,7 +27,8 @@ def load_dotenv(path: str = ".env") -> None:
     The file is gitignored; secrets never belong in the repository.
     """
     try:
-        lines = open(path, encoding="utf-8").read().splitlines()
+        with open(path, encoding="utf-8") as fh:
+            lines = fh.read().splitlines()
     except OSError:
         return
     for line in lines:
