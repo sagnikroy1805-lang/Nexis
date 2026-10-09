@@ -345,9 +345,12 @@ def models() -> dict[str, Any]:
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
         summary = json.loads(summary_path.read_text(encoding="utf-8"))
         rung = manifest.get("config", {}).get("rung")
+        if not isinstance(rung, int):  # ablation variants are not ladder rungs
+            continue
         for model, _ in summary.get("pr_auc", {}).items():
             row = {
                 "name": model,
+                "dataset": "Elliptic++" if model.startswith("elliptic_") else "IBM AML",
                 "rung": rung,
                 "pr_auc": summary["pr_auc"][model],
                 "pr_auc_std": summary.get("pr_auc_std", {}).get(model),
@@ -360,11 +363,16 @@ def models() -> dict[str, Any]:
                 "n_seeds": len(manifest.get("seeds", [])),
                 "working_tree_dirty": manifest.get("working_tree_dirty"),
             }
-            prevalence = summary.get("prevalence", {}).get(model, prevalence)
+            row["prevalence"] = summary.get("prevalence", {}).get(model)
+            if not model.startswith("elliptic_"):
+                prevalence = row["prevalence"] or prevalence
             ts = float(manifest.get("timestamp", 0))
             if model not in latest or ts > latest[model][0]:
                 latest[model] = (ts, row)
-    items = sorted((r for _, r in latest.values()), key=lambda r: (r["rung"] or 0, -(r["pr_auc"] or 0)))
+    items = sorted(
+        (r for _, r in latest.values()),
+        key=lambda r: (r["dataset"] != "IBM AML", r["rung"], -(r["pr_auc"] or 0)),
+    )
     return {"items": items, "prevalence": prevalence}
 
 
