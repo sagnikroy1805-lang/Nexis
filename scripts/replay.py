@@ -123,8 +123,22 @@ def main() -> None:
     params = json.loads(tuning.read_text())["best"] if tuning.exists() else {}
     model = XGBScorer(cols, seed=0, params=params).fit(train, val)
     version = f"xgb_graph@{_commit()}"
-    s_val, s_test = model.score(val), model.score(test)
-    print(f"serving model {version} trained ({time.time() - t0:.0f}s)")
+    raw_val, raw_test = model.score(val), model.score(test)
+    # Calibration (Concept Mastery §2.5): scale_pos_weight pushes raw scores of
+    # every strong alert to ~1.0, which tells an analyst nothing. Platt scaling
+    # fitted on the VALIDATION fold maps scores to P(label | score) at the
+    # validation base rate. It is monotone, so ranking, alerts and every
+    # ranking metric are unchanged; only the displayed number gains meaning.
+    from sklearn.linear_model import LogisticRegression
+
+    def _logit(p: np.ndarray) -> np.ndarray:
+        p = np.clip(p, 1e-7, 1 - 1e-7)
+        return np.log(p / (1 - p)).reshape(-1, 1)
+
+    platt = LogisticRegression(C=1e6, max_iter=1000).fit(_logit(raw_val), val[LABEL].to_numpy())
+    s_val = platt.predict_proba(_logit(raw_val))[:, 1]
+    s_test = platt.predict_proba(_logit(raw_test))[:, 1]
+    print(f"serving model {version} trained and calibrated ({time.time() - t0:.0f}s)")
 
     # Label-free threshold: the val-score quantile giving `budget` alerts over a
     # test-sized stream.
