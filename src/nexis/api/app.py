@@ -137,11 +137,14 @@ def summary(session: Session = Depends(get_session)) -> dict[str, Any]:
     total = session.scalar(select(func.count()).select_from(Alert)) or 0
     open_ = session.scalar(select(func.count()).where(Alert.status == "open")) or 0
     metrics = (run.metrics or {}) if run else {}
+    # The replay scores the validation fold too (to calibrate the threshold);
+    # the dashboard reports the replayed test period when the run recorded it.
+    period = metrics.get("replay_period") or {"start": _iso(start), "end": _iso(end)}
     return {
         "model_version": run.model_version if run else None,
         "dataset": metrics.get("dataset", "IBM AML HI-Small"),
-        "replay_period": {"start": _iso(start), "end": _iso(end)},
-        "transactions_scored": int(n or 0),
+        "replay_period": period,
+        "transactions_scored": int(metrics.get("transactions_replayed") or n or 0),
         "alerts_total": int(total),
         "alerts_open": int(open_),
         "alert_budget": metrics.get("alert_budget"),

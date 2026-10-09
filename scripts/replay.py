@@ -151,7 +151,10 @@ def main() -> None:
             metrics={"dataset": f"IBM AML {prep.cfg.variant}", "pr_auc": res.pr_auc, "pr_auc_std": pr_std,
                      "prevalence": res.prevalence, "recall_at_budget": res.recall_at_budget,
                      "precision_at_budget": res.precision_at_budget, "roc_auc": res.roc_auc,
-                     "threshold": tau, "alert_budget": budget, "note": "seed-0 serving model; "
+                     "threshold": tau, "alert_budget": budget,
+                     "replay_period": {"start": test["timestamp"].min().isoformat(),
+                                       "end": test["timestamp"].max().isoformat()},
+                     "transactions_replayed": len(test), "note": "seed-0 serving model; "
                      "the paper table reports mean ± std over 5 seeds"},
         ))
 
