@@ -99,6 +99,9 @@ db-up:
 results:
 	python scripts/results_table.py
 
+all:
+	python scripts/run_all.py --config $(CONFIG)
+
 clean:
 	find . -type d -name __pycache__ -exec rm -rf {} + 2>/dev/null || true
 	rm -rf .pytest_cache .ruff_cache .mypy_cache

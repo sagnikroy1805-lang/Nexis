@@ -42,7 +42,7 @@ RESULTS = Path("results")
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--raw", type=Path, default=Path("data/raw/elliptic"))
-    parser.add_argument("--trials", type=int, default=12)
+    parser.add_argument("--trials", type=int, default=6)  # same budget as IBM AML
     args = parser.parse_args()
 
     data = load_elliptic(args.raw)

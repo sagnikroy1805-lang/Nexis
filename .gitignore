@@ -32,5 +32,6 @@ results/**/*.png
 # Per-transaction scores are large and regenerable from the runs above
 results/scores/
 results/*.log
+results/logs/
 .env
 .DS_Store

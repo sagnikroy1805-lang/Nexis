@@ -51,7 +51,7 @@ def main() -> None:
         "--kinds", nargs="+", default=["homogeneous", "heterogeneous", "temporal"]
     )
     parser.add_argument("--trials", type=int, default=None)
-    parser.add_argument("--epochs", type=int, default=40)
+    parser.add_argument("--epochs", type=int, default=30)
     parser.add_argument("--verbose", action="store_true")
     args = parser.parse_args()
 

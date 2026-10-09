@@ -44,9 +44,12 @@ def _git_state() -> dict[str, Any]:
         commit = subprocess.check_output(
             ["git", "rev-parse", "HEAD"], stderr=subprocess.DEVNULL
         ).decode().strip()
+        # Experiment OUTPUTS (results/, data/) are not code: a run that writes
+        # results must not make the next run in the same chain look "dirty".
         dirty = bool(
             subprocess.check_output(
-                ["git", "status", "--porcelain"], stderr=subprocess.DEVNULL
+                ["git", "status", "--porcelain", "--", ".", ":!results", ":!data"],
+                stderr=subprocess.DEVNULL,
             ).decode().strip()
         )
     except Exception:

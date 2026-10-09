@@ -43,7 +43,8 @@ evaluation:
   # Analyst capacity for the test period (~417k transactions, ~613 positives).
   alert_budget: 500
   # Hyper-parameter trials per tunable model family, on the validation fold.
-  # Every model family gets the same budget (Concept Mastery §22.2).
-  tuning_trials: 12
+  # Every model family -- XGBoost and each GNN -- gets the same budget
+  # (Concept Mastery §22.2). 6 keeps the full GNN ladder inside ~4 GPU-hours.
+  tuning_trials: 6
   # Fraction of training negatives kept for RF / logistic regression.
   neg_subsample: 0.1
