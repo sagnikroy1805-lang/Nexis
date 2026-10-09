@@ -1,0 +1,48 @@
+# Tier-3 synthetic generator (Concept Mastery Module 14), loaded by
+# nexis.data.synthetic.load_generator_config.
+#
+# Controlled experiments only: ring-size, prevalence, camouflage, delay and drift
+# sweeps. Never the sole evidence for a claim -- validating on data we generated
+# ourselves is circular (CLAUDE.md, Datasets; §14.1).
+#
+# Sections only group keys for the reader; every key is a GeneratorConfig field.
+# Unknown keys raise. Build with:
+#   python -m nexis.data.synthetic --config configs/synthetic.yaml --out data/synthetic
+
+generator:
+  seed: 0
+  n_accounts: 5000
+  n_banks: 30
+  n_days: 20
+  start: "2026-01-05 00:00"      # a Monday; weekends get weekend_factor activity
+  tx_per_account_per_day: 2.0    # mean sending rate; per-account rates are lognormal
+
+injection:
+  # Target share of laundering-labelled rows. IBM HI-Small is ~0.1%.
+  prevalence: 0.002
+  # Accounts per injected pattern, inclusive. Min 3 so every typology is defined.
+  ring_size: [3, 12]
+  # 0 = pattern payments are obviously different (large amounts, ACH, scripted
+  # timing at any hour); 1 = amounts, formats and start hours drawn from the
+  # members' own normal behaviour. 0.3 keeps the benchmark from being trivial.
+  camouflage: 0.3
+  # Mean minutes between consecutive payments of a pattern. Sets how long a
+  # pattern takes to unfold, i.e. how much early warning is possible.
+  hop_delay_minutes: 180
+  typologies: [FAN-IN, FAN-OUT, CYCLE, SCATTER-GATHER, GATHER-SCATTER, STACK, BIPARTITE, RANDOM]
+
+drift:
+  # Rows before start + drift_onset_day are identical to a run with no drift.
+  drift_onset_day: 14
+  # amount_shift   : normal amounts x drift_magnitude (pattern amounts follow
+  #                  only in their camouflaged share, magnitude ** camouflage)
+  # velocity_shift : normal activity x drift_magnitude (prevalence held constant)
+  # new_typology   : drift_typology (default: first IBM typology not listed
+  #                  above) makes up drift_magnitude of post-onset patterns
+  drift_kind: amount_shift
+  drift_magnitude: 3.0
+  drift_typology: null
+
+# Optional overrides of the secondary behaviour parameters (GeneratorConfig
+# defaults apply otherwise). Not meant to be swept; see the dataclass docstring.
+behaviour: {}

@@ -188,6 +188,83 @@ def test_fx_rates_ignore_rows_after_rate_fit_end():
     )
 
 
+def test_behavioural_features_treat_same_timestamp_as_simultaneous():
+    """Strict past: rows sharing a timestamp never see each other.
+
+    Two payments from A in the same minute must both see zero prior activity,
+    and neither may sit inside the other's personal baseline.
+    """
+    from nexis.features.behavioural import behavioural_features
+
+    df = pd.DataFrame(
+        {
+            "src": ["A"] * 5,
+            "dst": ["B", "C", "D", "E", "F"],
+            "timestamp": pd.to_datetime(
+                ["2022-09-01 10:00"] * 3 + ["2022-09-01 10:05"] * 2
+            ),
+            "amount": [100.0, 100.0, 100.0, 50_000.0, 100.0],
+        }
+    )
+    f = behavioural_features(df, windows=("1h",), min_history=3)
+    assert f["src_out_cnt_1h"].tolist() == [0, 0, 0, 3, 3]
+    assert f["src_out_n_hist"].tolist() == [0, 0, 0, 3, 3]
+    # The 50k payment's baseline is the three 100s only, so it is extreme; the
+    # simultaneous 100 at 10:05 must not see the 50k.
+    assert f["amt_z_src"].iloc[3] > 100
+    assert f["amt_vs_src_max"].iloc[4] == pytest.approx(1.0, rel=1e-6)
+
+
+def test_behavioural_features_exclude_the_current_row():
+    from nexis.features.behavioural import behavioural_features
+
+    df = pd.DataFrame(
+        {
+            "src": ["A"] * 6,
+            "dst": list("BCDEFG"),
+            "timestamp": pd.date_range("2026-01-01", periods=6, freq="h"),
+            "amount": [100.0] * 5 + [10_000.0],
+        }
+    )
+    f = behavioural_features(df, windows=("24h",), min_history=3)
+    assert f["src_out_cnt_24h"].tolist() == [0, 1, 2, 3, 4, 5]
+    assert f["src_out_sum_24h"].iloc[-1] == 500.0, "must not include its own 10k"
+    assert f["amt_z_src"].iloc[-1] > 10
+
+
+def test_graph_features_never_see_the_scored_transaction_or_later():
+    """Rung-5 features for a transaction must be identical whether or not the
+    future exists. Truncating the data after a row must not change its features."""
+    from nexis.graphs.homogeneous import graph_features
+
+    rng = np.random.default_rng(0)
+    n = 400
+    df = pd.DataFrame(
+        {
+            "src": rng.choice([f"A{i}" for i in range(30)], n),
+            "dst": rng.choice([f"A{i}" for i in range(30)], n),
+            "timestamp": pd.Timestamp("2026-01-01")
+            + pd.to_timedelta(np.sort(rng.integers(0, 5 * 24 * 60, n)), unit="min"),
+            "amount": rng.lognormal(5, 1, n),
+        }
+    )
+    # Accounts that only exist in the future: they must not move today's values
+    # (e.g. through a PageRank normalised over every node code).
+    late = pd.DataFrame(
+        {
+            "src": [f"NEW{i}" for i in range(50)],
+            "dst": [f"NEW{i + 1}" for i in range(50)],
+            "timestamp": df["timestamp"].max() + pd.Timedelta("1min"),
+            "amount": 100.0,
+        }
+    )
+    df = pd.concat([df, late], ignore_index=True)
+    full = graph_features(df, delta="24h")
+    cut = 250
+    truncated = graph_features(df.iloc[:cut], delta="24h")
+    pd.testing.assert_frame_equal(full.iloc[:cut], truncated)
+
+
 def test_pattern_labels_never_enter_the_transactions_table(tmp_path):
     """Typology is derived from the label. If it sat in the transactions table, a
     model fitted on 'all columns' would read the answer off it."""
@@ -210,6 +287,40 @@ def test_pattern_labels_never_enter_the_transactions_table(tmp_path):
     build_processed(cfg)
     columns = set(pd.read_parquet(cfg.processed_path).columns)
     assert not columns & {"pattern_id", "typology", "detail"}
+
+
+def test_drift_adaptation_never_trains_on_the_window_it_scores():
+    """Drift retraining (§13.6) must only use labels from windows already scored.
+
+    The full recorder test lives in tests/test_drift.py; this is the guard in the
+    place CLAUDE.md says leakage tests live: an alarm-every-window detector forces
+    a retrain each step, and every adaptive model's training data must end at
+    least the embargo before the window it then scores.
+    """
+    from nexis.drift.adaptation import RetrainRecentWindow
+    from nexis.drift.detectors import ThresholdDetector
+    from nexis.drift.experiment import run_drift_experiment
+    from nexis.models.baselines.scorers import SklearnScorer
+
+    rng = np.random.default_rng(0)
+    n = 12 * 300
+    t = pd.Timestamp("2026-01-01") + pd.to_timedelta(np.sort(rng.uniform(0, 12 * 1440, n)), unit="min")
+    x = rng.normal(size=n) + (np.arange(n) >= n // 2)
+    stream = pd.DataFrame(
+        {"tx_id": [f"T{i:05d}" for i in range(n)], "timestamp": t, "x": x,
+         "is_fraud": (x + rng.normal(0, 0.5, n) > 2.0).astype("int8")}
+    )
+    result = run_drift_experiment(
+        stream, ["x"], "is_fraud", "timestamp",
+        lambda: SklearnScorer("logistic_regression", ["x"], seed=0, neg_rate=1.0),
+        reference_end="2026-01-04", window="1D",
+        detector=ThresholdDetector(drift_level=0.0, warn_level=0.0),
+        policy=RetrainRecentWindow("3D", min_positives=1),
+        alert_budget_rate=0.02, embargo="1D",
+    )
+    assert sum(a.train_end is not None for a in result.actions) >= 3, "the guard was not exercised"
+    for w in result.windows:
+        assert pd.Timestamp(w.adaptive_train_end) < pd.Timestamp(w.start) - pd.Timedelta("1D")
 
 
 @pytest.mark.slow
