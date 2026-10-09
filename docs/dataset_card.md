@@ -1,3 +1,9 @@
+# Dataset cards
+
+- [IBM AML HI-Small](#dataset-card--ibm-aml-hi-small) (tier 2)
+- [Elliptic++ transactions](#dataset-card--elliptic-transactions) (tier 1)
+- Synthetic generator (tier 3): `configs/synthetic.yaml`, `src/nexis/data/synthetic.py`
+
 # Dataset card — IBM AML (HI-Small)
 
 Tier 2 dataset (see `CLAUDE.md`). Built by `make data-ibm` from
@@ -185,3 +191,42 @@ this stops being true.
 - The pattern table is **label-derived**. It lives in a separate parquet
   (`*_patterns.parquet`, loaded with `load_patterns`), never in the transactions table,
   so no model fitted on "all columns" can read it. `tests/test_leakage.py` guards this.
+
+---
+
+# Dataset card — Elliptic++ (transactions)
+
+Tier 1: real Bitcoin transactions with human annotations. Loaded by
+`src/nexis/data/elliptic.py`; hashes in `results/elliptic_manifest.json`.
+
+## Source
+
+- Elmougy & Liu, *Demystifying Fraudulent Transactions and Illicit Nodes in the
+  Bitcoin Network for Financial Forensics*, KDD 2023;
+  [github.com/git-disl/EllipticPlusPlus](https://github.com/git-disl/EllipticPlusPlus).
+- Files: `txs_features.csv` (694,789,588 bytes), `txs_classes.csv` (2,361,914),
+  `txs_edgelist.csv` (4,470,584).
+
+## As loaded (validated against the published counts)
+
+| | |
+|---|---|
+| Transactions (nodes) | 203,769 |
+| Money-flow edges | 234,355 — every edge joins two transactions of the same time step (asserted) |
+| Time steps | 49 |
+| Illicit / licit / unknown | 4,545 / 42,019 / 157,205 (77.1% unknown) |
+| Features | 182: 110 local (93 original + 17 Elliptic++ additions), 72 neighbour aggregates |
+
+## Decisions
+
+- **Unknown is never licit.** Unknown nodes stay in the graph as context and are excluded
+  from every loss and metric.
+- **Split by time step:** train 1–29, validation 30–34, test 35–49 (the common
+  train ≤ 34 / test ≥ 35 protocol, with validation carved from the end of training).
+- **Graph information vs graph learning:** the 72 aggregate features already summarise each
+  transaction's neighbours, so "XGBoost on all features" is rung 5 (graph information) and
+  the GNN receives only the local features (rung 6, graph learning).
+- **Known regime change:** a dark-market shutdown around step 43 changes the illicit
+  population; per-step PR-AUC is saved (`results/elliptic_per_step_pr_auc.json`) to show it.
+- **Scope:** the actors component (wallets, 2.8M address edges) is not used yet. The
+  temporal and heterogeneous rungs (7–8) are therefore evaluated on IBM AML only.

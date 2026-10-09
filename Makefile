@@ -1,5 +1,5 @@
 .PHONY: help install install-gpu test test-fast lint format typecheck baseline \
-	data-ibm stats-ibm synthetic ladder gnn rung9 ablation drift replay api frontend \
+	data-ibm stats-ibm synthetic ladder gnn rung9 ablation drift elliptic replay api frontend \
 	frontend-build db-up results clean
 
 CONFIG ?= configs/ibm_aml.yaml
@@ -21,6 +21,7 @@ help:
 	@echo "rung9         - fusion + ring detection + early-warning time"
 	@echo "ablation      - feature-group ablation table"
 	@echo "drift         - drift experiment on the synthetic stream"
+	@echo "elliptic      - tier-1 ladder on Elliptic++ (data/raw/elliptic/)"
 	@echo "replay        - stream the test period into the database (alerts + evidence)"
 	@echo "api           - serve the analyst API on :8000 (and the built dashboard)"
 	@echo "frontend      - dashboard dev server on :5173 (proxies /api)"
@@ -75,6 +76,9 @@ ablation:
 
 drift:
 	python scripts/run_drift.py --config configs/synthetic.yaml
+
+elliptic:
+	python scripts/run_elliptic.py --raw data/raw/elliptic
 
 replay:
 	python scripts/replay.py --config $(CONFIG)
