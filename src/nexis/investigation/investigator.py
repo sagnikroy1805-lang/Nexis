@@ -260,5 +260,9 @@ class Investigator:
             if self.mode == "llm":
                 raise
             result = template_summary(packet, alert_id)
-            result.warnings.insert(0, f"LLM unavailable ({type(exc).__name__}); template summary shown")
+            if "authentication" in str(exc).lower():
+                reason = "no Anthropic credentials configured (set ANTHROPIC_API_KEY)"
+            else:
+                reason = type(exc).__name__
+            result.warnings.insert(0, f"LLM unavailable: {reason}; template summary shown")
             return result
