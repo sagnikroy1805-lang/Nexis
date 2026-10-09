@@ -89,6 +89,15 @@ class GNNScorer:
     epochs: int = 40
     patience: int = 6
     max_pos_weight: float = 100.0
+    # Share of training negatives used per snapshot step (re-drawn every epoch).
+    # Every positive is kept. Ranking metrics are unaffected by the base-rate
+    # change; it cuts the edge-scorer's activation memory ~1/neg_rate times.
+    neg_rate: float = 0.2
+    # Cap on this process's share of GPU memory. Past it PyTorch raises an
+    # out-of-memory error; without it Windows silently spills into system RAM
+    # and training slows by an order of magnitude.
+    gpu_memory_fraction: float = 0.9
+    score_chunk: int = 200_000
     verbose: bool = False
     history: list[dict[str, Any]] = field(default_factory=list)
 
@@ -172,6 +181,9 @@ class GNNScorer:
         torch.manual_seed(self.seed)
         np.random.seed(self.seed)  # noqa: NPY002 - seeds torch_geometric internals too
         dev = _device()
+        if dev.type == "cuda":
+            torch.cuda.set_per_process_memory_fraction(self.gpu_memory_fraction)
+        rng = np.random.default_rng(self.seed)
         self._prep = EdgeFeaturePrep(self.edge_cols).fit(train)
         self._edge_x = torch.as_tensor(self._prep.transform(self.frame), device=dev)
 
@@ -196,8 +208,10 @@ class GNNScorer:
         params = list(self._encoder.parameters()) + list(self._scorer.parameters())
         opt = torch.optim.AdamW(params, lr=self.lr, weight_decay=self.weight_decay)
 
-        n_pos = float(self.frame[LABEL].to_numpy()[tr_pos].sum())
-        pos_weight = min((len(tr_pos) - n_pos) / max(n_pos, 1.0), self.max_pos_weight)
+        labels_np = self.frame[LABEL].to_numpy()
+        n_pos = float(labels_np[tr_pos].sum())
+        n_neg_used = (len(tr_pos) - n_pos) * self.neg_rate
+        pos_weight = min(n_neg_used / max(n_pos, 1.0), self.max_pos_weight)
         loss_fn = nn.BCEWithLogitsLoss(pos_weight=torch.tensor(pos_weight, device=dev))
         src = torch.as_tensor(self.snapshots.src, device=dev)
         dst = torch.as_tensor(self.snapshots.dst, device=dev)
@@ -210,6 +224,8 @@ class GNNScorer:
             total = 0.0
             for i, h in self._embed_all(dev, train=True, grad_snaps=train_snaps):
                 rows = snaps[i].target_rows[is_tr[snaps[i].target_rows]]
+                keep = (labels_np[rows] == 1) | (rng.random(len(rows)) < self.neg_rate)
+                rows = rows[keep]
                 if len(rows) == 0:
                     continue
                 r = torch.as_tensor(rows, device=dev)
@@ -253,10 +269,10 @@ class GNNScorer:
         for i, h in self._embed_all(dev, train=False):
             rows = self.snapshots.snapshots[i].target_rows
             rows = rows[want[rows]]
-            if len(rows) == 0:
-                continue
-            r = torch.as_tensor(rows, device=dev)
-            out[rows] = torch.sigmoid(self._scorer(h, src[r], dst[r], self._edge_x[r])).cpu().numpy()
+            for c0 in range(0, len(rows), self.score_chunk):
+                chunk = rows[c0 : c0 + self.score_chunk]
+                r = torch.as_tensor(chunk, device=dev)
+                out[chunk] = torch.sigmoid(self._scorer(h, src[r], dst[r], self._edge_x[r])).cpu().numpy()
         scores = out[positions]
         assert not np.isnan(scores).any(), "some rows fell outside every snapshot"
         return scores

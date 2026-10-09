@@ -6,113 +6,93 @@ Adaptive AI financial crime intelligence platform — research prototype.
 detect coordinated financial fraud earlier, and with fewer false positives, than
 transaction-level ML baselines?
 
----
-
-## Quick start
-
-```bash
-git clone <your-repo> nexis && cd nexis
-
-python3.11 -m venv .venv
-source .venv/bin/activate          # Windows: .venv\Scripts\activate
-
-# 1. PyTorch first, matched to your CUDA version -- check with nvidia-smi
-pip install torch --index-url https://download.pytorch.org/whl/cu126
-
-# 2. Then the project
-pip install -e ".[dev]"
-
-# 3. Then PyG (needs torch already present)
-pip install torch-geometric
-pip install pyg_lib torch_scatter torch_sparse torch_cluster \
-  -f https://data.pyg.org/whl/torch-2.7.0+cu126.html
-
-# 4. Verify
-make test
-make baseline
-```
-
-`make baseline` runs the full spine — temporal split, behavioural features, three
-tabular models, five seeds, aggregated results — on generated demo data. If that
-prints a table, your environment is correct.
-
-### Checking your CUDA version
-
-```bash
-nvidia-smi                                        # driver's max supported CUDA
-python -c "import torch; print(torch.__version__, torch.version.cuda)"
-python -c "import torch; print(torch.cuda.is_available())"
-```
-
-The PyG wheel index URL must match your **torch** version and **CUDA** version
-exactly. `torch-2.7.0+cu126` means torch 2.7.0 with CUDA 12.6. A mismatch here is
-the most common setup failure; if `import torch_geometric` segfaults or complains
-about undefined symbols, this is why.
-
-PyG works without the optional extensions (`pyg_lib` and friends) — they add
-faster heterogeneous operators and sparse kernels. Skip them if the wheels fight
-you; add them when you reach Module 10.
+Results: [`docs/results.md`](docs/results.md) · Data: [`docs/dataset_card.md`](docs/dataset_card.md) ·
+API: [`docs/api_contract.md`](docs/api_contract.md) · Rules: [`CLAUDE.md`](CLAUDE.md)
 
 ---
 
-## Layout
+## What is in the box
 
-```
-configs/          YAML experiment configs
-data/raw/         downloaded datasets (gitignored)
-data/synthetic/   generated data (gitignored)
-docs/             study material, architecture notes
-notebooks/        exploration only -- production code lives in src/
-results/          experiment outputs; manifests are committed
-scripts/          runnable entry points
-src/nexis/
-  data/           loading, validation, dataset adapters
-  features/       tabular, velocity, behavioural, personal-baseline
-  graphs/         graph construction (homogeneous, heterogeneous, snapshots)
-  models/         baselines/, gnn/, temporal/
-  explainability/ SHAP, GNNExplainer, evidence packets
-  drift/          monitors, detectors, adaptation
-  investigation/  evidence retrieval, LLM investigator
-  evaluation/     splits, metrics, harness, leakage    <- the spine
-tests/            leakage tests first, then features, metrics, integration
-```
-
----
-
-## What already works
-
-| Component | Status |
-|---|---|
-| `data/ibm_aml.py` | IBM AML adapter: standard schema, USD amounts, tail cut, typology table, hashed manifest (`make data-ibm`) |
-| `evaluation/splits.py` | Temporal split (time-span or row-count) with embargo, walk-forward CV, integrity assertions |
-| `evaluation/metrics.py` | PR-AUC, alert-budget thresholds, recall@FPR, early-warning time, ring metrics |
-| `evaluation/harness.py` | Multi-seed runner, git provenance, mean ± std aggregation |
-| `evaluation/leakage.py` | Future-edge assertion, leakage canary |
-| `features/velocity.py` | Rolling velocity, inter-arrival, personal baselines, HHI |
-| `tests/` | 42 passing tests, leakage guards included |
-| `scripts/run_baseline.py` | End-to-end tabular baseline experiment |
-| `scripts/dataset_stats.py` | Dataset-card statistics (`make stats-ibm`) |
-
-Everything else is yours to build. The order is fixed — see `CLAUDE.md`.
-
----
-
-## Datasets
-
-| Tier | Dataset | Purpose |
+| Layer | Where | What it does |
 |---|---|---|
-| 1 | [Elliptic++](https://github.com/git-disl/EllipticPlusPlus) | Real labels, 49 time steps, heterogeneous. Credibility anchor. |
-| 2 | [IBM AML](https://www.kaggle.com/datasets/ealtman2019/ibm-transactions-for-anti-money-laundering-aml) | 8 labelled laundering typologies you did not design. |
-| 3 | Own generator | Controlled sweeps: ring size, prevalence, camouflage, drift. |
+| Data | `src/nexis/data/` | IBM AML adapter (tier 2), Elliptic++ adapter (tier 1), synthetic generator with drift (tier 3); hashed manifests |
+| Features | `src/nexis/features/` | strict-past sender/receiver behaviour (velocity, pass-through, fan-in, personal baselines, counterparty novelty) |
+| Graphs | `src/nexis/graphs/` | `t_cutoff`-asserted account graphs, structural features, leak-free snapshots typed by payment format |
+| Models | `src/nexis/models/` | ladder rungs 1–9: rules, LR/RF/XGBoost, Isolation Forest, homogeneous / heterogeneous / temporal GNNs, fusion, two-stage ring detection |
+| Evaluation | `src/nexis/evaluation/` | temporal splits with embargo, PR-AUC-first metrics, 5-seed harness with git provenance, leakage canary |
+| Explanation | `src/nexis/explainability/` | TreeSHAP contributions, evidence packets (rule 6) |
+| Drift | `src/nexis/drift/` | reference-frozen PSI, Page-Hinkley, ADWIN, adaptation policies, walk-forward experiment |
+| Investigator | `src/nexis/investigation/` | retrieval-first Claude summary with mechanical claim verification; template fallback |
+| Serving | `src/nexis/db/`, `src/nexis/api/`, `scripts/replay.py` | PostgreSQL schema, streaming replay, FastAPI |
+| Dashboard | `frontend/` | React + Tailwind analyst UI: dashboard, alerts, explanation, graph explorer, rings, drift, models |
 
-Start with an IBM AML **Small** variant (~2–5M transactions). Do not download a
-Large variant (175M+) until you have a reason.
+---
+
+## Setup (Windows, NVIDIA GPU)
+
+```bash
+py -3.11 -m venv .venv
+.venv\Scripts\activate
+pip install torch --index-url https://download.pytorch.org/whl/cu126
+pip install -e ".[dev,api,gnn]"
+python -c "import torch; print(torch.__version__, torch.cuda.is_available())"
+```
+
+`make` is not installed on Windows by default. Either install it
+(`winget install ezwinports.make`) or run the command each target shows in the `Makefile`.
+
+### Data
+
+Download into `data/raw/` (gitignored):
+- IBM AML: `HI-Small_Trans.csv` and `HI-Small_Patterns.txt` from
+  [Kaggle](https://www.kaggle.com/datasets/ealtman2019/ibm-transactions-for-anti-money-laundering-aml).
+- Elliptic++: `txs_features.csv`, `txs_classes.csv`, `txs_edgelist.csv` from the
+  [dataset's Drive folder](https://github.com/git-disl/EllipticPlusPlus) into `data/raw/elliptic/`.
+
+### Database
+
+```bash
+make db-up        # PostgreSQL 16 in Docker on localhost:5432 (user/password/db: nexis)
+copy .env.example .env
+```
+
+Without `NEXIS_DATABASE_URL` everything falls back to SQLite at `data/nexis.db`.
+
+### Investigator (optional)
+
+Create a key at [console.anthropic.com](https://console.anthropic.com) → Settings → API Keys,
+then store it in your user environment (never in the repo):
+
+```bash
+setx ANTHROPIC_API_KEY "sk-ant-..."
+```
+
+Open a new terminal afterwards. Without a key the investigator writes a template summary.
+
+---
+
+## Running the whole pipeline
+
+```bash
+make data-ibm     # raw CSV -> validated parquet + manifest
+make test         # leakage guards first
+make ladder       # rungs 1-5, 5 seeds each, + leakage canary
+make gnn          # rungs 6-8
+make rung9        # fusion, ring detection, early-warning time
+make ablation     # feature-group ablation
+make drift        # drift experiment on the synthetic generator
+python scripts/run_elliptic.py   # tier-1 ladder on Elliptic++
+make results      # -> docs/results.md
+make replay       # stream the test period into the database
+make api          # http://localhost:8000
+make frontend     # http://localhost:5173
+```
 
 ---
 
 ## The rules
 
-Full detail in `CLAUDE.md`. The short version:
+Full detail in `CLAUDE.md`:
 
 1. No temporal leakage — time-aware splits, embargo, `t_cutoff` on every graph.
 2. Never accuracy — PR-AUC primary, always with prevalence.
@@ -121,20 +101,5 @@ Full detail in `CLAUDE.md`. The short version:
 5. Risk scores, not accusations.
 6. No alert without evidence.
 
-## Out of scope
-
-Kafka, Redis, Neo4j, MLflow, production Docker Compose. Simulate streaming by
-replaying a sorted file. These are deferred deliberately — adding them before the
-core model works is the single most reliable way to run out of time.
-
----
-
-## Commands
-
-```bash
-make test        # full suite
-make test-fast   # skip slow tests
-make lint        # ruff
-make typecheck   # mypy
-make baseline    # end-to-end baseline experiment
-```
+Out of scope by design: Kafka, Redis, Neo4j, MLflow, a production Docker Compose stack,
+real customer data, and any automated action on an account.

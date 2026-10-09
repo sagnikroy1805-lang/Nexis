@@ -172,7 +172,14 @@ class SklearnScorer:
 
 @lru_cache(maxsize=1)
 def xgb_device() -> str:
-    """'cuda' if this XGBoost build can train on the GPU, else 'cpu'."""
+    """'cuda' if this XGBoost build can train on the GPU, else 'cpu'.
+
+    NEXIS_XGB_DEVICE=cpu forces the CPU, e.g. while a GNN run holds the GPU.
+    """
+    import os
+
+    if os.environ.get("NEXIS_XGB_DEVICE"):
+        return os.environ["NEXIS_XGB_DEVICE"]
     try:
         import xgboost as xgb
 

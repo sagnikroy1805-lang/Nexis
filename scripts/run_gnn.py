@@ -22,6 +22,7 @@ from typing import Any
 
 import numpy as np
 import pandas as pd
+import torch
 from sklearn.metrics import average_precision_score
 
 from nexis.evaluation.harness import format_table, run_experiment
@@ -91,13 +92,23 @@ def main() -> None:
         s = time.time()
         for trial in range(trials):
             params = sample_params(rng)
-            m = GNNScorer(
-                kind, snaps, prep.frame, cols, seed=0, epochs=args.epochs, **params
-            ).fit(train, val)
-            ap = float(average_precision_score(val[LABEL], m.score(val)))
-            log.append({**params, "val_pr_auc": ap, "epochs_run": len(m.history)})
-            print(f"  {kind} trial {trial}: {params} val PR-AUC {ap:.4f}")
-        best = max(log, key=lambda r: r["val_pr_auc"]) if log else {}
+            t_trial = time.time()
+            try:
+                m = GNNScorer(
+                    kind, snaps, prep.frame, cols, seed=0, epochs=args.epochs, **params
+                ).fit(train, val)
+                ap = float(average_precision_score(val[LABEL], m.score(val)))
+                log.append({**params, "val_pr_auc": ap, "epochs_run": len(m.history),
+                            "secs": round(time.time() - t_trial)})
+            except torch.cuda.OutOfMemoryError:
+                # Counted against the budget, reported, never silently dropped.
+                log.append({**params, "val_pr_auc": None, "failed": "out of GPU memory"})
+                ap = float("nan")
+            finally:
+                torch.cuda.empty_cache()
+            print(f"  {kind} trial {trial}: {params} val PR-AUC {ap:.4f} ({time.time() - t_trial:.0f}s)", flush=True)
+        ok = [r for r in log if r.get("val_pr_auc") is not None]
+        best = max(ok, key=lambda r: r["val_pr_auc"]) if ok else {}
         best_params = {k: best[k] for k in ("hidden", "layers", "lr", "dropout")} if best else {}
         (RESULTS / f"tuning_ibm_aml_gnn_{kind}.json").write_text(
             json.dumps({"budget": trials, "best": best_params, "trials": log}, indent=2)

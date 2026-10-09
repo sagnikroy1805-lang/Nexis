@@ -73,6 +73,10 @@ def run_experiment(
     run_id = f"{name}_{int(time.time())}"
     out = Path(results_dir) / run_id
     out.mkdir(parents=True, exist_ok=True)
+    # Captured BEFORE running: the code that produces the results is the code
+    # imported at start. Checking afterwards would blame edits made while a
+    # long run was in progress, and miss nothing that actually ran.
+    code_state = _git_state()
 
     results: list[EvalResult] = []
     for seed in seeds:
@@ -91,7 +95,7 @@ def run_experiment(
                 "config": config,
                 "seeds": list(seeds),
                 "timestamp": time.time(),
-                **_git_state(),
+                **code_state,
             },
             indent=2,
             default=str,

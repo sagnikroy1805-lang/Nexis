@@ -81,7 +81,26 @@ def load_transactions(df: pd.DataFrame, scores: pd.Series, model_version: str, u
     out["model_version"] = np.where(out["risk_score"].notna(), model_version, None)
     engine = get_engine(url)
     t0 = time.time()
-    out.to_sql("transactions", engine, if_exists="append", index=False, chunksize=100_000)
+    if engine.dialect.name == "postgresql":
+        # COPY streams CSV straight into the table: minutes faster than INSERTs
+        # for 5M rows. Empty unquoted fields load as NULL (unscored rows).
+        import io
+
+        cols = list(out.columns)
+        raw = engine.raw_connection()
+        try:
+            with raw.cursor() as cur, cur.copy(
+                f"COPY transactions ({', '.join(cols)}) FROM STDIN WITH (FORMAT csv)"
+            ) as cp:
+                for start in range(0, len(out), 500_000):
+                    buf = io.StringIO()
+                    out.iloc[start : start + 500_000].to_csv(buf, header=False, index=False, na_rep="")
+                    cp.write(buf.getvalue())
+            raw.commit()
+        finally:
+            raw.close()
+    else:
+        out.to_sql("transactions", engine, if_exists="append", index=False, chunksize=100_000)
     print(f"  loaded {len(out):,} transactions in {time.time() - t0:.0f}s")
 
 

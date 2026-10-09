@@ -13,6 +13,8 @@ data/raw/*
 data/processed/*
 data/synthetic/*
 !data/**/.gitkeep
+data/*.db
+data/*.db-*
 # Manifests are small and are the evidence of which bytes a result came from
 !data/processed/*.manifest.json
 *.parquet

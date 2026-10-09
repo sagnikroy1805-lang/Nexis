@@ -347,8 +347,11 @@ def models() -> dict[str, Any]:
                 "pr_auc": summary["pr_auc"][model],
                 "pr_auc_std": summary.get("pr_auc_std", {}).get(model),
                 "roc_auc": summary.get("roc_auc", {}).get(model),
+                "roc_auc_std": summary.get("roc_auc_std", {}).get(model),
                 "recall_at_fpr_1e3": summary.get("recall_at_fpr_1e3", {}).get(model),
+                "recall_at_fpr_1e3_std": summary.get("recall_at_fpr_1e3_std", {}).get(model),
                 "precision_at_budget": summary.get("precision_at_budget", {}).get(model),
+                "precision_at_budget_std": summary.get("precision_at_budget_std", {}).get(model),
                 "n_seeds": len(manifest.get("seeds", [])),
                 "working_tree_dirty": manifest.get("working_tree_dirty"),
             }

@@ -206,8 +206,9 @@ The modelling ladder, from `results/`: mean ± std over seeds.
 {
   "items": [
     {"name": "xgb_behavioural", "rung": 4, "pr_auc": 0.61, "pr_auc_std": 0.01,
-     "roc_auc": 0.99, "recall_at_fpr_1e3": 0.5, "precision_at_budget": 0.64,
-     "n_seeds": 5}
+     "roc_auc": 0.99, "roc_auc_std": 0.002, "recall_at_fpr_1e3": 0.5,
+     "recall_at_fpr_1e3_std": 0.01, "precision_at_budget": 0.64,
+     "precision_at_budget_std": 0.007, "n_seeds": 5}
   ],
   "prevalence": 0.00147
 }
