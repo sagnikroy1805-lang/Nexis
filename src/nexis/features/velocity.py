@@ -9,7 +9,7 @@ makes beating it a real result.
 
 from __future__ import annotations
 
-from typing import Sequence
+from collections.abc import Sequence
 
 import numpy as np
 import pandas as pd
@@ -148,7 +148,7 @@ def personal_baseline_features(
     seen: dict[str, set] = {}
     is_new = np.zeros(len(df), dtype=float)
     for i, (src, dst) in enumerate(
-        zip(df[key].to_numpy(), df[counterparty].to_numpy())
+        zip(df[key].to_numpy(), df[counterparty].to_numpy(), strict=True)
     ):
         bucket = seen.setdefault(src, set())
         is_new[i] = float(dst not in bucket)

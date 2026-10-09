@@ -11,9 +11,10 @@ from __future__ import annotations
 import json
 import subprocess
 import time
+from collections.abc import Callable, Sequence
 from dataclasses import asdict
 from pathlib import Path
-from typing import Any, Callable, Protocol, Sequence
+from typing import Any, Protocol
 
 import numpy as np
 import pandas as pd
@@ -28,7 +29,7 @@ class Scorer(Protocol):
     Models produce scores. The harness does splitting, metrics and logging.
     """
 
-    def fit(self, train: pd.DataFrame, val: pd.DataFrame) -> "Scorer": ...
+    def fit(self, train: pd.DataFrame, val: pd.DataFrame) -> Scorer: ...
 
     def score(self, df: pd.DataFrame) -> np.ndarray: ...
 

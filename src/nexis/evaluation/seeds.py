@@ -21,7 +21,9 @@ def set_all_seeds(seed: int, deterministic: bool = True) -> None:
     for final runs that go in the paper; disable it while exploring.
     """
     random.seed(seed)
-    np.random.seed(seed)
+    # The legacy global seed is deliberate: third-party code (sklearn defaults,
+    # older libraries) still draws from the global RNG, which a Generator cannot seed.
+    np.random.seed(seed)  # noqa: NPY002
     os.environ["PYTHONHASHSEED"] = str(seed)
 
     try:
