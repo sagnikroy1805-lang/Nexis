@@ -1,4 +1,4 @@
-.PHONY: help install test test-fast lint format typecheck baseline clean
+.PHONY: help install test test-fast lint format typecheck baseline data-ibm clean
 
 help:
 	@echo "install    - editable install with dev extras"
@@ -8,6 +8,7 @@ help:
 	@echo "format     - ruff format"
 	@echo "typecheck  - mypy"
 	@echo "baseline   - run the tabular baseline experiment on demo data"
+	@echo "data-ibm   - build data/processed/ from the IBM AML raw CSV"
 
 install:
 	pip install -e ".[dev]"
@@ -29,6 +30,9 @@ typecheck:
 
 baseline:
 	python scripts/run_baseline.py --demo
+
+data-ibm:
+	python -m nexis.data.ibm_aml --config configs/ibm_aml.yaml
 
 clean:
 	find . -type d -name __pycache__ -exec rm -rf {} + 2>/dev/null || true

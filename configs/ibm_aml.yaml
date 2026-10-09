@@ -1,0 +1,31 @@
+# IBM AML (IT-AML), HI-Small variant.
+# Every decision here is explained, with the numbers behind it, in docs/dataset_card.md.
+# Relative paths resolve against the repository root.
+
+dataset:
+  variant: HI-Small
+  raw_path: data/raw/HI-Small_Trans.csv
+  processed_path: data/processed/ibm_aml_hi_small.parquet
+
+  # Simulated normal activity ends on 2022-09-10. After it, 655 of the remaining
+  # 1,108 rows are positive (laundering chains completing with no background
+  # traffic). Kept, they would form a test fold at ~60% prevalence.
+  tail_cutoff: "2022-09-11 00:00"
+
+  # FX rates are estimated only from rows before this instant, so no later data
+  # shapes the amount column. The generator's rates are constant over time, so
+  # one day is enough.
+  rate_fit_end: "2022-09-02 00:00"
+
+split:
+  # Daily volume ranges from 1.1M (day 1) to ~207k (weekends); a split on the time
+  # span would leave about a day each for validation and test.
+  split_on: rows
+  train_frac: 0.6
+  val_frac: 0.2
+  embargo: 24h
+
+features:
+  # Rule 1: the longest window must not exceed the embargo. A 7D window is not
+  # possible on ten days of data.
+  windows: ["5min", "1h", "24h"]
