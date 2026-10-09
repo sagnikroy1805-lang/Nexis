@@ -32,3 +32,18 @@ features:
   # Rule 1: the longest window must not exceed the embargo. A 7D window is not
   # possible on ten days of data.
   windows: ["5min", "1h", "24h"]
+
+graph:
+  # Snapshot period Δ (§9.1). Structural features for a transaction come from the
+  # graph of everything before its period began. Patterns last ~75h (median), so
+  # a 24h period shows a typical pattern over 3-4 snapshots.
+  snapshot: 24h
+
+evaluation:
+  # Analyst capacity for the test period (~417k transactions, ~613 positives).
+  alert_budget: 500
+  # Hyper-parameter trials per tunable model family, on the validation fold.
+  # Every model family gets the same budget (Concept Mastery §22.2).
+  tuning_trials: 12
+  # Fraction of training negatives kept for RF / logistic regression.
+  neg_subsample: 0.1
