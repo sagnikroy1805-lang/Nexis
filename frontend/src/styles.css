@@ -1,0 +1,277 @@
+@import "tailwindcss";
+
+/*
+ * NEXIS — "orbit" theme.
+ * Vermilion page, thin white orbit lines, golden circles, black didone display
+ * type. #DB3A1E (not #D9361C) keeps black body text at >= 4.5:1 contrast.
+ */
+@theme {
+  --color-vermilion: #db3a1e;
+  --color-vermilion-deep: #c2300f;
+  --color-gold: #ffa800;
+  --color-cream: #fff4e6;
+  --color-cream-ink: #5a4636;
+  --color-ink: #0b0b0b;
+
+  --font-display: "Bodoni Moda", "Bodoni 72", Didot, "Times New Roman", serif;
+  --font-script: "Pinyon Script", "Snell Roundhand", "Segoe Script", cursive;
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "Cascadia Mono", Consolas, "Liberation Mono", monospace;
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  html,
+  body {
+    background: var(--color-vermilion);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection {
+    background: var(--color-ink);
+    color: var(--color-gold);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-ink);
+    outline-offset: 2px;
+  }
+  select,
+  input,
+  textarea {
+    font: inherit;
+    color: inherit;
+  }
+  /* Native date-picker icon is black on vermilion. */
+  input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+    filter: none;
+    cursor: pointer;
+  }
+}
+
+@layer components {
+  .num {
+    font-variant-numeric: tabular-nums;
+  }
+  .mono {
+    font-family: var(--font-mono);
+    font-size: 12px;
+  }
+  /*
+   * Display type. Bodoni Moda's optical-size axis would otherwise follow the
+   * font size, and at hero sizes its hairlines become nearly invisible. Pinning
+   * a text-range optical size plus a heavier weight keeps every stroke legible.
+   */
+  .display-sturdy {
+    font-family: var(--font-display);
+    font-optical-sizing: none;
+    font-variation-settings: "opsz" 18;
+  }
+  .label {
+    font-size: 10.5px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+  }
+
+  /* Pill buttons: black outline, invert on hover. */
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    border: 1px solid var(--color-ink);
+    border-radius: 999px;
+    padding: 0.35rem 0.95rem;
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    white-space: nowrap;
+    background: transparent;
+    color: var(--color-ink);
+    cursor: pointer;
+    transition:
+      background-color 180ms var(--ease-out-soft),
+      color 180ms var(--ease-out-soft);
+  }
+  .pill:hover:not(:disabled),
+  .pill[aria-pressed="true"],
+  .pill.is-current {
+    background: var(--color-ink);
+    color: var(--color-cream);
+  }
+  .pill:disabled {
+    opacity: 0.45;
+    cursor: default;
+  }
+  .pill-solid {
+    background: var(--color-ink);
+    color: var(--color-cream);
+  }
+  .pill-solid:hover:not(:disabled) {
+    background: transparent;
+    color: var(--color-ink);
+  }
+  .pill-sm {
+    padding: 0.15rem 0.65rem;
+    font-size: 10px;
+  }
+
+  /* Underline inputs on vermilion. */
+  .field-line {
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--color-ink);
+    border-radius: 0;
+    padding: 0.2rem 0.1rem;
+    font-size: 13px;
+  }
+  .field-line:focus-visible {
+    outline: none;
+    border-bottom-width: 2px;
+  }
+  select.field-line {
+    padding-right: 1.2rem;
+    cursor: pointer;
+  }
+  select.field-line option {
+    background: var(--color-cream);
+    color: var(--color-ink);
+  }
+
+  /* Minimal tables: thin rules, rows lighten on hover. */
+  .tbl {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .tbl th {
+    text-align: left;
+    font-size: 10.5px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    padding: 0 0.6rem 0.6rem;
+    border-bottom: 1px solid var(--color-ink);
+    white-space: nowrap;
+  }
+  .tbl td {
+    padding: 0.6rem;
+    border-bottom: 1px solid rgb(11 11 11 / 0.22);
+    vertical-align: middle;
+  }
+  .tbl tbody tr {
+    transition: background-color 160ms var(--ease-out-soft);
+  }
+  .tbl tbody tr:hover,
+  .tbl tbody tr.is-selected {
+    background: rgb(255 255 255 / 0.12);
+  }
+  .tbl .r {
+    text-align: right;
+  }
+  .tbl-click tbody tr {
+    cursor: pointer;
+  }
+
+  /*
+   * Frosted glass panel: all body text on the inner pages sits on these. The
+   * animated vermilion background stays visible, blurred, through the panel.
+   */
+  .glass {
+    background: rgb(255 255 255 / 0.7);
+    -webkit-backdrop-filter: blur(12px) saturate(1.15);
+    backdrop-filter: blur(12px) saturate(1.15);
+    border: 1px solid rgb(255 255 255 / 0.4);
+    border-radius: 1.5rem;
+    box-shadow:
+      0 24px 48px -30px rgb(0 0 0 / 0.55),
+      inset 0 1px 0 rgb(255 255 255 / 0.35);
+    padding: 1.25rem 1.4rem;
+  }
+  /* Tables on glass: rows darken slightly on hover instead of lightening. */
+  .glass .tbl tbody tr:hover,
+  .glass .tbl tbody tr.is-selected {
+    background: rgb(11 11 11 / 0.05);
+  }
+
+  /* Cream panel for dense content where contrast needs it. */
+  .panel-cream {
+    background: var(--color-cream);
+    border-radius: 1.25rem;
+    box-shadow: 0 18px 40px -22px rgb(0 0 0 / 0.55);
+    padding: 1.25rem;
+  }
+
+  /* Cytoscape. */
+  .cy-wrap {
+    position: relative;
+    width: 100%;
+  }
+  .cy-canvas {
+    position: absolute;
+    inset: 0;
+  }
+  .cy-tip {
+    position: absolute;
+    z-index: 3;
+    pointer-events: none;
+    white-space: pre;
+    background: var(--color-ink);
+    color: var(--color-cream);
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    line-height: 1.5;
+    padding: 0.45rem 0.65rem;
+    border-radius: 0.6rem;
+    box-shadow: 0 10px 24px -12px rgb(0 0 0 / 0.6);
+  }
+
+  /* Drift chart. */
+  /* The drift chart lives on a white glass panel: light grey grid. */
+  .drift-chart .grid {
+    stroke: #dcdcdc;
+    stroke-width: 1;
+  }
+  .drift-chart .baseline {
+    stroke: var(--color-ink);
+    stroke-width: 1;
+  }
+  .drift-chart .axis-text {
+    fill: var(--color-ink);
+    font-size: 10.5px;
+    font-variant-numeric: tabular-nums;
+  }
+  .drift-chart .ref-warn {
+    stroke: #8a8a8a;
+    stroke-width: 1.25;
+    stroke-dasharray: 3 4;
+  }
+  .drift-chart .ref-drift {
+    stroke: var(--color-ink);
+    stroke-width: 1.5;
+    stroke-dasharray: 8 5;
+  }
+  .drift-chart .ref-text,
+  .drift-chart .direct-label {
+    fill: var(--color-ink);
+    font-size: 11px;
+  }
+  .drift-chart .crosshair {
+    stroke: var(--color-ink);
+    stroke-width: 1;
+    stroke-dasharray: 2 3;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

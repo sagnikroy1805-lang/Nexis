@@ -1,0 +1,32 @@
+{
+  "name": "nexis-dashboard",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "NEXIS analyst dashboard: alert queue, evidence, graph explorer, rings, drift and the modelling ladder.",
+  "scripts": {
+    "dev": "vite",
+    "dev:mock": "vite --mode mock",
+    "build": "tsc -b && vite build",
+    "build:mock": "tsc -b && vite build --mode mock",
+    "typecheck": "tsc -b --noEmit",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "cytoscape": "^3.34.3",
+    "framer-motion": "^12.43.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^7.18.4"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/node": "^22.20.5",
+    "@types/react": "^18.3.31",
+    "@types/react-dom": "^18.3.7",
+    "@vitejs/plugin-react": "^4.7.0",
+    "tailwindcss": "^4.3.3",
+    "typescript": "~5.9.3",
+    "vite": "^6.4.4"
+  }
+}
