@@ -198,6 +198,10 @@ class XGBScorer:
     features: Sequence[str]
     seed: int = 0
     params: dict[str, Any] = field(default_factory=dict)
+    # 300, not 100: validation PR-AUC with ~500 positives is noisy, and a
+    # 100-round window let one seed stop at tree 3 (test PR-AUC 0.35 vs 0.52 for
+    # the same configuration trained to convergence). Recorded in docs/results.md.
+    early_stopping_rounds: int = 300
     model: Any = None
     best_iteration: int | None = None
 
@@ -207,7 +211,7 @@ class XGBScorer:
         y = train[LABEL].to_numpy()
         spw = float((y == 0).sum() / max((y == 1).sum(), 1))
         p = {
-            "n_estimators": 2000,
+            "n_estimators": 5000,  # a cap, not a target: early stopping decides
             "learning_rate": 0.05,
             "max_depth": 6,
             "min_child_weight": 5,
@@ -220,7 +224,7 @@ class XGBScorer:
             **p,
             scale_pos_weight=spw,
             eval_metric="aucpr",  # rule 2: never auc, error or logloss
-            early_stopping_rounds=100,
+            early_stopping_rounds=self.early_stopping_rounds,
             tree_method="hist",
             device=xgb_device(),
             random_state=self.seed,

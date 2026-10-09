@@ -1,7 +1,8 @@
 """Rung 9: score fusion + fraud-ring detection + early-warning time.
 
-Fusion (§22.3): a logistic stacker over the saved scores of the base models,
-fitted on the VALIDATION fold's scores only and applied to the test fold.
+Fusion (§22.3): a convex combination of the base models' standardised logits,
+with the weight chosen to maximise VALIDATION PR-AUC, then applied to the test
+fold unchanged.
 
 Rings (§11.4): two-stage detection on the fused scores. The stage-2 scorer is
 trained on validation-window candidates against validation-window patterns, then
@@ -26,6 +27,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import average_precision_score
 
 from nexis.data.ibm_aml import load_patterns
 from nexis.evaluation.harness import aggregate_over_seeds, format_table, run_experiment
@@ -50,18 +52,37 @@ RESULTS = Path("results")
 
 
 def fused_scores(base: list[str], seed: int, labels: pd.Series) -> pd.DataFrame:
-    """Stack base-model scores; the stacker sees validation labels only."""
+    """Convex combination of standardised logits, weight chosen on validation PR-AUC.
+
+    Why not a logistic stacker: it optimises log-loss with balanced classes, which
+    rewards global ranking (ROC-AUC) rather than precision at the top of the
+    list -- in an earlier run it raised ROC-AUC and LOWERED PR-AUC below the best
+    base model. Searching the weight on the reported metric, on the validation
+    fold only, and including the pure single-model ends of the grid, fixes that.
+    """
     frames = [load_scores(m, seed).rename(columns={"score": m}) for m in base]
     s = frames[0]
     for f in frames[1:]:
         s = s.merge(f, on=["tx_id", "fold"], how="inner")
-    logit = lambda p: np.log(np.clip(p, 1e-7, 1 - 1e-7) / np.clip(1 - p, 1e-7, 1))  # noqa: E731
-    x = np.column_stack([logit(s[m].to_numpy()) for m in base])
-    y = s["tx_id"].map(labels).to_numpy()
     is_val = (s["fold"] == "val").to_numpy()
-    stacker = LogisticRegression(class_weight="balanced", max_iter=2000).fit(x[is_val], y[is_val])
-    s["score"] = stacker.predict_proba(x)[:, 1]
-    s.attrs["weights"] = dict(zip(base, map(float, stacker.coef_[0]), strict=True))
+    y = s["tx_id"].map(labels).to_numpy()
+    z = []
+    for m in base:
+        p = np.clip(s[m].to_numpy(), 1e-7, 1 - 1e-7)
+        lg = np.log(p / (1 - p))
+        z.append((lg - lg[is_val].mean()) / (lg[is_val].std() + 1e-9))  # val statistics only
+    if len(base) == 2:
+        grid = np.linspace(0.0, 1.0, 21)
+        val_ap = [average_precision_score(y[is_val], w * z[0][is_val] + (1 - w) * z[1][is_val]) for w in grid]
+        w = float(grid[int(np.argmax(val_ap))])
+        weights = {base[0]: w, base[1]: 1 - w}
+        s["score"] = w * z[0] + (1 - w) * z[1]
+    else:
+        stacker = LogisticRegression(max_iter=2000).fit(np.column_stack(z)[is_val], y[is_val])
+        weights = dict(zip(base, map(float, stacker.coef_[0]), strict=True))
+        s["score"] = np.column_stack(z) @ stacker.coef_[0]
+    s["score"] = 1 / (1 + np.exp(-s["score"]))  # monotone map to (0, 1) for the API
+    s.attrs["weights"] = weights
     return s[["tx_id", "fold", "score"]]
 
 
