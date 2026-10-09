@@ -1,0 +1,40 @@
+{
+  "run_id": "ibm_aml_r4_isolation_forest_1791558449",
+  "name": "ibm_aml_r4_isolation_forest",
+  "config": {
+    "dataset": "ibm_aml",
+    "variant": "HI-Small",
+    "rung": 4,
+    "model": "isolation_forest",
+    "split": {
+      "train_frac": 0.6,
+      "val_frac": 0.2,
+      "embargo": "24h",
+      "split_on": "rows"
+    },
+    "windows": [
+      "5min",
+      "1h",
+      "24h"
+    ],
+    "alert_budget": 500,
+    "xgb_params": {
+      "max_depth": 10,
+      "learning_rate": 0.03,
+      "min_child_weight": 1,
+      "subsample": 1.0,
+      "colsample_bytree": 0.6,
+      "reg_lambda": 1.0
+    }
+  },
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "timestamp": 1791558535.01319,
+  "code_commit": "68cef556c8b19df1c581ebbd20130c5304232261",
+  "working_tree_dirty": false
+}

@@ -1,0 +1,24 @@
+{
+  "run_id": "elliptic_r3_rf_local_1791563432",
+  "name": "elliptic_r3_rf_local",
+  "config": {
+    "dataset": "elliptic++",
+    "rung": 3,
+    "model": "rf_local",
+    "split": {
+      "train_end": 29,
+      "val_end": 34
+    },
+    "alert_budget": 167
+  },
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "timestamp": 1791563440.428519,
+  "code_commit": "68cef556c8b19df1c581ebbd20130c5304232261",
+  "working_tree_dirty": false
+}

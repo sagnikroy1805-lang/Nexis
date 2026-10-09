@@ -1,0 +1,80 @@
+{
+  "prevalence": {
+    "elliptic_xgb_local": 0.06496700659868027
+  },
+  "n_samples": {
+    "elliptic_xgb_local": 16670.0
+  },
+  "n_positives": {
+    "elliptic_xgb_local": 1083.0
+  },
+  "pr_auc": {
+    "elliptic_xgb_local": 0.7733066075737407
+  },
+  "roc_auc": {
+    "elliptic_xgb_local": 0.9159815507880262
+  },
+  "pr_auc_lift": {
+    "elliptic_xgb_local": 11.903066618886665
+  },
+  "threshold_budget": {
+    "elliptic_xgb_local": 0.9995841383934021
+  },
+  "precision_at_budget": {
+    "elliptic_xgb_local": 1.0
+  },
+  "recall_at_budget": {
+    "elliptic_xgb_local": 0.15512465373961218
+  },
+  "recall_at_fpr_1e2": {
+    "elliptic_xgb_local": 0.6845798707294553
+  },
+  "recall_at_fpr_1e3": {
+    "elliptic_xgb_local": 0.6343490304709142
+  },
+  "median_ewt_minutes": {
+    "elliptic_xgb_local": NaN
+  },
+  "ring_detection_rate": {
+    "elliptic_xgb_local": NaN
+  },
+  "prevalence_std": {
+    "elliptic_xgb_local": 0.0
+  },
+  "n_samples_std": {
+    "elliptic_xgb_local": 0.0
+  },
+  "n_positives_std": {
+    "elliptic_xgb_local": 0.0
+  },
+  "pr_auc_std": {
+    "elliptic_xgb_local": 0.0024384397821625397
+  },
+  "roc_auc_std": {
+    "elliptic_xgb_local": 0.002092554255512109
+  },
+  "pr_auc_lift_std": {
+    "elliptic_xgb_local": 0.03753350985101395
+  },
+  "threshold_budget_std": {
+    "elliptic_xgb_local": 0.0003047754603421294
+  },
+  "precision_at_budget_std": {
+    "elliptic_xgb_local": 0.0
+  },
+  "recall_at_budget_std": {
+    "elliptic_xgb_local": 0.0
+  },
+  "recall_at_fpr_1e2_std": {
+    "elliptic_xgb_local": 0.007229392107502626
+  },
+  "recall_at_fpr_1e3_std": {
+    "elliptic_xgb_local": 0.0014599619853039997
+  },
+  "median_ewt_minutes_std": {
+    "elliptic_xgb_local": NaN
+  },
+  "ring_detection_rate_std": {
+    "elliptic_xgb_local": NaN
+  }
+}

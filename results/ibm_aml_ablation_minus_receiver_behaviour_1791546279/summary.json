@@ -1,0 +1,80 @@
+{
+  "prevalence": {
+    "ablation_minus_receiver_behaviour": 0.0014704965144674788
+  },
+  "n_samples": {
+    "ablation_minus_receiver_behaviour": 416866.0
+  },
+  "n_positives": {
+    "ablation_minus_receiver_behaviour": 613.0
+  },
+  "pr_auc": {
+    "ablation_minus_receiver_behaviour": 0.517125236740337
+  },
+  "roc_auc": {
+    "ablation_minus_receiver_behaviour": 0.9599092759062813
+  },
+  "pr_auc_lift": {
+    "ablation_minus_receiver_behaviour": 351.6670945171245
+  },
+  "threshold_budget": {
+    "ablation_minus_receiver_behaviour": 0.6172508358955383
+  },
+  "precision_at_budget": {
+    "ablation_minus_receiver_behaviour": 0.580439121756487
+  },
+  "recall_at_budget": {
+    "ablation_minus_receiver_behaviour": 0.47438825448613375
+  },
+  "recall_at_fpr_1e2": {
+    "ablation_minus_receiver_behaviour": 0.7487765089722676
+  },
+  "recall_at_fpr_1e3": {
+    "ablation_minus_receiver_behaviour": 0.5177814029363784
+  },
+  "median_ewt_minutes": {
+    "ablation_minus_receiver_behaviour": NaN
+  },
+  "ring_detection_rate": {
+    "ablation_minus_receiver_behaviour": NaN
+  },
+  "prevalence_std": {
+    "ablation_minus_receiver_behaviour": 0.0
+  },
+  "n_samples_std": {
+    "ablation_minus_receiver_behaviour": 0.0
+  },
+  "n_positives_std": {
+    "ablation_minus_receiver_behaviour": 0.0
+  },
+  "pr_auc_std": {
+    "ablation_minus_receiver_behaviour": 0.0036813323727407045
+  },
+  "roc_auc_std": {
+    "ablation_minus_receiver_behaviour": 0.0026886840260890153
+  },
+  "pr_auc_lift_std": {
+    "ablation_minus_receiver_behaviour": 2.5034621548041227
+  },
+  "threshold_budget_std": {
+    "ablation_minus_receiver_behaviour": 0.044382300741988005
+  },
+  "precision_at_budget_std": {
+    "ablation_minus_receiver_behaviour": 0.007251857135562855
+  },
+  "recall_at_budget_std": {
+    "ablation_minus_receiver_behaviour": 0.005926884869358877
+  },
+  "recall_at_fpr_1e2_std": {
+    "ablation_minus_receiver_behaviour": 0.006211886709513802
+  },
+  "recall_at_fpr_1e3_std": {
+    "ablation_minus_receiver_behaviour": 0.004839281231383805
+  },
+  "median_ewt_minutes_std": {
+    "ablation_minus_receiver_behaviour": NaN
+  },
+  "ring_detection_rate_std": {
+    "ablation_minus_receiver_behaviour": NaN
+  }
+}

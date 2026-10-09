@@ -1,0 +1,24 @@
+{
+  "run_id": "ibm_aml_r9_fusion_1791545184",
+  "name": "ibm_aml_r9_fusion",
+  "config": {
+    "dataset": "ibm_aml",
+    "rung": 9,
+    "base": [
+      "xgb_graph",
+      "gnn_homogeneous"
+    ],
+    "candidate_quantile": 0.99,
+    "alert_budget": 500
+  },
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "timestamp": 1791545261.141103,
+  "code_commit": "e2da6bbc1122c2ff7a0affc15e6e203f0af7d9e6",
+  "working_tree_dirty": false
+}

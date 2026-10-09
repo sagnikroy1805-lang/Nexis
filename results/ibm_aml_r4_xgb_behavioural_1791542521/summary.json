@@ -1,0 +1,80 @@
+{
+  "prevalence": {
+    "xgb_behavioural": 0.0014704965144674788
+  },
+  "n_samples": {
+    "xgb_behavioural": 416866.0
+  },
+  "n_positives": {
+    "xgb_behavioural": 613.0
+  },
+  "pr_auc": {
+    "xgb_behavioural": 0.464986797565443
+  },
+  "roc_auc": {
+    "xgb_behavioural": 0.9749944068124995
+  },
+  "pr_auc_lift": {
+    "xgb_behavioural": 316.2107444598955
+  },
+  "threshold_budget": {
+    "xgb_behavioural": 0.6861166954040527
+  },
+  "precision_at_budget": {
+    "xgb_behavioural": 0.5325622439331863
+  },
+  "recall_at_budget": {
+    "xgb_behavioural": 0.44469820554649264
+  },
+  "recall_at_fpr_1e2": {
+    "xgb_behavioural": 0.7556280587275693
+  },
+  "recall_at_fpr_1e3": {
+    "xgb_behavioural": 0.4955954323001631
+  },
+  "median_ewt_minutes": {
+    "xgb_behavioural": NaN
+  },
+  "ring_detection_rate": {
+    "xgb_behavioural": NaN
+  },
+  "prevalence_std": {
+    "xgb_behavioural": 0.0
+  },
+  "n_samples_std": {
+    "xgb_behavioural": 0.0
+  },
+  "n_positives_std": {
+    "xgb_behavioural": 0.0
+  },
+  "pr_auc_std": {
+    "xgb_behavioural": 0.0701132160659407
+  },
+  "roc_auc_std": {
+    "xgb_behavioural": 0.005530182066458776
+  },
+  "pr_auc_lift_std": {
+    "xgb_behavioural": 47.67996073172012
+  },
+  "threshold_budget_std": {
+    "xgb_behavioural": 0.2662204124658367
+  },
+  "precision_at_budget_std": {
+    "xgb_behavioural": 0.0694386414539184
+  },
+  "recall_at_budget_std": {
+    "xgb_behavioural": 0.03849365403915856
+  },
+  "recall_at_fpr_1e2_std": {
+    "xgb_behavioural": 0.03436245940921755
+  },
+  "recall_at_fpr_1e3_std": {
+    "xgb_behavioural": 0.054085130923594384
+  },
+  "median_ewt_minutes_std": {
+    "xgb_behavioural": NaN
+  },
+  "ring_detection_rate_std": {
+    "xgb_behavioural": NaN
+  }
+}

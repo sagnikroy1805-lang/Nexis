@@ -1,0 +1,80 @@
+{
+  "prevalence": {
+    "gnn_homogeneous": 0.0014704965144674788
+  },
+  "n_samples": {
+    "gnn_homogeneous": 416866.0
+  },
+  "n_positives": {
+    "gnn_homogeneous": 613.0
+  },
+  "pr_auc": {
+    "gnn_homogeneous": 0.2858403378188249
+  },
+  "roc_auc": {
+    "gnn_homogeneous": 0.986717922982975
+  },
+  "pr_auc_lift": {
+    "gnn_homogeneous": 194.38355345054202
+  },
+  "threshold_budget": {
+    "gnn_homogeneous": 0.9957016944885254
+  },
+  "precision_at_budget": {
+    "gnn_homogeneous": 0.35489021956087824
+  },
+  "recall_at_budget": {
+    "gnn_homogeneous": 0.2900489396411093
+  },
+  "recall_at_fpr_1e2": {
+    "gnn_homogeneous": 0.7827079934747145
+  },
+  "recall_at_fpr_1e3": {
+    "gnn_homogeneous": 0.3226753670473083
+  },
+  "median_ewt_minutes": {
+    "gnn_homogeneous": NaN
+  },
+  "ring_detection_rate": {
+    "gnn_homogeneous": NaN
+  },
+  "prevalence_std": {
+    "gnn_homogeneous": 0.0
+  },
+  "n_samples_std": {
+    "gnn_homogeneous": 0.0
+  },
+  "n_positives_std": {
+    "gnn_homogeneous": 0.0
+  },
+  "pr_auc_std": {
+    "gnn_homogeneous": 0.012358437206503835
+  },
+  "roc_auc_std": {
+    "gnn_homogeneous": 0.00037302387877849176
+  },
+  "pr_auc_lift_std": {
+    "gnn_homogeneous": 8.404261475573282
+  },
+  "threshold_budget_std": {
+    "gnn_homogeneous": 0.0011458688068116162
+  },
+  "precision_at_budget_std": {
+    "gnn_homogeneous": 0.02007948317757971
+  },
+  "recall_at_budget_std": {
+    "gnn_homogeneous": 0.01641080109619481
+  },
+  "recall_at_fpr_1e2_std": {
+    "gnn_homogeneous": 0.010016366351066112
+  },
+  "recall_at_fpr_1e3_std": {
+    "gnn_homogeneous": 0.017241145305860173
+  },
+  "median_ewt_minutes_std": {
+    "gnn_homogeneous": NaN
+  },
+  "ring_detection_rate_std": {
+    "gnn_homogeneous": NaN
+  }
+}

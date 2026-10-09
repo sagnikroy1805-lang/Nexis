@@ -1,0 +1,39 @@
+{
+  "run_id": "ibm_aml_ablation_minus_transaction_fields_1791547408",
+  "name": "ibm_aml_ablation_minus_transaction_fields",
+  "config": {
+    "dataset": "ibm_aml",
+    "rung": "ablation",
+    "variant": "minus_transaction_fields",
+    "n_features": 67,
+    "dropped": [
+      "hour",
+      "is_cross_bank",
+      "is_cross_currency",
+      "is_round_amount",
+      "is_self_transfer",
+      "log_amount",
+      "pay_currency",
+      "payment_format",
+      "recv_currency"
+    ],
+    "params": {
+      "max_depth": 10,
+      "learning_rate": 0.05,
+      "min_child_weight": 5,
+      "subsample": 0.7,
+      "colsample_bytree": 0.6,
+      "reg_lambda": 0.5
+    }
+  },
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "timestamp": 1791547774.3064845,
+  "code_commit": "e2da6bbc1122c2ff7a0affc15e6e203f0af7d9e6",
+  "working_tree_dirty": false
+}

@@ -1,0 +1,80 @@
+{
+  "prevalence": {
+    "elliptic_gnn_sage_local": 0.06496700659868027
+  },
+  "n_samples": {
+    "elliptic_gnn_sage_local": 16670.0
+  },
+  "n_positives": {
+    "elliptic_gnn_sage_local": 1083.0
+  },
+  "pr_auc": {
+    "elliptic_gnn_sage_local": 0.635477945470635
+  },
+  "roc_auc": {
+    "elliptic_gnn_sage_local": 0.9005134733285385
+  },
+  "pr_auc_lift": {
+    "elliptic_gnn_sage_local": 9.781548800549848
+  },
+  "threshold_budget": {
+    "elliptic_gnn_sage_local": 0.9997056722640991
+  },
+  "precision_at_budget": {
+    "elliptic_gnn_sage_local": 0.9523809523809523
+  },
+  "recall_at_budget": {
+    "elliptic_gnn_sage_local": 0.14773776546629733
+  },
+  "recall_at_fpr_1e2": {
+    "elliptic_gnn_sage_local": 0.47276084949215147
+  },
+  "recall_at_fpr_1e3": {
+    "elliptic_gnn_sage_local": 0.24025854108956599
+  },
+  "median_ewt_minutes": {
+    "elliptic_gnn_sage_local": NaN
+  },
+  "ring_detection_rate": {
+    "elliptic_gnn_sage_local": NaN
+  },
+  "prevalence_std": {
+    "elliptic_gnn_sage_local": 0.0
+  },
+  "n_samples_std": {
+    "elliptic_gnn_sage_local": 0.0
+  },
+  "n_positives_std": {
+    "elliptic_gnn_sage_local": 0.0
+  },
+  "pr_auc_std": {
+    "elliptic_gnn_sage_local": 0.04394161319625623
+  },
+  "roc_auc_std": {
+    "elliptic_gnn_sage_local": 0.005821740942630791
+  },
+  "pr_auc_lift_std": {
+    "elliptic_gnn_sage_local": 0.6763681366404358
+  },
+  "threshold_budget_std": {
+    "elliptic_gnn_sage_local": 8.319314958244342e-05
+  },
+  "precision_at_budget_std": {
+    "elliptic_gnn_sage_local": 0.03834553192477715
+  },
+  "recall_at_budget_std": {
+    "elliptic_gnn_sage_local": 0.0059483373622923
+  },
+  "recall_at_fpr_1e2_std": {
+    "elliptic_gnn_sage_local": 0.07537137705315795
+  },
+  "recall_at_fpr_1e3_std": {
+    "elliptic_gnn_sage_local": 0.08045013184740298
+  },
+  "median_ewt_minutes_std": {
+    "elliptic_gnn_sage_local": NaN
+  },
+  "ring_detection_rate_std": {
+    "elliptic_gnn_sage_local": NaN
+  }
+}

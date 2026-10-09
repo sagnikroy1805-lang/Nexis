@@ -1,0 +1,60 @@
+{
+  "budget": 6,
+  "best": {
+    "hidden": 32,
+    "layers": 1,
+    "lr": 0.001,
+    "dropout": 0.1
+  },
+  "trials": [
+    {
+      "hidden": 128,
+      "layers": 2,
+      "lr": 0.003,
+      "dropout": 0.1,
+      "val_pr_auc": null,
+      "failed": "out of GPU memory"
+    },
+    {
+      "hidden": 32,
+      "layers": 1,
+      "lr": 0.001,
+      "dropout": 0.1,
+      "val_pr_auc": 0.1705784872108428,
+      "epochs_run": 30,
+      "secs": 69
+    },
+    {
+      "hidden": 32,
+      "layers": 3,
+      "lr": 0.003,
+      "dropout": 0.3,
+      "val_pr_auc": null,
+      "failed": "out of GPU memory"
+    },
+    {
+      "hidden": 64,
+      "layers": 2,
+      "lr": 0.01,
+      "dropout": 0.3,
+      "val_pr_auc": null,
+      "failed": "out of GPU memory"
+    },
+    {
+      "hidden": 64,
+      "layers": 2,
+      "lr": 0.003,
+      "dropout": 0.3,
+      "val_pr_auc": null,
+      "failed": "out of GPU memory"
+    },
+    {
+      "hidden": 32,
+      "layers": 3,
+      "lr": 0.01,
+      "dropout": 0.1,
+      "val_pr_auc": null,
+      "failed": "out of GPU memory"
+    }
+  ]
+}

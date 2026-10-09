@@ -1,0 +1,80 @@
+{
+  "prevalence": {
+    "ablation_minus_graph_edge_motifs": 0.0014704965144674788
+  },
+  "n_samples": {
+    "ablation_minus_graph_edge_motifs": 416866.0
+  },
+  "n_positives": {
+    "ablation_minus_graph_edge_motifs": 613.0
+  },
+  "pr_auc": {
+    "ablation_minus_graph_edge_motifs": 0.5116321002294931
+  },
+  "roc_auc": {
+    "ablation_minus_graph_edge_motifs": 0.967966217872523
+  },
+  "pr_auc_lift": {
+    "ablation_minus_graph_edge_motifs": 347.9315287019052
+  },
+  "threshold_budget": {
+    "ablation_minus_graph_edge_motifs": 0.5134146034717559
+  },
+  "precision_at_budget": {
+    "ablation_minus_graph_edge_motifs": 0.5633436423855586
+  },
+  "recall_at_budget": {
+    "ablation_minus_graph_edge_motifs": 0.4760195758564437
+  },
+  "recall_at_fpr_1e2": {
+    "ablation_minus_graph_edge_motifs": 0.7637846655791191
+  },
+  "recall_at_fpr_1e3": {
+    "ablation_minus_graph_edge_motifs": 0.532137030995106
+  },
+  "median_ewt_minutes": {
+    "ablation_minus_graph_edge_motifs": NaN
+  },
+  "ring_detection_rate": {
+    "ablation_minus_graph_edge_motifs": NaN
+  },
+  "prevalence_std": {
+    "ablation_minus_graph_edge_motifs": 0.0
+  },
+  "n_samples_std": {
+    "ablation_minus_graph_edge_motifs": 0.0
+  },
+  "n_positives_std": {
+    "ablation_minus_graph_edge_motifs": 0.0
+  },
+  "pr_auc_std": {
+    "ablation_minus_graph_edge_motifs": 0.09767422733938574
+  },
+  "roc_auc_std": {
+    "ablation_minus_graph_edge_motifs": 0.004243618025648096
+  },
+  "pr_auc_lift_std": {
+    "ablation_minus_graph_edge_motifs": 66.42261738019639
+  },
+  "threshold_budget_std": {
+    "ablation_minus_graph_edge_motifs": 0.04936610916259628
+  },
+  "precision_at_budget_std": {
+    "ablation_minus_graph_edge_motifs": 0.11870576681790981
+  },
+  "recall_at_budget_std": {
+    "ablation_minus_graph_edge_motifs": 0.062294265918878065
+  },
+  "recall_at_fpr_1e2_std": {
+    "ablation_minus_graph_edge_motifs": 0.031217541336959875
+  },
+  "recall_at_fpr_1e3_std": {
+    "ablation_minus_graph_edge_motifs": 0.0924788013076351
+  },
+  "median_ewt_minutes_std": {
+    "ablation_minus_graph_edge_motifs": NaN
+  },
+  "ring_detection_rate_std": {
+    "ablation_minus_graph_edge_motifs": NaN
+  }
+}

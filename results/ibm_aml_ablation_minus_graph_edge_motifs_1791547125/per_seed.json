@@ -1,0 +1,107 @@
+[
+  {
+    "model": "ablation_minus_graph_edge_motifs",
+    "seed": 0,
+    "split": "test",
+    "prevalence": 0.0014704965144674788,
+    "n_samples": 416866,
+    "n_positives": 613,
+    "pr_auc": 0.3370749894021505,
+    "roc_auc": 0.9606662153239569,
+    "pr_auc_lift": 229.22528961193618,
+    "threshold_budget": 0.5907390713691711,
+    "precision_at_budget": 0.3516483516483517,
+    "recall_at_budget": 0.36541598694942906,
+    "recall_at_fpr_1e2": 0.7079934747145188,
+    "recall_at_fpr_1e3": 0.367047308319739,
+    "median_ewt_minutes": NaN,
+    "ring_detection_rate": NaN,
+    "extra": {
+      "n_features": 73
+    }
+  },
+  {
+    "model": "ablation_minus_graph_edge_motifs",
+    "seed": 1,
+    "split": "test",
+    "prevalence": 0.0014704965144674788,
+    "n_samples": 416866,
+    "n_positives": 613,
+    "pr_auc": 0.5489265879906222,
+    "roc_auc": 0.9714585305870788,
+    "pr_auc_lift": 373.2933622011398,
+    "threshold_budget": 0.5151419043540955,
+    "precision_at_budget": 0.6027944111776448,
+    "recall_at_budget": 0.4926590538336052,
+    "recall_at_fpr_1e2": 0.7797716150081566,
+    "recall_at_fpr_1e3": 0.5693311582381729,
+    "median_ewt_minutes": NaN,
+    "ring_detection_rate": NaN,
+    "extra": {
+      "n_features": 73
+    }
+  },
+  {
+    "model": "ablation_minus_graph_edge_motifs",
+    "seed": 2,
+    "split": "test",
+    "prevalence": 0.0014704965144674788,
+    "n_samples": 416866,
+    "n_positives": 613,
+    "pr_auc": 0.5587679529459948,
+    "roc_auc": 0.9690684787876981,
+    "pr_auc_lift": 379.98590778594627,
+    "threshold_budget": 0.5204618573188782,
+    "precision_at_budget": 0.6147704590818364,
+    "recall_at_budget": 0.5024469820554649,
+    "recall_at_fpr_1e2": 0.7781402936378466,
+    "recall_at_fpr_1e3": 0.5774877650897227,
+    "median_ewt_minutes": NaN,
+    "ring_detection_rate": NaN,
+    "extra": {
+      "n_features": 73
+    }
+  },
+  {
+    "model": "ablation_minus_graph_edge_motifs",
+    "seed": 3,
+    "split": "test",
+    "prevalence": 0.0014704965144674788,
+    "n_samples": 416866,
+    "n_positives": 613,
+    "pr_auc": 0.5595893590611672,
+    "roc_auc": 0.9702333279089594,
+    "pr_auc_lift": 380.5444987836746,
+    "threshold_budget": 0.46815043687820435,
+    "precision_at_budget": 0.6287425149700598,
+    "recall_at_budget": 0.5138662316476346,
+    "recall_at_fpr_1e2": 0.7765089722675367,
+    "recall_at_fpr_1e3": 0.566068515497553,
+    "median_ewt_minutes": NaN,
+    "ring_detection_rate": NaN,
+    "extra": {
+      "n_features": 73
+    }
+  },
+  {
+    "model": "ablation_minus_graph_edge_motifs",
+    "seed": 4,
+    "split": "test",
+    "prevalence": 0.0014704965144674788,
+    "n_samples": 416866,
+    "n_positives": 613,
+    "pr_auc": 0.5538016117475312,
+    "roc_auc": 0.9684045367549222,
+    "pr_auc_lift": 376.60858512682927,
+    "threshold_budget": 0.4725797474384308,
+    "precision_at_budget": 0.6187624750499002,
+    "recall_at_budget": 0.5057096247960848,
+    "recall_at_fpr_1e2": 0.7765089722675367,
+    "recall_at_fpr_1e3": 0.5807504078303426,
+    "median_ewt_minutes": NaN,
+    "ring_detection_rate": NaN,
+    "extra": {
+      "n_features": 73
+    }
+  }
+]

@@ -1,0 +1,80 @@
+{
+  "prevalence": {
+    "ablation_full": 0.0014704965144674788
+  },
+  "n_samples": {
+    "ablation_full": 416866.0
+  },
+  "n_positives": {
+    "ablation_full": 613.0
+  },
+  "pr_auc": {
+    "ablation_full": 0.5591442447707033
+  },
+  "roc_auc": {
+    "ablation_full": 0.9683041374373704
+  },
+  "pr_auc_lift": {
+    "ablation_full": 380.24180218692334
+  },
+  "threshold_budget": {
+    "ablation_full": 0.5600921154022217
+  },
+  "precision_at_budget": {
+    "ablation_full": 0.6131736526946108
+  },
+  "recall_at_budget": {
+    "ablation_full": 0.5011419249592169
+  },
+  "recall_at_fpr_1e2": {
+    "ablation_full": 0.765415986949429
+  },
+  "recall_at_fpr_1e3": {
+    "ablation_full": 0.5670473083197389
+  },
+  "median_ewt_minutes": {
+    "ablation_full": NaN
+  },
+  "ring_detection_rate": {
+    "ablation_full": NaN
+  },
+  "prevalence_std": {
+    "ablation_full": 0.0
+  },
+  "n_samples_std": {
+    "ablation_full": 0.0
+  },
+  "n_positives_std": {
+    "ablation_full": 0.0
+  },
+  "pr_auc_std": {
+    "ablation_full": 0.00303773628037409
+  },
+  "roc_auc_std": {
+    "ablation_full": 0.0012056597370403526
+  },
+  "pr_auc_lift_std": {
+    "ablation_full": 2.065789514281247
+  },
+  "threshold_budget_std": {
+    "ablation_full": 0.015298134380000846
+  },
+  "precision_at_budget_std": {
+    "ablation_full": 0.004970019799596345
+  },
+  "recall_at_budget_std": {
+    "ablation_full": 0.00406195745448245
+  },
+  "recall_at_fpr_1e2_std": {
+    "ablation_full": 0.004377294572593396
+  },
+  "recall_at_fpr_1e3_std": {
+    "ablation_full": 0.007166682752524922
+  },
+  "median_ewt_minutes_std": {
+    "ablation_full": NaN
+  },
+  "ring_detection_rate_std": {
+    "ablation_full": NaN
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "run_id": "ibm_aml_r2_rules_1791542251",
+  "name": "ibm_aml_r2_rules",
+  "config": {
+    "dataset": "ibm_aml",
+    "variant": "HI-Small",
+    "rung": 2,
+    "model": "rules",
+    "split": {
+      "train_frac": 0.6,
+      "val_frac": 0.2,
+      "embargo": "24h",
+      "split_on": "rows"
+    },
+    "windows": [
+      "5min",
+      "1h",
+      "24h"
+    ],
+    "alert_budget": 500,
+    "xgb_params": null
+  },
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "timestamp": 1791542253.8872619,
+  "code_commit": "e2da6bbc1122c2ff7a0affc15e6e203f0af7d9e6",
+  "working_tree_dirty": false
+}

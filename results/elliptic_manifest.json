@@ -1,0 +1,15 @@
+{
+  "files": {
+    "txs_features.csv": "2db326ec8ddb68f1d810c1834e1ff62e0a8300378f0984a1e3b2ca82a439821b",
+    "txs_classes.csv": "013a11742969071a906878ded0319571df0657f9b7133e5c6cdb36217bf0d240",
+    "txs_edgelist.csv": "a35053ba68a98e4382cae2ba65b9d9e36b23b6439e02dff084971b1b72a5156e"
+  },
+  "n_nodes": 203769,
+  "n_edges": 234355,
+  "n_illicit": 4545,
+  "n_licit": 42019,
+  "n_unknown": 157205,
+  "n_steps": 49,
+  "n_features": 182,
+  "n_local_features": 110
+}

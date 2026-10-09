@@ -1,0 +1,80 @@
+{
+  "prevalence": {
+    "elliptic_lr_local": 0.06496700659868027
+  },
+  "n_samples": {
+    "elliptic_lr_local": 16670.0
+  },
+  "n_positives": {
+    "elliptic_lr_local": 1083.0
+  },
+  "pr_auc": {
+    "elliptic_lr_local": 0.22711432933956024
+  },
+  "roc_auc": {
+    "elliptic_lr_local": 0.848400017985014
+  },
+  "pr_auc_lift": {
+    "elliptic_lr_local": 3.495841061948725
+  },
+  "threshold_budget": {
+    "elliptic_lr_local": 0.9999926207552058
+  },
+  "precision_at_budget": {
+    "elliptic_lr_local": 0.0
+  },
+  "recall_at_budget": {
+    "elliptic_lr_local": 0.0
+  },
+  "recall_at_fpr_1e2": {
+    "elliptic_lr_local": 0.0
+  },
+  "recall_at_fpr_1e3": {
+    "elliptic_lr_local": 0.0
+  },
+  "median_ewt_minutes": {
+    "elliptic_lr_local": NaN
+  },
+  "ring_detection_rate": {
+    "elliptic_lr_local": NaN
+  },
+  "prevalence_std": {
+    "elliptic_lr_local": 0.0
+  },
+  "n_samples_std": {
+    "elliptic_lr_local": 0.0
+  },
+  "n_positives_std": {
+    "elliptic_lr_local": 0.0
+  },
+  "pr_auc_std": {
+    "elliptic_lr_local": 0.0
+  },
+  "roc_auc_std": {
+    "elliptic_lr_local": 0.0
+  },
+  "pr_auc_lift_std": {
+    "elliptic_lr_local": 0.0
+  },
+  "threshold_budget_std": {
+    "elliptic_lr_local": 0.0
+  },
+  "precision_at_budget_std": {
+    "elliptic_lr_local": 0.0
+  },
+  "recall_at_budget_std": {
+    "elliptic_lr_local": 0.0
+  },
+  "recall_at_fpr_1e2_std": {
+    "elliptic_lr_local": 0.0
+  },
+  "recall_at_fpr_1e3_std": {
+    "elliptic_lr_local": 0.0
+  },
+  "median_ewt_minutes_std": {
+    "elliptic_lr_local": NaN
+  },
+  "ring_detection_rate_std": {
+    "elliptic_lr_local": NaN
+  }
+}

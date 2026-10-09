@@ -1,0 +1,80 @@
+{
+  "prevalence": {
+    "gnn_heterogeneous": 0.0014704965144674788
+  },
+  "n_samples": {
+    "gnn_heterogeneous": 416866.0
+  },
+  "n_positives": {
+    "gnn_heterogeneous": 613.0
+  },
+  "pr_auc": {
+    "gnn_heterogeneous": 0.15425542849463816
+  },
+  "roc_auc": {
+    "gnn_heterogeneous": 0.9858806216286243
+  },
+  "pr_auc_lift": {
+    "gnn_heterogeneous": 104.90023402095566
+  },
+  "threshold_budget": {
+    "gnn_heterogeneous": 0.989722752571106
+  },
+  "precision_at_budget": {
+    "gnn_heterogeneous": 0.2151696606786427
+  },
+  "recall_at_budget": {
+    "gnn_heterogeneous": 0.17585644371941273
+  },
+  "recall_at_fpr_1e2": {
+    "gnn_heterogeneous": 0.7321370309951061
+  },
+  "recall_at_fpr_1e3": {
+    "gnn_heterogeneous": 0.18499184339314845
+  },
+  "median_ewt_minutes": {
+    "gnn_heterogeneous": NaN
+  },
+  "ring_detection_rate": {
+    "gnn_heterogeneous": NaN
+  },
+  "prevalence_std": {
+    "gnn_heterogeneous": 0.0
+  },
+  "n_samples_std": {
+    "gnn_heterogeneous": 0.0
+  },
+  "n_positives_std": {
+    "gnn_heterogeneous": 0.0
+  },
+  "pr_auc_std": {
+    "gnn_heterogeneous": 0.012137324139571403
+  },
+  "roc_auc_std": {
+    "gnn_heterogeneous": 0.00031086694040288645
+  },
+  "pr_auc_lift_std": {
+    "gnn_heterogeneous": 8.253895211690978
+  },
+  "threshold_budget_std": {
+    "gnn_heterogeneous": 0.001965878147466371
+  },
+  "precision_at_budget_std": {
+    "gnn_heterogeneous": 0.016960196236525355
+  },
+  "recall_at_budget_std": {
+    "gnn_heterogeneous": 0.013861432813212398
+  },
+  "recall_at_fpr_1e2_std": {
+    "gnn_heterogeneous": 0.013222762890152985
+  },
+  "recall_at_fpr_1e3_std": {
+    "gnn_heterogeneous": 0.01338280215464515
+  },
+  "median_ewt_minutes_std": {
+    "gnn_heterogeneous": NaN
+  },
+  "ring_detection_rate_std": {
+    "gnn_heterogeneous": NaN
+  }
+}

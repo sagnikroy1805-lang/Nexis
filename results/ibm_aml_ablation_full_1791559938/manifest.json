@@ -1,0 +1,29 @@
+{
+  "run_id": "ibm_aml_ablation_full_1791559938",
+  "name": "ibm_aml_ablation_full",
+  "config": {
+    "dataset": "ibm_aml",
+    "rung": "ablation",
+    "variant": "full",
+    "n_features": 76,
+    "dropped": [],
+    "params": {
+      "max_depth": 10,
+      "learning_rate": 0.05,
+      "min_child_weight": 5,
+      "subsample": 0.7,
+      "colsample_bytree": 0.6,
+      "reg_lambda": 0.5
+    }
+  },
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "timestamp": 1791560357.7648742,
+  "code_commit": "68cef556c8b19df1c581ebbd20130c5304232261",
+  "working_tree_dirty": false
+}

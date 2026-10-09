@@ -1,0 +1,39 @@
+{
+  "run_id": "ibm_aml_ablation_minus_pass_through_1791561649",
+  "name": "ibm_aml_ablation_minus_pass_through",
+  "config": {
+    "dataset": "ibm_aml",
+    "rung": "ablation",
+    "variant": "minus_pass_through",
+    "n_features": 67,
+    "dropped": [
+      "amt_over_src_in_24h",
+      "src_in_cnt_1h",
+      "src_in_cnt_24h",
+      "src_in_cnt_5min",
+      "src_in_n_hist",
+      "src_in_sum_1h",
+      "src_in_sum_24h",
+      "src_in_sum_5min",
+      "src_secs_since_in"
+    ],
+    "params": {
+      "max_depth": 10,
+      "learning_rate": 0.05,
+      "min_child_weight": 5,
+      "subsample": 0.7,
+      "colsample_bytree": 0.6,
+      "reg_lambda": 0.5
+    }
+  },
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "timestamp": 1791562061.8167562,
+  "code_commit": "68cef556c8b19df1c581ebbd20130c5304232261",
+  "working_tree_dirty": false
+}

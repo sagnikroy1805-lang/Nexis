@@ -1,0 +1,24 @@
+{
+  "run_id": "elliptic_r1_random_1791541769",
+  "name": "elliptic_r1_random",
+  "config": {
+    "dataset": "elliptic++",
+    "rung": 1,
+    "model": "random",
+    "split": {
+      "train_end": 29,
+      "val_end": 34
+    },
+    "alert_budget": 167
+  },
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "timestamp": 1791541770.2041361,
+  "code_commit": "89f5ed69e5edf827b4053348e77c8842cf765106",
+  "working_tree_dirty": true
+}

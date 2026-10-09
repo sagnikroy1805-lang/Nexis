@@ -1,0 +1,80 @@
+{
+  "prevalence": {
+    "xgb_tabular": 0.0014704965144674788
+  },
+  "n_samples": {
+    "xgb_tabular": 416866.0
+  },
+  "n_positives": {
+    "xgb_tabular": 613.0
+  },
+  "pr_auc": {
+    "xgb_tabular": 0.09712215091484572
+  },
+  "roc_auc": {
+    "xgb_tabular": 0.9374503504305828
+  },
+  "pr_auc_lift": {
+    "xgb_tabular": 66.04718199554335
+  },
+  "threshold_budget": {
+    "xgb_tabular": 0.9329387307167053
+  },
+  "precision_at_budget": {
+    "xgb_tabular": 0.1812322649213532
+  },
+  "recall_at_budget": {
+    "xgb_tabular": 0.14910277324632953
+  },
+  "recall_at_fpr_1e2": {
+    "xgb_tabular": 0.49526916802610116
+  },
+  "recall_at_fpr_1e3": {
+    "xgb_tabular": 0.14812398042414354
+  },
+  "median_ewt_minutes": {
+    "xgb_tabular": NaN
+  },
+  "ring_detection_rate": {
+    "xgb_tabular": NaN
+  },
+  "prevalence_std": {
+    "xgb_tabular": 0.0
+  },
+  "n_samples_std": {
+    "xgb_tabular": 0.0
+  },
+  "n_positives_std": {
+    "xgb_tabular": 0.0
+  },
+  "pr_auc_std": {
+    "xgb_tabular": 0.0021556031446897475
+  },
+  "roc_auc_std": {
+    "xgb_tabular": 0.001012374179943156
+  },
+  "pr_auc_lift_std": {
+    "xgb_tabular": 1.4659015669073976
+  },
+  "threshold_budget_std": {
+    "xgb_tabular": 0.003873715237434317
+  },
+  "precision_at_budget_std": {
+    "xgb_tabular": 0.006442294564198549
+  },
+  "recall_at_budget_std": {
+    "xgb_tabular": 0.004699791285770946
+  },
+  "recall_at_fpr_1e2_std": {
+    "xgb_tabular": 0.008678261715021472
+  },
+  "recall_at_fpr_1e3_std": {
+    "xgb_tabular": 0.00676555998477251
+  },
+  "median_ewt_minutes_std": {
+    "xgb_tabular": NaN
+  },
+  "ring_detection_rate_std": {
+    "xgb_tabular": NaN
+  }
+}

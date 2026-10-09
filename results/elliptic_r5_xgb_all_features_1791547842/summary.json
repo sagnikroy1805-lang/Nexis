@@ -1,0 +1,80 @@
+{
+  "prevalence": {
+    "elliptic_xgb_all_features": 0.06496700659868027
+  },
+  "n_samples": {
+    "elliptic_xgb_all_features": 16670.0
+  },
+  "n_positives": {
+    "elliptic_xgb_all_features": 1083.0
+  },
+  "pr_auc": {
+    "elliptic_xgb_all_features": 0.7945057713160123
+  },
+  "roc_auc": {
+    "elliptic_xgb_all_features": 0.9314576136884201
+  },
+  "pr_auc_lift": {
+    "elliptic_xgb_all_features": 12.229373229767242
+  },
+  "threshold_budget": {
+    "elliptic_xgb_all_features": 0.9997206211090088
+  },
+  "precision_at_budget": {
+    "elliptic_xgb_all_features": 1.0
+  },
+  "recall_at_budget": {
+    "elliptic_xgb_all_features": 0.15512465373961218
+  },
+  "recall_at_fpr_1e2": {
+    "elliptic_xgb_all_features": 0.7303785780240074
+  },
+  "recall_at_fpr_1e3": {
+    "elliptic_xgb_all_features": 0.7026777469990766
+  },
+  "median_ewt_minutes": {
+    "elliptic_xgb_all_features": NaN
+  },
+  "ring_detection_rate": {
+    "elliptic_xgb_all_features": NaN
+  },
+  "prevalence_std": {
+    "elliptic_xgb_all_features": 0.0
+  },
+  "n_samples_std": {
+    "elliptic_xgb_all_features": 0.0
+  },
+  "n_positives_std": {
+    "elliptic_xgb_all_features": 0.0
+  },
+  "pr_auc_std": {
+    "elliptic_xgb_all_features": 0.0016672669432687547
+  },
+  "roc_auc_std": {
+    "elliptic_xgb_all_features": 0.0020364870577906304
+  },
+  "pr_auc_lift_std": {
+    "elliptic_xgb_all_features": 0.02566328711384121
+  },
+  "threshold_budget_std": {
+    "elliptic_xgb_all_features": 0.00033489286027070926
+  },
+  "precision_at_budget_std": {
+    "elliptic_xgb_all_features": 0.0
+  },
+  "recall_at_budget_std": {
+    "elliptic_xgb_all_features": 0.0
+  },
+  "recall_at_fpr_1e2_std": {
+    "elliptic_xgb_all_features": 0.0026920368858934793
+  },
+  "recall_at_fpr_1e3_std": {
+    "elliptic_xgb_all_features": 0.0052639677982416234
+  },
+  "median_ewt_minutes_std": {
+    "elliptic_xgb_all_features": NaN
+  },
+  "ring_detection_rate_std": {
+    "elliptic_xgb_all_features": NaN
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "prevalence": {
+    "fusion": 0.0014704965144674788
+  },
+  "n_samples": {
+    "fusion": 416866.0
+  },
+  "n_positives": {
+    "fusion": 613.0
+  },
+  "pr_auc": {
+    "fusion": 0.564686491873233
+  },
+  "roc_auc": {
+    "fusion": 0.9835140869453889
+  },
+  "pr_auc_lift": {
+    "fusion": 384.0107652874831
+  },
+  "threshold_budget": {
+    "fusion": 0.9959435939788819
+  },
+  "precision_at_budget": {
+    "fusion": 0.612375249500998
+  },
+  "recall_at_budget": {
+    "fusion": 0.500489396411093
+  },
+  "recall_at_fpr_1e2": {
+    "fusion": 0.7817292006525285
+  },
+  "recall_at_fpr_1e3": {
+    "fusion": 0.5712887438825449
+  },
+  "median_ewt_minutes": {
+    "fusion": 2569.0
+  },
+  "ring_detection_rate": {
+    "fusion": 0.8842857142857143
+  },
+  "prevalence_std": {
+    "fusion": 0.0
+  },
+  "n_samples_std": {
+    "fusion": 0.0
+  },
+  "n_positives_std": {
+    "fusion": 0.0
+  },
+  "pr_auc_std": {
+    "fusion": 0.0023126568602045445
+  },
+  "roc_auc_std": {
+    "fusion": 0.00127350667882714
+  },
+  "pr_auc_lift_std": {
+    "fusion": 1.5727047547896034
+  },
+  "threshold_budget_std": {
+    "fusion": 0.0013189051227599285
+  },
+  "precision_at_budget_std": {
+    "fusion": 0.005538697375453721
+  },
+  "recall_at_budget_std": {
+    "fusion": 0.004526733091520922
+  },
+  "recall_at_fpr_1e2_std": {
+    "fusion": 0.0052100226501374915
+  },
+  "recall_at_fpr_1e3_std": {
+    "fusion": 0.008585773159504534
+  },
+  "median_ewt_minutes_std": {
+    "fusion": 39.177480776589015
+  },
+  "ring_detection_rate_std": {
+    "fusion": 0.011736911946539306
+  }
+}

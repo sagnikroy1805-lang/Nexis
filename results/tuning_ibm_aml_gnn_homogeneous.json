@@ -1,0 +1,65 @@
+{
+  "budget": 6,
+  "best": {
+    "hidden": 32,
+    "layers": 3,
+    "lr": 0.01,
+    "dropout": 0.1
+  },
+  "trials": [
+    {
+      "hidden": 128,
+      "layers": 2,
+      "lr": 0.003,
+      "dropout": 0.1,
+      "val_pr_auc": 0.28411994739770874,
+      "epochs_run": 30,
+      "secs": 114
+    },
+    {
+      "hidden": 32,
+      "layers": 1,
+      "lr": 0.001,
+      "dropout": 0.1,
+      "val_pr_auc": 0.18330655599140727,
+      "epochs_run": 30,
+      "secs": 46
+    },
+    {
+      "hidden": 32,
+      "layers": 3,
+      "lr": 0.003,
+      "dropout": 0.3,
+      "val_pr_auc": 0.2561633315741345,
+      "epochs_run": 30,
+      "secs": 63
+    },
+    {
+      "hidden": 64,
+      "layers": 2,
+      "lr": 0.01,
+      "dropout": 0.3,
+      "val_pr_auc": 0.26408467329050883,
+      "epochs_run": 30,
+      "secs": 71
+    },
+    {
+      "hidden": 64,
+      "layers": 2,
+      "lr": 0.003,
+      "dropout": 0.3,
+      "val_pr_auc": 0.2796599102074195,
+      "epochs_run": 30,
+      "secs": 76
+    },
+    {
+      "hidden": 32,
+      "layers": 3,
+      "lr": 0.01,
+      "dropout": 0.1,
+      "val_pr_auc": 0.35157391942582644,
+      "epochs_run": 30,
+      "secs": 68
+    }
+  ]
+}

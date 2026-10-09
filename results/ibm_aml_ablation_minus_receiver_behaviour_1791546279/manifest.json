@@ -1,0 +1,45 @@
+{
+  "run_id": "ibm_aml_ablation_minus_receiver_behaviour_1791546279",
+  "name": "ibm_aml_ablation_minus_receiver_behaviour",
+  "config": {
+    "dataset": "ibm_aml",
+    "rung": "ablation",
+    "variant": "minus_receiver_behaviour",
+    "n_features": 61,
+    "dropped": [
+      "dst_in_cnt_1h",
+      "dst_in_cnt_24h",
+      "dst_in_cnt_5min",
+      "dst_in_n_hist",
+      "dst_in_sum_1h",
+      "dst_in_sum_24h",
+      "dst_in_sum_5min",
+      "dst_n_counterparties",
+      "dst_out_cnt_1h",
+      "dst_out_cnt_24h",
+      "dst_out_cnt_5min",
+      "dst_out_n_hist",
+      "dst_out_sum_1h",
+      "dst_out_sum_24h",
+      "dst_out_sum_5min"
+    ],
+    "params": {
+      "max_depth": 10,
+      "learning_rate": 0.05,
+      "min_child_weight": 5,
+      "subsample": 0.7,
+      "colsample_bytree": 0.6,
+      "reg_lambda": 0.5
+    }
+  },
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "timestamp": 1791546566.5160434,
+  "code_commit": "e2da6bbc1122c2ff7a0affc15e6e203f0af7d9e6",
+  "working_tree_dirty": false
+}

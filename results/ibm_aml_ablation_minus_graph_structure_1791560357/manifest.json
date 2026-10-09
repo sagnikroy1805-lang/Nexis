@@ -1,0 +1,59 @@
+{
+  "run_id": "ibm_aml_ablation_minus_graph_structure_1791560357",
+  "name": "ibm_aml_ablation_minus_graph_structure",
+  "config": {
+    "dataset": "ibm_aml",
+    "rung": "ablation",
+    "variant": "minus_graph_structure",
+    "n_features": 47,
+    "dropped": [
+      "closes_cycle",
+      "dst_degree_asymmetry",
+      "dst_flow_through",
+      "dst_in_degree",
+      "dst_in_tx",
+      "dst_log_in_weight",
+      "dst_log_out_weight",
+      "dst_log_scc_size",
+      "dst_nbr_in_degree_mean",
+      "dst_nbr_out_degree_mean",
+      "dst_out_degree",
+      "dst_out_tx",
+      "dst_pagerank",
+      "dst_reciprocal_partners",
+      "prior_pair_tx",
+      "reverse_edge_exists",
+      "src_degree_asymmetry",
+      "src_flow_through",
+      "src_in_degree",
+      "src_in_tx",
+      "src_log_in_weight",
+      "src_log_out_weight",
+      "src_log_scc_size",
+      "src_nbr_in_degree_mean",
+      "src_nbr_out_degree_mean",
+      "src_out_degree",
+      "src_out_tx",
+      "src_pagerank",
+      "src_reciprocal_partners"
+    ],
+    "params": {
+      "max_depth": 10,
+      "learning_rate": 0.05,
+      "min_child_weight": 5,
+      "subsample": 0.7,
+      "colsample_bytree": 0.6,
+      "reg_lambda": 0.5
+    }
+  },
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "timestamp": 1791560707.311883,
+  "code_commit": "68cef556c8b19df1c581ebbd20130c5304232261",
+  "working_tree_dirty": false
+}

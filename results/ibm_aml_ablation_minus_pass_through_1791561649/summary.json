@@ -1,0 +1,80 @@
+{
+  "prevalence": {
+    "ablation_minus_pass_through": 0.0014704965144674788
+  },
+  "n_samples": {
+    "ablation_minus_pass_through": 416866.0
+  },
+  "n_positives": {
+    "ablation_minus_pass_through": 613.0
+  },
+  "pr_auc": {
+    "ablation_minus_pass_through": 0.550646862755898
+  },
+  "roc_auc": {
+    "ablation_minus_pass_through": 0.9720862275656179
+  },
+  "pr_auc_lift": {
+    "ablation_minus_pass_through": 374.46322200587304
+  },
+  "threshold_budget": {
+    "ablation_minus_pass_through": 0.5552900433540344
+  },
+  "precision_at_budget": {
+    "ablation_minus_pass_through": 0.6095808383233533
+  },
+  "recall_at_budget": {
+    "ablation_minus_pass_through": 0.498205546492659
+  },
+  "recall_at_fpr_1e2": {
+    "ablation_minus_pass_through": 0.768678629690049
+  },
+  "recall_at_fpr_1e3": {
+    "ablation_minus_pass_through": 0.5647634584013052
+  },
+  "median_ewt_minutes": {
+    "ablation_minus_pass_through": NaN
+  },
+  "ring_detection_rate": {
+    "ablation_minus_pass_through": NaN
+  },
+  "prevalence_std": {
+    "ablation_minus_pass_through": 0.0
+  },
+  "n_samples_std": {
+    "ablation_minus_pass_through": 0.0
+  },
+  "n_positives_std": {
+    "ablation_minus_pass_through": 0.0
+  },
+  "pr_auc_std": {
+    "ablation_minus_pass_through": 0.002058207554297644
+  },
+  "roc_auc_std": {
+    "ablation_minus_pass_through": 0.0014626624187273121
+  },
+  "pr_auc_lift_std": {
+    "ablation_minus_pass_through": 1.3996684344695653
+  },
+  "threshold_budget_std": {
+    "ablation_minus_pass_through": 0.02573581851605825
+  },
+  "precision_at_budget_std": {
+    "ablation_minus_pass_through": 0.004139010250165161
+  },
+  "recall_at_budget_std": {
+    "ablation_minus_pass_through": 0.0033827799923862073
+  },
+  "recall_at_fpr_1e2_std": {
+    "ablation_minus_pass_through": 0.010016366351066078
+  },
+  "recall_at_fpr_1e3_std": {
+    "ablation_minus_pass_through": 0.00932853406557637
+  },
+  "median_ewt_minutes_std": {
+    "ablation_minus_pass_through": NaN
+  },
+  "ring_detection_rate_std": {
+    "ablation_minus_pass_through": NaN
+  }
+}

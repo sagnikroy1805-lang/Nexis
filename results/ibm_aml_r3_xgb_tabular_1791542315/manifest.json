@@ -1,0 +1,40 @@
+{
+  "run_id": "ibm_aml_r3_xgb_tabular_1791542315",
+  "name": "ibm_aml_r3_xgb_tabular",
+  "config": {
+    "dataset": "ibm_aml",
+    "variant": "HI-Small",
+    "rung": 3,
+    "model": "xgb_tabular",
+    "split": {
+      "train_frac": 0.6,
+      "val_frac": 0.2,
+      "embargo": "24h",
+      "split_on": "rows"
+    },
+    "windows": [
+      "5min",
+      "1h",
+      "24h"
+    ],
+    "alert_budget": 500,
+    "xgb_params": {
+      "max_depth": 8,
+      "learning_rate": 0.05,
+      "min_child_weight": 20,
+      "subsample": 1.0,
+      "colsample_bytree": 0.8,
+      "reg_lambda": 1.0
+    }
+  },
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "timestamp": 1791542328.1055136,
+  "code_commit": "e2da6bbc1122c2ff7a0affc15e6e203f0af7d9e6",
+  "working_tree_dirty": false
+}

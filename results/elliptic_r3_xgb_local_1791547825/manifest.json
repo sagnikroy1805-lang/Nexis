@@ -1,0 +1,24 @@
+{
+  "run_id": "elliptic_r3_xgb_local_1791547825",
+  "name": "elliptic_r3_xgb_local",
+  "config": {
+    "dataset": "elliptic++",
+    "rung": 3,
+    "model": "xgb_local",
+    "split": {
+      "train_end": 29,
+      "val_end": 34
+    },
+    "alert_budget": 167
+  },
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "timestamp": 1791547842.0457168,
+  "code_commit": "e2da6bbc1122c2ff7a0affc15e6e203f0af7d9e6",
+  "working_tree_dirty": false
+}

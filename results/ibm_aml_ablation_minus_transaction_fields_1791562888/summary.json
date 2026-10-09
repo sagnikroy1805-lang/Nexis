@@ -1,0 +1,80 @@
+{
+  "prevalence": {
+    "ablation_minus_transaction_fields": 0.0014704965144674788
+  },
+  "n_samples": {
+    "ablation_minus_transaction_fields": 416866.0
+  },
+  "n_positives": {
+    "ablation_minus_transaction_fields": 613.0
+  },
+  "pr_auc": {
+    "ablation_minus_transaction_fields": 0.4590971050668262
+  },
+  "roc_auc": {
+    "ablation_minus_transaction_fields": 0.9628050164418568
+  },
+  "pr_auc_lift": {
+    "ablation_minus_transaction_fields": 312.20550375332397
+  },
+  "threshold_budget": {
+    "ablation_minus_transaction_fields": 0.5707707405090332
+  },
+  "precision_at_budget": {
+    "ablation_minus_transaction_fields": 0.5369261477045908
+  },
+  "recall_at_budget": {
+    "ablation_minus_transaction_fields": 0.43882544861337686
+  },
+  "recall_at_fpr_1e2": {
+    "ablation_minus_transaction_fields": 0.7513866231647635
+  },
+  "recall_at_fpr_1e3": {
+    "ablation_minus_transaction_fields": 0.47765089722675363
+  },
+  "median_ewt_minutes": {
+    "ablation_minus_transaction_fields": NaN
+  },
+  "ring_detection_rate": {
+    "ablation_minus_transaction_fields": NaN
+  },
+  "prevalence_std": {
+    "ablation_minus_transaction_fields": 0.0
+  },
+  "n_samples_std": {
+    "ablation_minus_transaction_fields": 0.0
+  },
+  "n_positives_std": {
+    "ablation_minus_transaction_fields": 0.0
+  },
+  "pr_auc_std": {
+    "ablation_minus_transaction_fields": 0.003986364358021524
+  },
+  "roc_auc_std": {
+    "ablation_minus_transaction_fields": 0.0006597067994350964
+  },
+  "pr_auc_lift_std": {
+    "ablation_minus_transaction_fields": 2.710896842530188
+  },
+  "threshold_budget_std": {
+    "ablation_minus_transaction_fields": 0.010855310158409811
+  },
+  "precision_at_budget_std": {
+    "ablation_minus_transaction_fields": 0.007056953904057339
+  },
+  "recall_at_budget_std": {
+    "ablation_minus_transaction_fields": 0.00576759201620348
+  },
+  "recall_at_fpr_1e2_std": {
+    "ablation_minus_transaction_fields": 0.008205400548097411
+  },
+  "recall_at_fpr_1e3_std": {
+    "ablation_minus_transaction_fields": 0.004811706754894825
+  },
+  "median_ewt_minutes_std": {
+    "ablation_minus_transaction_fields": NaN
+  },
+  "ring_detection_rate_std": {
+    "ablation_minus_transaction_fields": NaN
+  }
+}

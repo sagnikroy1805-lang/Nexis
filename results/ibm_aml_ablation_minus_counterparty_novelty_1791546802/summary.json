@@ -1,0 +1,80 @@
+{
+  "prevalence": {
+    "ablation_minus_counterparty_novelty": 0.0014704965144674788
+  },
+  "n_samples": {
+    "ablation_minus_counterparty_novelty": 416866.0
+  },
+  "n_positives": {
+    "ablation_minus_counterparty_novelty": 613.0
+  },
+  "pr_auc": {
+    "ablation_minus_counterparty_novelty": 0.5463155459331409
+  },
+  "roc_auc": {
+    "ablation_minus_counterparty_novelty": 0.968013080057986
+  },
+  "pr_auc_lift": {
+    "ablation_minus_counterparty_novelty": 371.5177428563862
+  },
+  "threshold_budget": {
+    "ablation_minus_counterparty_novelty": 0.5662978887557983
+  },
+  "precision_at_budget": {
+    "ablation_minus_counterparty_novelty": 0.607185628742515
+  },
+  "recall_at_budget": {
+    "ablation_minus_counterparty_novelty": 0.49624796084828715
+  },
+  "recall_at_fpr_1e2": {
+    "ablation_minus_counterparty_novelty": 0.7543230016313214
+  },
+  "recall_at_fpr_1e3": {
+    "ablation_minus_counterparty_novelty": 0.5539967373572594
+  },
+  "median_ewt_minutes": {
+    "ablation_minus_counterparty_novelty": NaN
+  },
+  "ring_detection_rate": {
+    "ablation_minus_counterparty_novelty": NaN
+  },
+  "prevalence_std": {
+    "ablation_minus_counterparty_novelty": 0.0
+  },
+  "n_samples_std": {
+    "ablation_minus_counterparty_novelty": 0.0
+  },
+  "n_positives_std": {
+    "ablation_minus_counterparty_novelty": 0.0
+  },
+  "pr_auc_std": {
+    "ablation_minus_counterparty_novelty": 0.004219080107563142
+  },
+  "roc_auc_std": {
+    "ablation_minus_counterparty_novelty": 0.0018587918053029424
+  },
+  "pr_auc_lift_std": {
+    "ablation_minus_counterparty_novelty": 2.869153422707032
+  },
+  "threshold_budget_std": {
+    "ablation_minus_counterparty_novelty": 0.016929706444918848
+  },
+  "precision_at_budget_std": {
+    "ablation_minus_counterparty_novelty": 0.004327242193349095
+  },
+  "recall_at_budget_std": {
+    "ablation_minus_counterparty_novelty": 0.003536620454923126
+  },
+  "recall_at_fpr_1e2_std": {
+    "ablation_minus_counterparty_novelty": 0.011454153136405841
+  },
+  "recall_at_fpr_1e3_std": {
+    "ablation_minus_counterparty_novelty": 0.008365991128847027
+  },
+  "median_ewt_minutes_std": {
+    "ablation_minus_counterparty_novelty": NaN
+  },
+  "ring_detection_rate_std": {
+    "ablation_minus_counterparty_novelty": NaN
+  }
+}

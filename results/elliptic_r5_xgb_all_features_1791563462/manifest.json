@@ -1,0 +1,24 @@
+{
+  "run_id": "elliptic_r5_xgb_all_features_1791563462",
+  "name": "elliptic_r5_xgb_all_features",
+  "config": {
+    "dataset": "elliptic++",
+    "rung": 5,
+    "model": "xgb_all_features",
+    "split": {
+      "train_end": 29,
+      "val_end": 34
+    },
+    "alert_budget": 167
+  },
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "timestamp": 1791563505.1759012,
+  "code_commit": "68cef556c8b19df1c581ebbd20130c5304232261",
+  "working_tree_dirty": false
+}

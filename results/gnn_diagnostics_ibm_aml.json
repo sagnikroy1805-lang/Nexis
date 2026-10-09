@@ -1,0 +1,16 @@
+{
+  "degree": {
+    "isolated_fraction": 0.0010037314736797145,
+    "median_degree": 3.0,
+    "p99_degree": 13.0,
+    "max_degree": 14775.0
+  },
+  "positive_edge_adjacency_train": {
+    "positive_touching_positive": 0.6116673922507618,
+    "negative_touching_positive": 0.09539
+  },
+  "n_accounts": 515078,
+  "n_banks": 30528,
+  "edges_last_snapshot": 996516,
+  "snapshot_delta": "24h"
+}

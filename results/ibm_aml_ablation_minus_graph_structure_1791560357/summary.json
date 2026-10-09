@@ -1,0 +1,80 @@
+{
+  "prevalence": {
+    "ablation_minus_graph_structure": 0.0014704965144674788
+  },
+  "n_samples": {
+    "ablation_minus_graph_structure": 416866.0
+  },
+  "n_positives": {
+    "ablation_minus_graph_structure": 613.0
+  },
+  "pr_auc": {
+    "ablation_minus_graph_structure": 0.524518676594979
+  },
+  "roc_auc": {
+    "ablation_minus_graph_structure": 0.968147778615425
+  },
+  "pr_auc_lift": {
+    "ablation_minus_graph_structure": 356.6949472062683
+  },
+  "threshold_budget": {
+    "ablation_minus_graph_structure": 0.6222780585289002
+  },
+  "precision_at_budget": {
+    "ablation_minus_graph_structure": 0.5956087824351297
+  },
+  "recall_at_budget": {
+    "ablation_minus_graph_structure": 0.48678629690048936
+  },
+  "recall_at_fpr_1e2": {
+    "ablation_minus_graph_structure": 0.7615008156606852
+  },
+  "recall_at_fpr_1e3": {
+    "ablation_minus_graph_structure": 0.5396411092985318
+  },
+  "median_ewt_minutes": {
+    "ablation_minus_graph_structure": NaN
+  },
+  "ring_detection_rate": {
+    "ablation_minus_graph_structure": NaN
+  },
+  "prevalence_std": {
+    "ablation_minus_graph_structure": 0.0
+  },
+  "n_samples_std": {
+    "ablation_minus_graph_structure": 0.0
+  },
+  "n_positives_std": {
+    "ablation_minus_graph_structure": 0.0
+  },
+  "pr_auc_std": {
+    "ablation_minus_graph_structure": 0.002239556768106334
+  },
+  "roc_auc_std": {
+    "ablation_minus_graph_structure": 0.0009650427560712495
+  },
+  "pr_auc_lift_std": {
+    "ablation_minus_graph_structure": 1.5229935916695072
+  },
+  "threshold_budget_std": {
+    "ablation_minus_graph_structure": 0.032295463798101845
+  },
+  "precision_at_budget_std": {
+    "ablation_minus_graph_structure": 0.008058534626022502
+  },
+  "recall_at_budget_std": {
+    "ablation_minus_graph_structure": 0.006586175934155401
+  },
+  "recall_at_fpr_1e2_std": {
+    "ablation_minus_graph_structure": 0.0116727855269158
+  },
+  "recall_at_fpr_1e3_std": {
+    "ablation_minus_graph_structure": 0.008964849372942306
+  },
+  "median_ewt_minutes_std": {
+    "ablation_minus_graph_structure": NaN
+  },
+  "ring_detection_rate_std": {
+    "ablation_minus_graph_structure": NaN
+  }
+}
